@@ -3,34 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#070b1a">
 <title>חגורה לכל אחד — שבוע זה״ב | מחוז דרום</title>
 <style>
 :root {
-  --sky-50: #f0f9ff; --sky-100: #e0f2fe; --sky-200: #bae6fd; --sky-300: #7dd3fc;
-  --sky-500: #0ea5e9; --sky-600: #0284c7; --sky-700: #0369a1;
-  --ink: #0f2744; --ink-soft: #334e68; --muted: #5a7a94;
-  --paper: #ffffff; --card: #ffffff;
-  --mint: #10b981; --mint-soft: #d1fae5;
-  --coral: #ef4444; --coral-soft: #fee2e2;
-  --amber: #f59e0b; --amber-soft: #fef3c7; --gold: #fbbf24;
+  color-scheme: dark;
+  --sky-50: #0a1028; --sky-100: #121a38; --sky-200: #243056; --sky-300: #3a4a78;
+  --sky-500: #4FD6FF; --sky-600: #38bdf8; --sky-700: #FFD236;
+  --ink: #F5F7FA; --ink-soft: #D5DCE8; --muted: #9AA8C0;
+  --paper: #121a38; --card: #162040;
+  --mint: #3ECF9A; --mint-soft: #1A3D32;
+  --coral: #FF6B84; --coral-soft: #3D1A24;
+  --amber: #FFB84A; --amber-soft: #3D2A14; --gold: #FFD236;
   --radius: 1.1rem; --radius-btn: .85rem;
-  --shadow: 0 10px 28px -10px rgba(15,39,68,.18), 0 2px 8px rgba(15,39,68,.06);
-  --shadow-3d: 0 14px 0 -2px rgba(2,132,199,.12), 0 18px 36px -12px rgba(15,39,68,.22);
-  --focus: 3px solid #0369a1;
-  --font: Assistant, Heebo, Rubik, Arial, sans-serif;
-  --touch: 48px;
+  --shadow: 0 4px 6px rgba(0,0,0,.25), 0 18px 42px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.1);
+  --shadow-3d: 0 1px 0 rgba(255,255,255,.14) inset, 0 -2px 0 rgba(0,0,0,.35) inset, 0 10px 0 rgba(0,0,0,.35), 0 16px 28px rgba(0,0,0,.45);
+  --focus: 3px solid rgba(62,207,154,.55);
+  --font: Assistant, Heebo, Rubik, "Segoe UI", Tahoma, Arial, sans-serif;
+  --touch: 52px;
+  --bg: #070b1a; --bg2: #0c1230; --bg3: #120a22;
+  --line: rgba(255,210,54,.16);
+  --btn-face: linear-gradient(180deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,.02) 40%,rgba(0,0,0,.18) 100%);
+  --surface: #1E2C55; --surface2: #101A38;
+  --touch: 52px; --cyan: #4FD6FF;
 }
 *, *::before, *::after { box-sizing: border-box; }
 html, body {
   margin: 0; padding: 0; min-height: 100%;
   font-family: var(--font); color: var(--ink);
   background:
-    radial-gradient(1200px 600px at 100% -10%, #bae6fd 0%, transparent 55%),
-    radial-gradient(900px 500px at -10% 110%, #a5f3fc 0%, transparent 50%),
-    linear-gradient(180deg, var(--sky-50), #e8f7ff 40%, #f0f9ff);
+    radial-gradient(circle at 14% 8%, rgba(79,214,255,.16), transparent 28%),
+    radial-gradient(circle at 88% 12%, rgba(255,210,54,.12), transparent 30%),
+    radial-gradient(circle at 50% 95%, rgba(167,139,250,.1), transparent 34%),
+    linear-gradient(165deg, var(--bg), var(--bg2) 55%, var(--bg3));
+  background-attachment: fixed;
   -webkit-tap-highlight-color: transparent;
 }
+body { line-height: 1.45; }
 body { line-height: 1.45; }
 button, [role="button"] {
   font-family: inherit; cursor: pointer;
@@ -54,7 +64,7 @@ button:focus-visible, [tabindex="0"]:focus-visible, .choice:focus-visible, .buck
 }
 .brand-chip {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,.85); border: 1px solid var(--sky-200);
+  background: rgba(22,32,72,.94); border: 1px solid var(--sky-200);
   border-radius: 999px; padding: 6px 12px 6px 8px;
   font-size: .85rem; color: var(--sky-700); font-weight: 700;
   box-shadow: var(--shadow);
@@ -69,7 +79,7 @@ button:focus-visible, [tabindex="0"]:focus-visible, .choice:focus-visible, .buck
 .icon-btn[aria-pressed="true"] { background: var(--amber-soft); border-color: var(--amber); }
 .progress-wrap {
   flex: 1; min-width: 140px; max-width: 280px;
-  background: rgba(255,255,255,.7); border-radius: 999px; height: 12px;
+  background: rgba(16,26,56,.85); border-radius: 999px; height: 12px;
   border: 1px solid var(--sky-200); overflow: hidden;
 }
 .progress-bar {
@@ -91,7 +101,7 @@ button:focus-visible, [tabindex="0"]:focus-visible, .choice:focus-visible, .buck
 .hero-icon {
   width: 88px; height: 88px; margin: 0 auto 12px;
   display: grid; place-items: center;
-  background: linear-gradient(160deg, #e0f2fe, #cffafe);
+  background: linear-gradient(160deg, #1a2a55, #1a3050);
   border-radius: 24px; border: 2px solid var(--sky-200);
   box-shadow: inset 0 2px 0 rgba(255,255,255,.8), 0 8px 0 rgba(2,132,199,.1);
 }
@@ -113,13 +123,13 @@ h1 {
 @media (max-width: 520px) { .age-grid { grid-template-columns: 1fr; } }
 .age-btn {
   border: 3px solid var(--sky-200);
-  background: linear-gradient(180deg, #fff, var(--sky-50));
+  background: linear-gradient(180deg, var(--surface), var(--sky-50));
   border-radius: var(--radius); padding: 18px 14px; text-align: center;
   box-shadow: var(--shadow); color: var(--ink);
 }
 .age-btn.selected {
   border-color: var(--sky-600);
-  background: linear-gradient(180deg, #e0f2fe, #fff);
+  background: linear-gradient(180deg, #1a2a55, #fff);
   box-shadow: 0 0 0 3px rgba(14,165,233,.25), var(--shadow);
 }
 .age-btn .age-label { display: block; font-size: 1.35rem; font-weight: 800; color: var(--sky-700); }
@@ -163,7 +173,7 @@ h1 {
   display: flex; align-items: flex-start; gap: 12px;
   text-align: right; width: 100%; padding: 14px;
   border-radius: 14px; border: 2.5px solid var(--sky-200);
-  background: linear-gradient(180deg, #fff, #f8fcff);
+  background: linear-gradient(180deg, var(--surface), #162040);
   color: var(--ink); font-size: 1.1rem; font-weight: 700;
   box-shadow: 0 4px 0 rgba(2,132,199,.08);
 }
@@ -173,7 +183,7 @@ h1 {
   color: var(--sky-700); font-weight: 900; font-size: .95rem;
 }
 .choice .mark { margin-inline-start: auto; font-weight: 900; }
-.choice.selected { border-color: var(--sky-500); background: #e0f2fe; }
+.choice.selected { border-color: var(--sky-500); background: #1a2a55; }
 .choice.correct { border-color: var(--mint) !important; background: var(--mint-soft) !important; }
 .choice.wrong { border-color: var(--coral) !important; background: var(--coral-soft) !important; }
 .feedback {
@@ -181,14 +191,14 @@ h1 {
   font-weight: 800; align-items: center; gap: 8px;
 }
 .feedback.show { display: flex; }
-.feedback.ok { background: var(--mint-soft); color: #065f46; border: 2px solid var(--mint); }
-.feedback.bad { background: var(--coral-soft); color: #991b1b; border: 2px solid var(--coral); }
-.feedback.info { background: var(--amber-soft); color: #92400e; border: 2px solid var(--amber); }
+.feedback.ok { background: var(--mint-soft); color: #B8F5E0; border: 2px solid var(--mint); }
+.feedback.bad { background: var(--coral-soft); color: #FFC9C9; border: 2px solid var(--coral); }
+.feedback.info { background: var(--amber-soft); color: #FFE0B0; border: 2px solid var(--amber); }
 .knowledge { text-align: center; padding: 8px 4px; }
 .knowledge-icon {
   width: 64px; height: 64px; margin: 0 auto 10px; border-radius: 18px;
   display: grid; place-items: center; font-size: 2rem;
-  background: linear-gradient(160deg, #fef3c7, #e0f2fe); border: 2px solid var(--amber);
+  background: linear-gradient(160deg, #3D2A14, #1a2a55); border: 2px solid var(--amber);
 }
 .knowledge-text { font-size: clamp(1.15rem, 3vw, 1.4rem); font-weight: 800; color: var(--ink); margin: 0 0 8px; }
 .hint-note { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 10px; font-weight: 600; }
@@ -197,7 +207,7 @@ h1 {
 .star { opacity: .25; filter: grayscale(1); }
 .star.on { opacity: 1; filter: none; transform: scale(1.1); }
 .friend-bubble {
-  display: inline-block; background: #fff; border: 2px solid var(--sky-300);
+  display: inline-block; background: var(--surface); border: 2px solid var(--sky-300);
   border-radius: 16px; padding: 10px 14px; font-weight: 800; color: var(--ink-soft);
   box-shadow: var(--shadow); margin-bottom: 10px;
 }
@@ -216,7 +226,7 @@ h1 {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;
 }
 .buckle-seat {
-  background: #fff; border: 3px solid var(--sky-200); border-radius: 16px;
+  background: var(--surface); border: 3px solid var(--sky-200); border-radius: 16px;
   padding: 10px 8px; text-align: center; position: relative;
   min-height: 160px; display: flex; flex-direction: column; align-items: center; gap: 6px;
 }
@@ -249,7 +259,7 @@ h1 {
 .buckle-seat.ok .status-txt { color: #047857; }
 .buckle-btn {
   width: 100%; min-height: 44px; border-radius: 12px; border: 2px solid var(--sky-400);
-  background: linear-gradient(180deg, #fff, var(--sky-50));
+  background: linear-gradient(180deg, var(--surface), var(--sky-50));
   font-weight: 900; color: var(--sky-700); font-size: 1rem;
   box-shadow: 0 3px 0 rgba(2,132,199,.12);
 }
@@ -257,7 +267,7 @@ h1 {
   background: var(--mint); color: #fff; border-color: #059669;
 }
 .distract {
-  font-size: .8rem; font-weight: 700; color: #92400e;
+  font-size: .8rem; font-weight: 700; color: #FFE0B0;
   background: var(--amber-soft); border-radius: 8px; padding: 4px 6px;
 }
 .go-drive {
@@ -266,10 +276,317 @@ h1 {
 .fix-note {
   text-align: center; font-weight: 800; color: var(--sky-700); margin: 8px 0 0;
 }
+
+/* === Dark soft-3D upgrade (match game 01) === */
+.brand-chip, .brand {
+  background: linear-gradient(180deg,rgba(255,255,255,.06),transparent 50%), rgba(22,32,72,.94) !important;
+  border: 1px solid var(--line) !important;
+  color: var(--gold) !important;
+  box-shadow: var(--shadow) !important;
+}
+.icon-btn {
+  background: var(--btn-face), var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  color: var(--ink) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,.14) inset, 0 4px 0 rgba(0,0,0,.35), 0 8px 14px rgba(0,0,0,.35) !important;
+  border-radius: 14px !important;
+}
+.icon-btn[aria-pressed="true"] {
+  background: var(--btn-face), #2A2448 !important;
+  border-color: rgba(167,139,250,.55) !important;
+  color: #A78BFA !important;
+}
+#nikudBtn {
+  width: auto !important; min-width: var(--touch); padding: 0 14px !important;
+  border-radius: 14px !important; font-size: .85rem !important; font-weight: 800 !important;
+  color: var(--gold) !important; letter-spacing: .02em;
+}
+#nikudBtn[aria-pressed="false"] { color: var(--muted) !important; }
+.progress-wrap {
+  background: var(--surface2) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.45) !important;
+}
+.progress-bar {
+  background: linear-gradient(90deg, var(--sky-500), var(--mint), var(--gold)) !important;
+}
+.card, .panel, .sheet {
+  background: linear-gradient(165deg,rgba(255,255,255,.07) 0%,transparent 42%,rgba(0,0,0,.22) 100%), var(--card) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: 0 8px 12px rgba(0,0,0,.3), 0 28px 56px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.1) !important;
+  color: var(--ink) !important;
+}
+h1, .title { color: var(--gold) !important; text-shadow: 0 2px 18px rgba(255,210,54,.22); }
+.subtitle, .lead { color: var(--ink-soft) !important; }
+.age-btn, .choice, .arrow-btn, .path-btn, .route-opt, .dir-pad button,
+.door-btn, .vis-opt, .msg-opt, .match-opt, .helmet-step, .place-btn, .strap-btn,
+.buckle-btn, .lane-slot, .place-car, .dir-btn {
+  background: var(--btn-face), var(--surface) !important;
+  border: 2px solid var(--line) !important;
+  color: var(--ink) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,.14) inset, 0 -2px 0 rgba(0,0,0,.3) inset, 0 6px 0 rgba(0,0,0,.35), 0 10px 16px rgba(0,0,0,.35) !important;
+}
+.age-btn .age-label, .age-btn .age-title { color: var(--gold) !important; }
+.age-btn.selected, .age-btn[aria-pressed="true"] {
+  background: linear-gradient(180deg,rgba(255,255,255,.18),transparent 45%), linear-gradient(135deg,#3A6BC5,#FFD236) !important;
+  color: #0a1020 !important; border-color: transparent !important;
+}
+.age-btn.selected .age-label, .age-btn[aria-pressed="true"] .age-label { color: #0a1020 !important; }
+.primary-btn, .primary, .start-btn {
+  background: linear-gradient(180deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,.05) 38%,rgba(0,0,0,.12) 100%),
+    linear-gradient(135deg, var(--amber), var(--gold)) !important;
+  color: #1a1400 !important; border: 0 !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 -3px 0 rgba(0,0,0,.22) inset, 0 8px 0 #A85A18, 0 14px 24px rgba(255,154,74,.32) !important;
+}
+.next-btn, .go-btn {
+  background: linear-gradient(180deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,.05) 38%,rgba(0,0,0,.12) 100%),
+    linear-gradient(135deg, #2ecc8a, #3ECF9A) !important;
+  color: #042816 !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 -3px 0 rgba(0,0,0,.22) inset, 0 8px 0 #087a52, 0 14px 24px rgba(61,214,160,.28) !important;
+}
+.secondary-btn {
+  background: var(--btn-face), var(--surface) !important;
+  border: 2px solid var(--line) !important; color: var(--ink-soft) !important;
+}
+.badge, .pill, .step-pill {
+  background: var(--btn-face), var(--surface) !important;
+  border: 1px solid var(--line) !important; color: var(--ink-soft) !important;
+}
+.step-pill.done { background: var(--mint-soft) !important; border-color: var(--mint) !important; color: #B8F5E0 !important; }
+.step-pill.cur { background: var(--amber-soft) !important; border-color: var(--amber) !important; color: #FFE0B0 !important; }
+.goals li, .goal-item {
+  background: var(--btn-face), var(--surface2) !important;
+  border: 1px solid var(--line) !important; color: var(--ink-soft) !important;
+}
+.feedback.ok, .choice.correct, .arrow-btn.lit {
+  background: var(--mint-soft) !important; border-color: var(--mint) !important; color: #B8F5E0 !important;
+}
+.feedback.bad, .choice.wrong, .arrow-btn.bad-flash {
+  background: var(--coral-soft) !important; border-color: var(--coral) !important; color: #FFC9C9 !important;
+}
+.feedback.info { background: #2A2448 !important; border-color: rgba(167,139,250,.45) !important; color: #D4C8FF !important; }
+.knowledge-icon, .hero-icon {
+  background: var(--btn-face), linear-gradient(160deg, rgba(255,210,54,.25), rgba(245,180,40,.1)) !important;
+  border: 2px solid var(--gold) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,.14) inset, 0 6px 0 rgba(0,0,0,.4), 0 12px 20px rgba(0,0,0,.4) !important;
+}
+.logo-corner {
+  height: 56px !important; max-width: 160px !important;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.45)) !important;
+  opacity: .95;
+}
+.friend-bubble {
+  background: rgba(245,180,40,.18) !important; border: 2px solid var(--amber) !important; color: var(--gold) !important;
+}
+.topbar, .top-bar {
+  background: linear-gradient(180deg,rgba(255,255,255,.06),transparent 50%), rgba(22,32,72,.94);
+  border: 1px solid var(--line); border-radius: 22px; padding: 10px 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.28), 0 8px 18px rgba(0,0,0,.32);
+  backdrop-filter: blur(12px);
+}
+
+/* Soft-3D night street kit */
+.soft3d-board {
+  position: relative; overflow: hidden; border-radius: 22px; height: 160px; margin: 12px auto 16px;
+  max-width: 420px; border: 2px solid rgba(255,255,255,.12);
+  background:
+    radial-gradient(ellipse 80% 40% at 70% 8%, rgba(79,214,255,.12), transparent 55%),
+    radial-gradient(ellipse 50% 30% at 20% 12%, rgba(255,210,54,.08), transparent 50%),
+    linear-gradient(180deg,#050814 0%,#0a1230 28%,#121a38 42%,#1a2438 42%,#243048 58%,#2e3648 58%,#1e2434 78%,#2a3140 78%,#363e4c 100%);
+  box-shadow: inset 0 -14px 36px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08), 0 8px 12px rgba(0,0,0,.3), 0 22px 48px rgba(0,0,0,.5);
+  perspective: 900px;
+}
+.soft3d-board .stars {
+  position: absolute; inset: 0 0 55% 0; pointer-events: none; opacity: .7;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 18%, #e2e8f0 50%, transparent 51%),
+    radial-gradient(1px 1px at 28% 32%, #e2e8f0 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 48% 12%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 72% 22%, #e2e8f0 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 88% 14%, #fff 50%, transparent 51%);
+}
+.soft3d-board .moon {
+  position: absolute; top: 10px; left: 12%; width: 26px; height: 26px; border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, #fffdf0, #f0e0a0 55%, #c4a84a);
+  box-shadow: 0 0 22px rgba(255,230,150,.5); z-index: 1;
+}
+.soft3d-board .city {
+  position: absolute; left: 0; right: 0; bottom: 55%; height: 40%;
+  display: flex; align-items: flex-end; gap: 4px; padding: 0 8px; z-index: 1;
+}
+.soft3d-board .bldg {
+  display: block; border-radius: 3px 3px 0 0;
+  background: linear-gradient(145deg, #243056 0%, #141c38 45%, #0a1024 100%);
+  box-shadow: inset 2px 0 0 rgba(255,255,255,.06), 2px 0 6px rgba(0,0,0,.35);
+  position: relative;
+}
+.soft3d-board .bldg::after {
+  content: ""; position: absolute; inset: 12% 16% 10%;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 8px, rgba(255,210,54,.22) 8px 11px),
+    repeating-linear-gradient(90deg, transparent 0 7px, rgba(79,214,255,.14) 7px 10px);
+  opacity: .75;
+}
+.soft3d-board .b1 { width: 12%; height: 55%; }
+.soft3d-board .b2 { width: 9%; height: 78%; }
+.soft3d-board .b3 { width: 14%; height: 62%; }
+.soft3d-board .b4 { width: 8%; height: 88%; margin-inline-start: auto; }
+.soft3d-board .b5 { width: 10%; height: 50%; }
+.soft3d-board .road {
+  position: absolute; left: 0; right: 0; top: 52%; height: 28%;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), transparent 20%, transparent 80%, rgba(0,0,0,.2)),
+    linear-gradient(180deg, #3d465c, #2a3348 50%, #1e2738);
+  box-shadow: inset 0 6px 12px rgba(0,0,0,.4); z-index: 2;
+}
+.soft3d-board .lane {
+  position: absolute; left: 8%; right: 8%; top: 64%; height: 0; z-index: 2;
+  border-top: 3px dashed rgba(251,191,36,.9); pointer-events: none;
+}
+.soft3d-board .walk {
+  position: absolute; left: 40%; width: 20%; top: 52%; height: 28%; z-index: 3;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.95) 0 8px, transparent 8px 14px);
+  transform: perspective(400px) rotateX(8deg);
+}
+.soft3d-board .lamp {
+  position: absolute; left: 16%; top: 14%; width: 12px; height: 36%; z-index: 3;
+}
+.soft3d-board .lamp .pole {
+  display: block; width: 4px; height: 100%; margin: 0 auto; border-radius: 2px;
+  background: linear-gradient(90deg, #64748b, #334155 40%, #1e293b);
+}
+.soft3d-board .lamp .bulb {
+  position: absolute; top: 0; left: 50%; width: 12px; height: 9px; margin-left: 4px;
+  border-radius: 3px 3px 6px 6px; background: linear-gradient(180deg, #fef9c3, #fbbf24);
+  box-shadow: 0 0 16px rgba(253,224,71,.85);
+  animation: lampPulse 2.8s ease-in-out infinite;
+}
+.soft3d-board .car3d {
+  position: absolute; z-index: 4; width: 64px; height: 34px; top: 54%;
+  filter: drop-shadow(0 5px 3px rgba(0,0,0,.45));
+  animation: driveLtr 5s linear infinite;
+  left: -12%;
+}
+.soft3d-board .car3d.far {
+  top: 66%; width: 48px; height: 26px; opacity: .9;
+  animation: driveRtl 7s linear infinite; left: auto; right: -10%;
+  transform: scaleX(-1);
+}
+.soft3d-board .car3d svg { width: 100%; height: 100%; display: block; overflow: visible; }
+@keyframes driveLtr { from { transform: translateX(0); } to { transform: translateX(480px); } }
+@keyframes driveRtl { from { transform: scaleX(-1) translateX(0); } to { transform: scaleX(-1) translateX(480px); } }
+@keyframes lampPulse { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.35); } }
+@keyframes softFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes softPulse {
+  0%,100% { box-shadow: 0 0 0 3px rgba(255,210,54,.2), 0 6px 0 rgba(0,0,0,.35); }
+  50% { box-shadow: 0 0 0 6px rgba(255,210,54,.35), 0 6px 0 rgba(0,0,0,.35); }
+}
+.hero-float { animation: softFloat 2.4s ease-in-out infinite; }
+.pulse-gold { animation: softPulse 1.6s ease-in-out infinite; }
+
+/* Darkify existing light scenes */
+.look-scene, .map-board, .sign-stage, .car-cabin, .rider-stage, .car-scene,
+.cam-scene, .street-map, .post-scene, .sign-card {
+  background:
+    radial-gradient(ellipse 80% 40% at 70% 8%, rgba(79,214,255,.1), transparent 55%),
+    linear-gradient(180deg, #050814 0%, #0a1230 30%, #1a2438 42%, #2a3348 70%, #1e2434 100%) !important;
+  border: 2px solid rgba(255,255,255,.12) !important;
+  box-shadow: inset 0 -10px 28px rgba(0,0,0,.45), 0 8px 20px rgba(0,0,0,.4) !important;
+}
+.look-scene .road, .map-road, .car-scene .road {
+  background: linear-gradient(180deg, #3d465c, #1e2738) !important;
+}
+.look-scene .sw-label, .map-sidewalk-label, .car-scene .walk-label {
+  background: rgba(10,16,40,.88) !important; color: var(--ink-soft) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+}
+.look-scene .car {
+  background: linear-gradient(180deg, #7db8ff, #2563eb) !important;
+  box-shadow: 0 4px 0 #1e3a8a, 0 6px 10px rgba(0,0,0,.4) !important;
+  border-radius: 6px 12px 5px 5px !important;
+}
+.look-scene .car::before {
+  background: linear-gradient(180deg, #e0f2fe, #7dd3fc) !important;
+}
+.look-scene .ped { background: linear-gradient(145deg, #60a5fa, #1d4ed8) !important; }
+.sign-stage svg, .sign-card svg { filter: drop-shadow(0 8px 12px rgba(0,0,0,.45)); }
+.buckle-seat {
+  background: var(--btn-face), var(--surface) !important;
+  border: 2px solid var(--line) !important;
+}
+.buckle-seat.ok { border-color: var(--mint) !important; background: var(--mint-soft) !important; }
+.zehuv-vest {
+  background: linear-gradient(145deg, #fbbf24, #d97706) !important;
+  box-shadow: 0 6px 0 #92400e, 0 10px 18px rgba(0,0,0,.4) !important;
+  animation: softPulse 2s ease-in-out infinite;
+}
+.cam-scene .cam-hud {
+  background: rgba(10,16,40,.75) !important; color: var(--cyan, #4FD6FF) !important;
+  border: 1px solid rgba(79,214,255,.35) !important;
+}
+.fig-bright {
+  filter: drop-shadow(0 0 10px rgba(255,210,54,.7)) !important;
+  animation: lampPulse 2s ease-in-out infinite;
+}
+.fig-dark { opacity: .45; filter: grayscale(.4); }
+
+.demo-note, .hint-note, .fill-note, .age-hint { color: var(--muted) !important; }
+.q-meta, .question { color: var(--ink) !important; }
+.choice .letter {
+  background: linear-gradient(145deg, #2a3668, #1a2248) !important;
+  color: var(--gold) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .soft3d-board .car3d {
+    left: 28% !important; right: auto !important; animation: none !important; transform: none !important;
+  }
+  .soft3d-board .car3d.far {
+    left: auto !important; right: 18% !important; transform: scaleX(-1) !important;
+  }
+  .look-scene .car.from-left { left: 28% !important; animation: none !important; }
+  .look-scene .car.from-right { right: 28% !important; animation: none !important; }
+  .hero-float, .pulse-gold, .zehuv-vest, .fig-bright, .soft3d-board .lamp .bulb {
+    animation: none !important; filter: none !important;
+  }
+}
+
+/* Game polish 05 */
+
+.car-cabin {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(79,214,255,.08), transparent 50%),
+    linear-gradient(180deg,#0a1024,#162040 40%,#1a2438) !important;
+  border: 2px solid rgba(255,255,255,.12) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 12px 28px rgba(0,0,0,.45) !important;
+}
+.buckle-seat {
+  background: linear-gradient(165deg,rgba(255,255,255,.08),transparent 40%,rgba(0,0,0,.25)), #1a2748 !important;
+  border: 2px solid rgba(255,210,54,.2) !important;
+  box-shadow: 0 6px 0 rgba(0,0,0,.4), 0 10px 16px rgba(0,0,0,.35) !important;
+}
+.buckle-seat.ok {
+  border-color: var(--mint) !important;
+  box-shadow: 0 0 0 3px rgba(62,207,154,.3), 0 6px 0 rgba(0,0,0,.35) !important;
+}
+.buckle-seat .belt-line {
+  background: linear-gradient(90deg,#fbbf24,#f59e0b) !important;
+  box-shadow: 0 2px 6px rgba(251,191,36,.45);
+  height: 5px !important; border-radius: 3px;
+}
+.avatar .head {
+  background: radial-gradient(circle at 35% 30%,#fde68a,#d97706) !important;
+  box-shadow: inset -2px -1px 3px rgba(0,0,0,.25);
+}
+.avatar .torso {
+  background: linear-gradient(145deg,#60a5fa,#1d4ed8) !important;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.25), 1px 2px 3px rgba(0,0,0,.35);
+}
+
 </style>
 </head>
 <body>
-<img class="logo-corner" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAABlCAIAAABrzV7vAAAACXBIWXMAAAGUAAABlQCwFm27AAANB0lEQVR4nO2diXcU9R3A+Rv6Xl9f+57WaquI8qqo1LbW1nrVo61XfR59rVYfKBAlJICCYLBcQZSU05CIJMRoIMEQzEUwJJL7vrObbLJ39j5md+c+tt+ZSRCTDIS4ZPNbfp+Xlzc7OzP7ezOf/f6+v9/+5jcLohiMBgviXQDM/AXLgdEEy4HRBMuB0QTLgdEEy4HRBMuB0QTLgdEEy4HRBMuB0QTLgdEEy4HRBMuB0QTLgdEEy4HRBMuB0QTLgdEEy4HRBMuB0QTLgdEEy4HRBMuB0QTLETNESYK/eJcilmA5Zgl4wAkiwwthhiMo1h9hYCECyzQLK+NdutiA5ZgREBAEUWI4AS4/yco2BCkW/oMHoMikgMHyAsny8SpqDMFyTI8aGGiOJxQJQjQbpuXAAH4IM6g8KI6n0PcDyyEjTagAVUNQrSNojmQ4mpsmMMwQUCrm5ZxjrlE55DoCgj/DQUiAqxggGXAC6gKoEeCtmHwEJB98jA4VL64JOeCrz0PyyAmggmoDBAb4g8DAzzIuXJ6IEniuyqHnigSUAy42XHJGyQrBAIgKIISaLrBXz4UpgBlQSc3NZ10lEkEOuN5QHUDGEFGqCbCBiHUdMQvgo6Ew8fr0mICwHJAqQmAg5JqCg+8oo6gwf3qhoCCgabxL8YNAVQ5oK0JsiGNgmAl+kkG6zxRJOaA6R6IXASIHZDnxLsXsQU8OSflGxrsUMwIMhggX71LMHvTkgFQDlUQP6j1Uijot6MnBKnlovEsxIyDhCKLcT4qeHJCEolKtAN4IHe8izB705IjOrIkoRsJRMf7JIESOed6kugRIynHZM+4vzPOf/OJyh5nmCJIQ4w5vtQMmtsecM5CUA844O+WM+04cYy3G4OmiQOlXvhN5kZYGsrMF1osURfZ0cA472d1GdrXyXo+/6HN1F7K9KdLaQPV0RJrOE2e+pvX9to2rmZEhcEsgghLPE5UlnHMscOp4uKHWmbE90tEMewXLT4WbzjNGg3oQODJRVUp2t9vT0yKtjZ7svYLfR1RXiLRcoaj9tnN3amIKknKQ7OQzHjpXqVt6U6DkuPXdJNOqf/uL8se2brAkvQJvuf63w7Yp2Z621pmxw31wtyN98/Bj90oCL3Gc4ekHxra+EygpHH3pcdvmNe7MjP6bf+TJ2mdPSxVpCuQY+stSz5ED9s1r4JiOj7e59qV7cg+PbX/PX/g5LKsfDaLoH74neKaUHhr0FeSYV/0LPtG69g31XV4Q0c1JkZQDWrPE95uIUIlEmut8RfnhpjpL8usQCewbkiCKwFvenE+8x7LgXVgWQgR4E6qu5MZs9EAvcbYsUPYVa7d687Ij7c3+4gL53XOVEGlg40DJCYgZEJCo/h7TshdhG1hpfOUZCCquvenh2ip46cnL9h/PBRVApqgSveA4gdNF1pRl8BFRZaQIup3oSMohTWoiXqKLeia919I0eStrGvXmZl54CUKIZCQq10TNgbJiz6f7o3KFRdIG/dR9QQ5f/pEL6TAUFdE+dCTliKpnPN5lmCEEJf8IFO9SzAZ05WBieMbl4B+IMNCyoDmaYimKJUnG74/Agt8XlkSJjDCwgd8XgUyY4wSW5cMhmlTqiyDFmXyk2U9aAqTFT8GCyU86iO+6NyBDotHsREdVjnCsx1nlHa3NOnjm2Gc1h/ZWfLKvIuPD028tz64s69z70dcN53XD+rHtaYWfZVVn7q98NyUvfevJj9NLNqbKrZ6D9aPPHW1dtKtm8e6a23bV3L675sFDDUkne0h2vHjq7QsxLOqcgaoccMZj20RsbR7ev6cMzAAJLGZv1sGqDzadyDpUtfO/J6squwVBPJL5TVuLYfuWwjde/QT+79l1et3qXCpMl+ucX7RbCjute78d3n1uuKTXDi+PtZlDzHi0ECVUR/2gKocgSrEd3t3ZPnq2snt4aEw3ILcynI7A6IjLZvUN9FkJQm6JuJxBimStFm9H24jF7LGYPD1dJqiQqvSu7EZjbqtZ7wy2mX3VQ67MhtGcFlOA+s5dRBssqMqhNc4KEgLTqHvE4BzSj/m8IUggDMMOSA4cY4Eh3ZjXE6JpDuoIuPB2mw/yBlhpGHLAsjCRwegG7cYRl8dNwMagCKyxWbywBg5rNrphF8g8rGYv+KFuXz7o+LTJeOP26vx2a4fV/1h2y+ri3sJOy8VyQIaE4qgfVOUAfBF66hmHK3rfknfv/fX6P/920zOP7WxpGv7lT988tLd89/bi3yxeBytrvul74sGti296+4WndjfW6Z98aNsj929ZdENSa7Pc4+nxhP7+6I4bfrxsx5bCzevz77wlGex59P4tSxauefi+tBt/sryooHHLxoJbrlu5ZGFKatJR2KV0wHG0xbQgqeTJ7JbcVsuCN4qTT/UVdVkvloOg2alduvMfhOWQz/h0DZaXn92zaX0+SHDP7Wvhmjz7RHraBvl3lm/PDfzqZytMRjcsP/fkh7u2noRooRuwQ1ABVyq+7lB3P3e2F14SQaqrw7jw+pVuF7H6zeyVrx/u6TTd+vNVIF/pqbaHfr/5QEb5H+7eANtDzpFZP/JQZhMvSkNu4tHMhmSIHN+XA5Wha5NAWA5oIk57S+o/n8v44L2Cxjrd0sXreF6ECLFl45ewvrXJsPC6lZA0wPLzf/0Qwkn9t7rf3fHOmD1w96LUitJOdfeGOp0sB0FBtnHbL5I87lDyik+TVxzRD9rhJTRoP9556oWnPvqqsBniE+Q+x9qt75f3bzs7VDviy242P57V+OqXHTvP6j3h72o9ZYASeg0WhOVgNYaEvfzMno1r86qreu5alAopyPN/27X5HTlyNNUPQeSARBKWn308/UBGWW11/+Ib34ZYsuTWlPKJyAFOQK0BWQUsLLx+ldtNQJv2rWVZysuVXm/ozf9kpqz6DFq54BBLMiUDrj8dqE8t6V9+ogsqlK1V+n/ktL5W0HlxkUQ0O9ERlgPOuDc8zVCat5Zn3XnLmj8ufe+R+9NEKfrKi/u2vX8C1re1jNxxc7IaOSC6HD54pq3ZANe7sV7/wL2bqiq61d2ttsBdt6ZCm0Wvs9+1KAXqkfWrc9e9nQNr7l6U4nQGXnz6Iwger720D6JOMEDCLiV9zv11o7uqh1cU9eR32A41GH3kZGv9JINcRoqwHFElJ5260u+PQONi1OCEdCEqCU6zPai0RSGK2GwBtVXidgVDIYrnBXAF2i8OB0FNNIx5wmMzORlW4HgJmrKiKPl94YA/wnOC0+4XBdHlCAQCZGuvVT7+97nEzbFyJ/o8GHx0RaAtB8TqS9+sPNQ7EDWP1xdcJBQlffLSpDaOJETdwxde0XU5UVKueiQycGGlqDSeXWGGU9yq7B/LbRy9oqJCSZEb9YO2HJHpxlmFiIi7p4WxDNR0GDoHzKzXSY70DNr8TptdMjRJXrP6Myw7UMPb+jh9HdtdRp8/yhs7eGsvp6vlBs9xgzXcUD3dfDxKh2HT0h5bmfLXYHDnN44ebzEVtZktPrK8x0ZQM00zGQRvnUVbDorjJ41Eh+93x4CVsJmkkKfB4K3tNuu7+hy9beU9DsLp4KyDolMOEryxne2poM7nsL1VkeIPBIdOosPCmI5pLaKbCujzOXRDPjcij/vqtPjym0b7bIHGEbfRE24yuMGMghZjl8Vf3GGZ+Qw+UKcgN+oHbTl4QZzUCgiSrDNIqcuSJDUNuzhBrkTgi0uSjGdYJwm84DIIHpO8AUWIhFuiQrAgv6RDUJXwtn55mYlERfiuC9WDDka+S1s41WEJT/xcotWKvgQo3jqLthzSJSfQUSbkGI8rjiBltLo55sq+uwZXSB2q02r0XtxvMTugqGh1oqMtR1Q541fv1nr1wLE6PJjKITXqB305aBaVMz6Lyii+IC+HPMkfImdcvpETqQYL8nKwsR71c/XgsBxzDKR4qEzqCBKjNSMD8nJElaE08S7C5YGs2R9B7OeVRJDDG6Hn+c3KUKH4yVgOl58bEkEOaCLOt3FWygSHonrbpjpL+jzXd1oSQQ5qyq2zc8yFmU9B06AyUTqhzJUOBePn1QyHV0giyDH3E0HBFYdQoP6yo06NHVaSTSauM5/GnESQA76b0w7siOHx1Wnz5SmRmfHnaaiT4PIIx4XLkwhyROVRP0ysLhIcRw4MSvdJWJkSeWKidH7WT1BAlASRAy7hrNsC4kXP01CnxlZVSLA6YhYkiBygRnBmP4hPPFpFCQz0eFOCZOVBQ8qs+de0DZNIEDmiys+zU4f/SxOPVgkrT19Tk0fYkrr26ohZkDhyRJWfPdUwQE08TOPC8zTGH60S7xKiRULJEVXSSfWhjTgw/HASTQ5MDMFyYDTBcmA0wXJgNMFyYDTBcmA0wXJgNMFyYDTBcmA0wXJgNMFyYDTBcmA0wXJgNMFyYDTBcmA0wXJgNMFyYDTBcmA0wXJgNMFyYDTBcmA0wXJgNPk/jIpH4rqiSPQAAAAASUVORK5CYII=" alt="לוגו מחוז דרום" height="48" width="auto">
+<img class="logo-corner" src="data:image/png;base64,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" alt="לוגו מחוז דרום" height="48" width="auto">
 <div class="app" id="app">
   <div class="topbar" id="topbar">
     <div class="brand-chip">
@@ -279,15 +596,25 @@ h1 {
     <div class="progress-wrap" id="progressWrap" hidden>
       <div class="progress-bar" id="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="התקדמות"></div>
     </div>
+    <button type="button" class="icon-btn" id="nikudBtn" aria-pressed="true" aria-label="כיבוי ניקוד" title="ניקוד (סימני תנועות)">נִקּוּד</button>
     <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="השתקה" title="השתקה">🔊</button>
   </div>
   <div id="live" class="live-region" aria-live="polite" aria-atomic="true"></div>
 
   <section class="screen active" id="screen-hub" aria-labelledby="hub-title">
     <div class="card">
-      <div class="hero-icon" aria-hidden="true">
+      <div class="hero-icon hero-float" aria-hidden="true">
         <svg width="56" height="56" viewBox="0 0 64 64"><rect x="6" y="18" width="52" height="32" rx="6" fill="#0ea5e9"/><path d="M14 28h30l-8 14" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="18" cy="54" r="5" fill="#1e293b"/><circle cx="46" cy="54" r="5" fill="#1e293b"/></svg>
       </div>
+      <div class="soft3d-board" aria-hidden="true">
+  <div class="stars"></div><div class="moon"></div>
+  <div class="city"><i class="bldg b1"></i><i class="bldg b2"></i><i class="bldg b3"></i><i class="bldg b4"></i><i class="bldg b5"></i></div>
+  <div class="lamp"><span class="pole"></span><span class="bulb"></span></div>
+  <div class="road"></div><div class="lane"></div><div class="walk"></div>
+  <div class="car3d"><svg viewBox="0 0 72 40" aria-hidden="true"><ellipse cx="36" cy="36" rx="28" ry="3" fill="rgba(0,0,0,.35)"/><path d="M8 26c2-8 10-12 20-12h16c10 0 18 4 20 12l2 6H6l2-6z" fill="url(#cbU)"/><path d="M22 14h20c4 0 8 3 9 7H14c2-4 5-7 8-7z" fill="#bae6fd" opacity=".9"/><circle cx="20" cy="32" r="6" fill="#1e293b"/><circle cx="20" cy="32" r="3" fill="#94a3b8"/><circle cx="52" cy="32" r="6" fill="#1e293b"/><circle cx="52" cy="32" r="3" fill="#94a3b8"/><defs><linearGradient id="cbU" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#93c5fd"/><stop offset="100%" stop-color="#1d4ed8"/></linearGradient></defs></svg></div>
+  <div class="car3d far"><svg viewBox="0 0 72 40" aria-hidden="true"><ellipse cx="36" cy="36" rx="24" ry="2.5" fill="rgba(0,0,0,.3)"/><path d="M8 26c2-8 10-12 20-12h16c10 0 18 4 20 12l2 6H6l2-6z" fill="url(#coU)"/><path d="M22 14h20c4 0 8 3 9 7H14c2-4 5-7 8-7z" fill="#fef3c7" opacity=".9"/><circle cx="20" cy="32" r="6" fill="#1e293b"/><circle cx="52" cy="32" r="6" fill="#1e293b"/><defs><linearGradient id="coU" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fdba74"/><stop offset="100%" stop-color="#c2410c"/></linearGradient></defs></svg></div>
+  <div style="position:absolute;bottom:18%;left:50%;transform:translateX(-50%);z-index:5;width:90px;height:40px;border-radius:10px;background:linear-gradient(145deg,#334155,#0f172a);box-shadow:0 6px 0 #020617;border:2px solid #1e293b"><div style="position:absolute;inset:8px 14px;border-top:3px solid #fbbf24;border-radius:50%;opacity:.9"></div></div>
+</div>
       <h1 id="hub-title">חֲגוֹרָה לְכָל אֶחָד</h1>
       <p class="subtitle" id="hub-sub">מִשְׂחַק »חֲגֹר־וּסַע« · בְּטִיחוּת בַּדֶּרֶךְ</p>
       <ul class="goals">
@@ -315,7 +642,7 @@ h1 {
     <div class="card" id="play-card">
       <div class="q-meta">
         <span class="badge" id="q-counter">1 / 10</span>
-        <span class="badge" id="q-score" aria-label="ניקוד">★ 0</span>
+        <span class="badge" id="q-score" aria-label="כוכבים">★ 0</span>
       </div>
       <div id="scene-host"></div>
       <h2 class="question" id="q-title"></h2>
@@ -583,14 +910,14 @@ h1 {
       b.setAttribute("aria-pressed", on ? "true" : "false");
     });
     const u = UI[a];
-    $("#hub-title").textContent = u.title;
-    $("#hub-sub").textContent = u.sub;
-    $("#startBtn").textContent = u.start; $("#startBtn").disabled = false;
-    $("#age-prompt").textContent = u.agePrompt;
-    $("#nextBtn").textContent = u.next;
-    $("#knowNext").textContent = u.next;
-    $("#know-title").textContent = u.knowTitle;
-    $("#againBtn").textContent = u.again;
+    $("#hub-title").textContent = withNikud(u.title);
+    $("#hub-sub").textContent = withNikud(u.sub);
+    $("#startBtn").textContent = withNikud(u.start); $("#startBtn").disabled = false;
+    $("#age-prompt").textContent = withNikud(u.agePrompt);
+    $("#nextBtn").textContent = withNikud(u.next);
+    $("#knowNext").textContent = withNikud(u.next);
+    $("#know-title").textContent = withNikud(u.knowTitle);
+    $("#againBtn").textContent = withNikud(u.again);
   }
 
   function updateProgress() {
@@ -610,7 +937,7 @@ h1 {
     item.choices.forEach((c,i) => {
       const b = document.createElement("button");
       b.type="button"; b.className="choice"; b.dataset.i=i;
-      b.innerHTML = '<span class="letter">'+letters[i]+'</span><span>'+c.t+'</span><span class="mark" aria-hidden="true"></span>';
+      b.innerHTML = '<span class="letter">'+letters[i]+'</span><span>'+withNikud(c.t)+'</span><span class="mark" aria-hidden="true"></span>';
       b.addEventListener("click", () => onChoose(i));
       wrap.appendChild(b);
     });
@@ -643,11 +970,11 @@ h1 {
     $("#scene-host").appendChild(cabin);
     const note = document.createElement("p");
     note.className = "fix-note";
-    note.textContent = u.drive;
+    note.textContent = withNikud(u.drive);
     $("#q-body").appendChild(note);
     const go = document.createElement("button");
     go.type = "button"; go.className = "primary-btn go-drive"; go.id = "driveBtn";
-    go.textContent = u.driveOk;
+    go.textContent = withNikud(u.driveOk);
     go.addEventListener("click", () => tryDrive(item));
     $("#q-body").appendChild(go);
     cabin.querySelectorAll(".buckle-btn").forEach(btn => {
@@ -699,8 +1026,8 @@ h1 {
           const seat = $("#seat-"+s.id);
           if (seat) {
             seat.classList.add("ok"); seat.classList.remove("bad");
-            seat.querySelector(".buckle-btn").textContent = u.buckled;
-            $("#st-"+s.id).textContent = u.buckled;
+            seat.querySelector(".buckle-btn").textContent = withNikud(u.buckled);
+            $("#st-"+s.id).textContent = withNikud(u.buckled);
           }
         });
         showFb(false, true);
@@ -773,7 +1100,7 @@ h1 {
   }
 
   function showKnowledge(text) {
-    sfx("know"); $("#know-text").textContent = text; show(know); live(text);
+    sfx("know"); $("#know-text").textContent = withNikud(text); show(know); live(text);
   }
 
   function renderItem() {
@@ -783,7 +1110,7 @@ h1 {
     $("#feedback").className = "feedback"; $("#feedback").textContent = "";
     $("#nextBtn").hidden = true;
     $("#scene-host").innerHTML = ""; $("#q-body").innerHTML = "";
-    $("#q-title").textContent = item.q;
+    $("#q-title").textContent = withNikud(item.q);
     if (item.type === "knowledge-only") { showKnowledge(item.know); return; }
     if (item.friend) {
       $("#scene-host").innerHTML = '<div style="text-align:center"><span class="friend-bubble" role="img" aria-label="חבר">🗣️ «'+esc(item.friend)+'»</span></div>';
@@ -806,13 +1133,13 @@ h1 {
   function finish() {
     $("#progressBar").style.width = "100%";
     const u = UI[age];
-    $("#end-title").textContent = u.endTitle;
-    $("#end-sub").textContent = u.endSub;
+    $("#end-title").textContent = withNikud(u.endTitle);
+    $("#end-sub").textContent = withNikud(u.endSub);
     const maxScore = items.filter(it => it.type !== "knowledge-only").length * 3;
     const ratio = maxScore ? Math.min(1, score / maxScore) : 1;
     let stars = ratio >= 0.75 ? 3 : ratio >= 0.45 ? 2 : 1;
     document.querySelectorAll(".star").forEach(s => s.classList.toggle("on", +s.dataset.i <= stars));
-    $("#end-score").textContent = "ניקוד: "+score+" · כוכבים: "+stars+" / 3";
+    $("#end-score").textContent = "נקודות: "+score+" · כוכבים: "+stars+" / 3";
     $("#end-stars").setAttribute("aria-label", stars+" כוכבים מתוך 3");
     sfx("win"); show(end); live(u.endTitle+" "+stars+" כוכבים");
   }
@@ -849,7 +1176,49 @@ h1 {
   $("#startBtn").disabled = true;
   $("#hub-title").textContent = "חֲגוֹרָה לְכָל אֶחָד";
   $("#hub-sub").textContent = "מִשְׂחַק »חֲגֹר־וּסַע« · בְּטִיחוּת בַּדֶּרֶךְ";
-  $("#startBtn").textContent = "הַתְחֵלָה";
+  $("#startBtn").textContent = "הַתְחֵל
+
+  /* Nikud = Hebrew vowel marks (not score). Score = כוכבים/נקודות */
+  let nikudOn = true;
+  const NIKUD_RE = /[\u0591-\u05C7]/g;
+  function stripNiqqud(s) { return String(s == null ? "" : s).replace(NIKUD_RE, ""); }
+  function withNikud(s) { return nikudOn ? String(s == null ? "" : s) : stripNiqqud(s); }
+  function refreshNikudBtn() {
+    const btn = document.getElementById("nikudBtn");
+    if (!btn) return;
+    btn.setAttribute("aria-pressed", nikudOn ? "true" : "false");
+    btn.textContent = nikudOn ? "נִקּוּד" : "ניקוד";
+    btn.setAttribute("aria-label", nikudOn ? "כיבוי ניקוד" : "הפעלת ניקוד");
+  }
+  function applyNikudDom() {
+    document.querySelectorAll("[data-nik]").forEach((el) => {
+      if (!el.getAttribute("data-nik-src")) el.setAttribute("data-nik-src", el.textContent);
+      el.textContent = withNikud(el.getAttribute("data-nik-src"));
+    });
+  }
+  function toggleNikud() {
+    nikudOn = !nikudOn;
+    try { localStorage.setItem("zehuv-nikud-on", nikudOn ? "1" : "0"); } catch (e) {}
+    refreshNikudBtn();
+    applyNikudDom();
+    try { if (typeof applyUI === "function") applyUI(); } catch(e) {}
+    try { if (typeof paintHub === "function") paintHub(); } catch(e) {}
+    try { if (typeof updateCopy === "function") updateCopy(); } catch(e) {}
+    try { if (typeof renderItem === "function" && typeof idx === "number") renderItem(); } catch(e) {}
+    try {
+      const live = document.getElementById("live");
+      if (live) live.textContent = nikudOn ? "ניקוד דולק" : "ניקוד כבוי";
+    } catch(e) {}
+  }
+  try {
+    const saved = localStorage.getItem("zehuv-nikud-on");
+    if (saved === "0") nikudOn = false;
+    if (saved === "1") nikudOn = true;
+  } catch (e) {}
+  document.getElementById("nikudBtn")?.addEventListener("click", toggleNikud);
+  refreshNikudBtn();
+
+ָה";
 })();
 </script>
 </body>

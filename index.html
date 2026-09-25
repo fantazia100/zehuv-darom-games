@@ -3,40 +3,86 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#070b1a">
 <title>משחקי זה״ב דרום — זהירות בדרכים</title>
 <style>
-:root{color-scheme:light}
-body{margin:0;background:#fff8e7;color:#1a1a1a;font-family:Arial,Helvetica,sans-serif;line-height:1.6}
-main{max-width:920px;margin:auto;padding:32px 20px}
-h1{font-size:clamp(1.8rem,4.5vw,2.8rem);margin:0 0 8px;color:#b45309}
-.sub{font-size:1.15rem;color:#444;margin:0 0 8px}
-.note{font-size:0.95rem;color:#666;background:#fff3cd;border:1px solid #f0d78c;border-radius:10px;padding:12px 16px;margin:16px 0 24px}
-.games{display:grid;gap:12px}
-.games a{display:block;padding:18px 22px;background:#fef3c7;border:2px solid #f59e0b;border-radius:14px;color:#1a1a1a;text-decoration:none;font-size:1.3rem;font-weight:bold;transition:background .15s,transform .1s}
-.games a:hover{background:#fde68a;transform:translateY(-1px)}
-.games a:focus{outline:3px solid #d97706;outline-offset:2px}
-.num{display:inline-block;min-width:2.2em;color:#b45309;margin-left:10px}
-footer{margin-top:28px;font-size:0.9rem;color:#777}
+:root {
+  color-scheme: dark;
+  --bg:#070b1a; --bg2:#0c1230; --bg3:#120a22;
+  --ink:#F5F7FA; --ink2:#D5DCE8; --muted:#9AA8C0;
+  --gold:#FFD236; --cyan:#4FD6FF; --green:#3ECF9A;
+  --card:#162040; --line:rgba(255,210,54,.16);
+  --shadow:0 4px 6px rgba(0,0,0,.25), 0 18px 42px rgba(0,0,0,.45);
+}
+* { box-sizing: border-box; }
+body {
+  margin:0; color:var(--ink); font-family:Assistant,Heebo,Arial,sans-serif; line-height:1.55;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(79,214,255,.16), transparent 28%),
+    radial-gradient(circle at 88% 12%, rgba(255,210,54,.12), transparent 30%),
+    linear-gradient(165deg, var(--bg), var(--bg2) 55%, var(--bg3));
+  min-height:100vh;
+}
+main { max-width:920px; margin:auto; padding:32px 20px 48px; }
+.eyebrow {
+  display:inline-flex; gap:8px; align-items:center;
+  border:1px solid rgba(255,210,54,.5); color:#FFE0B0;
+  background:rgba(61,42,20,.9); padding:7px 14px; border-radius:99px; font-weight:700; font-size:.9rem;
+}
+h1 {
+  font-size:clamp(1.8rem,4.5vw,2.8rem); margin:14px 0 8px; color:var(--gold);
+  text-shadow:0 2px 18px rgba(255,210,54,.22);
+}
+.sub { font-size:1.1rem; color:var(--ink2); margin:0 0 8px; }
+.note {
+  font-size:.95rem; color:var(--ink2);
+  background:rgba(22,32,72,.9); border:1px solid var(--line);
+  border-radius:14px; padding:12px 16px; margin:16px 0 24px;
+}
+.games { display:grid; gap:12px; }
+.games a {
+  display:flex; align-items:center; gap:14px; padding:18px 22px;
+  background:linear-gradient(165deg,rgba(255,255,255,.07),transparent 42%,rgba(0,0,0,.22)), var(--card);
+  border:1px solid var(--line); border-radius:18px; color:var(--ink);
+  text-decoration:none; font-size:1.25rem; font-weight:800;
+  box-shadow:var(--shadow); transition:transform .12s, box-shadow .12s;
+}
+.games a:hover { transform:translateY(-2px); border-color:rgba(255,210,54,.45); }
+.games a:focus { outline:3px solid rgba(62,207,154,.55); outline-offset:2px; }
+.num {
+  display:inline-grid; place-items:center; min-width:2.4em; height:2.4em;
+  border-radius:12px; background:linear-gradient(145deg,#1a3a6a,#0c1a38);
+  color:var(--gold); border:1px solid var(--line); font-size:1rem;
+}
+.lab { flex:1; }
+footer { margin-top:28px; font-size:.9rem; color:var(--muted); }
+.logo {
+  height:52px; width:auto; margin-bottom:10px;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,.45));
+}
 </style>
 </head>
 <body>
 <main>
-<h1>משחקי זה״ב דרום — זהירות בדרכים</h1>
-<p class="sub">פנטזיה · זה״ב מחוז דרום · לכיתה וללוח חכם</p>
-<p class="note">פרסום זמני ב־GitHub Pages לשימוש בכיתה. אין צורך להוריד מקבצי Drive — לחצו על משחק לפתיחה מיידית.</p>
-<div class="games">
-<a href="01-hatsiya-btucha.html"><span class="num">01</span>חצייה בטוחה</a>
-<a href="02-smol-yamin-smol.html"><span class="num">02</span>שמאל־ימין־שמאל</a>
-<a href="03-al-hamidracha.html"><span class="num">03</span>על המדרכה</a>
-<a href="04-tazmorim-leyesodi.html"><span class="num">04</span>תמרורים ליסודי</a>
-<a href="05-hagora-lekol-echad.html"><span class="num">05</span>חגורה לכל אחד</a>
-<a href="06-ofanayim-vekasda.html"><span class="num">06</span>אופניים וקסדה</a>
-<a href="07-yetzia-meharechev.html"><span class="num">07</span>יציאה מהרכב</a>
-<a href="08-roim-venirim.html"><span class="num">08</span>רואים ונראים</a>
-<a href="09-rechev-beyamin.html"><span class="num">09</span>רכב בימין</a>
-<a href="10-mishmarot-zehuv.html"><span class="num">10</span>משמרות זה״ב</a>
-</div>
-<footer>Fantazia / זה״ב דרום — תוכן למשחקי זהירות בדרכים</footer>
+  <img class="logo" src="data:image/png;base64,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" alt="לוגו מחוז דרום" height="52" width="auto">
+  <div class="eyebrow">שבוע זה״ב · מחוז דרום</div>
+  <h1>משחקי זה״ב דרום — זהירות בדרכים</h1>
+  <p class="sub">פנטזיה · לכיתה וללוח חכם · מצב כהה</p>
+  <p class="note">פרסום זמני ב־GitHub Pages לשימוש בכיתה. אין צורך להוריד מקבצי Drive — לחצו על משחק לפתיחה מיידית. ניקוד = סימני תנועות בעברית; ניקוד ≠ נקודות/כוכבים.</p>
+  <div class="games">
+    <a href="01-hatsiya-btucha.html"><span class="num">01</span><span class="lab">חצייה בטוחה</span></a>
+<a href="02-smol-yamin-smol.html"><span class="num">02</span><span class="lab">שמאל־ימין־שמאל</span></a>
+<a href="03-al-hamidracha.html"><span class="num">03</span><span class="lab">על המדרכה</span></a>
+<a href="04-tazmorim-leyesodi.html"><span class="num">04</span><span class="lab">תמרורים ליסודי</span></a>
+<a href="05-hagora-lekol-echad.html"><span class="num">05</span><span class="lab">חגורה לכל אחד</span></a>
+<a href="06-ofanayim-vekasda.html"><span class="num">06</span><span class="lab">אופניים וקסדה</span></a>
+<a href="07-yetzia-meharechev.html"><span class="num">07</span><span class="lab">יציאה מהרכב</span></a>
+<a href="08-roim-venirim.html"><span class="num">08</span><span class="lab">רואים ונראים</span></a>
+<a href="09-rechev-beyamin.html"><span class="num">09</span><span class="lab">רכב בימין</span></a>
+<a href="10-mishmarot-zehuv.html"><span class="num">10</span><span class="lab">משמרות זה״ב</span></a>
+  </div>
+  <footer>פנטזיה / זה״ב דרום — תוכן למשחקי זהירות בדרכים</footer>
 </main>
 </body>
 </html>
