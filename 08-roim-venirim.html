@@ -966,7 +966,7 @@ h1, .title { color: var(--gold) !important; text-shadow: 0 2px 18px rgba(255,210
   }
 
   function showKnowledge(text) {
-    sfx("know"); $("#know-text").textContent = withNikud(text); show(know); live(text);
+    sfx("know"); $("#know-text").textContent = text; show(know); live(text);
   }
 
 
@@ -1095,7 +1095,8 @@ h1, .title { color: var(--gold) !important; text-shadow: 0 2px 18px rgba(255,210
   document.querySelectorAll(".age-btn").forEach(b => { b.classList.remove("selected"); b.setAttribute("aria-pressed","false"); });
   $("#startBtn").disabled = true;
   $("#hub-title").textContent = 'רוֹאִים וְנִרְאִים';
-  $("#hub-sub").textContent = 'מִשְׂחַק »מַצְלֵמַת נַהָג« · בְּטִיחוּת בַּדֶּרֶ
+  $("#hub-sub").textContent = 'מִשְׂחַק »מַצְלֵמַת נַהָג« · בְּטִיחוּת בַּדֶּרֶךְ';
+
 
   /* Nikud = Hebrew vowel marks (not score). Score = כוכבים/נקודות */
   let nikudOn = true;
@@ -1137,7 +1138,6 @@ h1, .title { color: var(--gold) !important; text-shadow: 0 2px 18px rgba(255,210
   document.getElementById("nikudBtn")?.addEventListener("click", toggleNikud);
   refreshNikudBtn();
 
-ךְ';
 })();
 </script>
 </body>
