@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>שְׂמֹאל־יָמִין־שְׂמֹאל — שבוע זה״ב | מחוז דרום</title>
+<style>
+
+:root {
+  --sky-50: #f0f9ff; --sky-100: #e0f2fe; --sky-200: #bae6fd; --sky-300: #7dd3fc;
+  --sky-500: #0ea5e9; --sky-600: #0284c7; --sky-700: #0369a1;
+  --ink: #0f2744; --ink-soft: #334e68; --muted: #5a7a94;
+  --paper: #ffffff; --card: #ffffff;
+  --mint: #10b981; --mint-soft: #d1fae5;
+  --coral: #ef4444; --coral-soft: #fee2e2;
+  --amber: #f59e0b; --amber-soft: #fef3c7; --gold: #fbbf24;
+  --radius: 1.1rem; --radius-btn: .85rem;
+  --shadow: 0 10px 28px -10px rgba(15,39,68,.18), 0 2px 8px rgba(15,39,68,.06);
+  --shadow-3d: 0 14px 0 -2px rgba(2,132,199,.12), 0 18px 36px -12px rgba(15,39,68,.22);
+  --focus: 3px solid #0369a1;
+  --font: Assistant, Heebo, Rubik, Arial, sans-serif;
+  --touch: 48px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; min-height: 100%;
+  font-family: var(--font); color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 100% -10%, #bae6fd 0%, transparent 55%),
+    radial-gradient(900px 500px at -10% 110%, #a5f3fc 0%, transparent 50%),
+    linear-gradient(180deg, var(--sky-50), #e8f7ff 40%, #f0f9ff);
+  -webkit-tap-highlight-color: transparent;
+}
+body { line-height: 1.45; }
+button, [role="button"] {
+  font-family: inherit; cursor: pointer;
+  min-height: var(--touch); min-width: var(--touch);
+}
+button:focus-visible, [tabindex="0"]:focus-visible, .choice:focus-visible, .arrow-btn:focus-visible, .path-btn:focus-visible, .route-opt:focus-visible, .dir-pad button:focus-visible {
+  outline: var(--focus); outline-offset: 3px;
+}
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.app { max-width: 920px; margin: 0 auto; padding: 12px 14px 88px; min-height: 100dvh; position: relative; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.brand-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.85); border: 1px solid var(--sky-200);
+  border-radius: 999px; padding: 6px 12px 6px 8px;
+  font-size: .85rem; color: var(--sky-700); font-weight: 700; box-shadow: var(--shadow);
+}
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--touch); height: var(--touch); border-radius: 50%;
+  border: 2px solid var(--sky-200); background: var(--paper); color: var(--ink);
+  font-size: 1.25rem; box-shadow: var(--shadow);
+}
+.icon-btn[aria-pressed="true"] { background: var(--amber-soft); border-color: var(--amber); }
+.progress-wrap {
+  flex: 1; min-width: 140px; max-width: 280px;
+  background: rgba(255,255,255,.7); border-radius: 999px; height: 12px;
+  border: 1px solid var(--sky-200); overflow: hidden;
+}
+.progress-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--sky-500), var(--mint));
+  border-radius: 999px; transition: width .35s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar, .card, .feedback, .star, .car-swoop, .arrow-btn.lit, .ped-walk { transition: none !important; animation: none !important; }
+}
+.screen { display: none; }
+.screen.active { display: block; animation: fadeIn .35s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.card {
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-3d);
+  border: 1px solid rgba(14,165,233,.18); padding: 22px 20px 24px; position: relative;
+}
+.hero-icon {
+  width: 88px; height: 88px; margin: 0 auto 12px; display: grid; place-items: center;
+  background: linear-gradient(160deg, #e0f2fe, #cffafe);
+  border-radius: 24px; border: 2px solid var(--sky-200);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.8), 0 8px 0 rgba(2,132,199,.1);
+}
+h1 {
+  margin: 0 0 8px; text-align: center;
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem); color: var(--sky-700);
+  font-weight: 800; letter-spacing: -.01em;
+}
+.subtitle { text-align: center; color: var(--ink-soft); margin: 0 0 20px; font-size: clamp(1rem, 2.5vw, 1.15rem); font-weight: 600; }
+.age-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0 20px; }
+@media (max-width: 520px) { .age-grid { grid-template-columns: 1fr; } }
+.age-btn {
+  border: 3px solid var(--sky-200); background: linear-gradient(180deg, #fff, var(--sky-50));
+  border-radius: var(--radius); padding: 18px 14px; text-align: center;
+  box-shadow: var(--shadow); color: var(--ink); transition: border-color .15s, transform .12s;
+}
+.age-btn:hover { border-color: var(--sky-500); transform: translateY(-2px); }
+.age-btn.selected {
+  border-color: var(--sky-600); background: linear-gradient(180deg, #e0f2fe, #fff);
+  box-shadow: 0 0 0 3px rgba(14,165,233,.25), var(--shadow);
+}
+.age-btn .age-label { display: block; font-size: 1.35rem; font-weight: 800; color: var(--sky-700); }
+.age-btn .age-hint { display: block; margin-top: 4px; font-size: .95rem; color: var(--muted); font-weight: 600; }
+.primary-btn, .secondary-btn, .next-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px 18px; border-radius: var(--radius-btn);
+  font-size: 1.2rem; font-weight: 800; border: none; min-height: 52px;
+}
+.primary-btn {
+  background: linear-gradient(180deg, #38bdf8, #0284c7); color: #fff;
+  box-shadow: 0 6px 0 #0369a1, 0 10px 20px rgba(2,132,199,.28);
+}
+.primary-btn:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 3px 0 #0369a1; }
+.primary-btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+.secondary-btn {
+  background: #fff; color: var(--sky-700); border: 2px solid var(--sky-300); box-shadow: var(--shadow);
+}
+.next-btn {
+  background: linear-gradient(180deg, #34d399, #059669); color: #fff;
+  box-shadow: 0 6px 0 #047857, 0 10px 20px rgba(16,185,129,.25); margin-top: 14px;
+}
+.q-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  font-weight: 700; color: var(--muted); font-size: .95rem;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--sky-100); color: var(--sky-700);
+  border-radius: 999px; padding: 4px 12px; font-size: .9rem;
+}
+.question {
+  font-size: clamp(1.25rem, 3.2vw, 1.65rem); font-weight: 800;
+  margin: 0 0 16px; color: var(--ink); text-align: right;
+}
+.young .question, .young .choice, .young .knowledge-text, .young .age-btn .age-label,
+.young h1, .young .subtitle, .young .feedback-text, .young .arrow-btn {
+  font-size: clamp(1.3rem, 3.4vw, 1.75rem);
+}
+.young .choice { font-size: clamp(1.15rem, 3vw, 1.4rem); }
+.choices { display: grid; gap: 10px; }
+.choice {
+  display: flex; align-items: flex-start; gap: 12px; text-align: right; width: 100%;
+  padding: 14px; border-radius: 14px; border: 2.5px solid var(--sky-200);
+  background: linear-gradient(180deg, #fff, #f8fcff); color: var(--ink);
+  font-size: 1.1rem; font-weight: 700; box-shadow: 0 4px 0 rgba(2,132,199,.08);
+}
+.choice .letter {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px;
+  display: grid; place-items: center; background: var(--sky-100); color: var(--sky-700); font-weight: 900;
+}
+.choice:hover:not(:disabled) { border-color: var(--sky-500); }
+.choice.selected { border-color: var(--sky-600); background: #e0f2fe; }
+.choice.correct { border-color: var(--mint); background: var(--mint-soft); }
+.choice.wrong { border-color: var(--coral); background: var(--coral-soft); }
+.choice:disabled { cursor: default; }
+.choice .mark { margin-inline-start: auto; font-size: 1.3rem; font-weight: 900; }
+.feedback {
+  margin-top: 14px; padding: 12px 14px; border-radius: 12px;
+  font-weight: 800; display: none; align-items: center; gap: 10px;
+}
+.feedback.show { display: flex; }
+.feedback.ok { background: var(--mint-soft); color: #065f46; border: 2px solid var(--mint); }
+.feedback.bad { background: var(--coral-soft); color: #991b1b; border: 2px solid var(--coral); }
+.feedback.info { background: var(--amber-soft); color: #92400e; border: 2px solid var(--amber); }
+.knowledge { text-align: center; padding: 8px 4px; }
+.knowledge-icon {
+  width: 72px; height: 72px; margin: 0 auto 12px; border-radius: 20px;
+  background: var(--amber-soft); display: grid; place-items: center; font-size: 2rem; border: 2px solid var(--amber);
+}
+.knowledge-text { font-size: clamp(1.15rem, 3vw, 1.4rem); font-weight: 800; color: var(--ink); margin: 0 0 8px; }
+.logo-corner {
+  position: fixed; bottom: 10px; left: 10px; z-index: 40;
+  height: 48px; width: auto; max-width: 140px;
+  filter: drop-shadow(0 2px 6px rgba(15,39,68,.15)); pointer-events: none;
+}
+@media (max-width: 480px) { .logo-corner { height: 40px; } }
+.end-stars { display: flex; justify-content: center; gap: 10px; margin: 16px 0; font-size: 2.4rem; }
+.star { filter: grayscale(1); opacity: .35; transform: scale(.9); }
+.star.on { filter: none; opacity: 1; transform: scale(1); }
+.goals { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 8px; }
+.goals li {
+  background: var(--sky-50); border: 1px solid var(--sky-200); border-radius: 12px;
+  padding: 10px 12px; font-weight: 700; color: var(--ink-soft); font-size: .98rem;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.goals li::before { content: "✓"; color: var(--mint); font-weight: 900; }
+.hint-note { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 10px; font-weight: 600; }
+.friend-bubble {
+  display: inline-block; background: #fef3c7; border: 2px solid #f59e0b;
+  border-radius: 16px 16px 4px 16px; padding: 8px 14px;
+  font-weight: 900; color: #92400e; margin-bottom: 10px;
+}
+.live-region { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+.look-scene {
+  background: linear-gradient(180deg, #87ceeb 0%, #b8e0f0 36%, #94a3b8 36%, #64748b 70%, #86efac 70%);
+  border-radius: 16px; border: 2px solid var(--sky-300);
+  height: 180px; position: relative; overflow: hidden; margin-bottom: 14px;
+}
+.look-scene .road { position: absolute; left: 0; right: 0; top: 36%; height: 34%; background: #475569; }
+.look-scene .lane { position: absolute; left: 8%; right: 8%; top: 50%; height: 4px; border-top: 3px dashed #fbbf24; opacity: .85; }
+.look-scene .crosswalk {
+  position: absolute; left: 42%; width: 16%; top: 36%; height: 34%;
+  background: repeating-linear-gradient(90deg, #fff 0 8px, transparent 8px 14px);
+}
+.look-scene .sw-label {
+  position: absolute; bottom: 6px; right: 10px;
+  background: rgba(255,255,255,.9); padding: 2px 8px; border-radius: 8px;
+  font-size: .75rem; font-weight: 800; color: var(--ink-soft);
+}
+.look-scene .car {
+  position: absolute; width: 54px; height: 28px; border-radius: 6px 10px 6px 6px;
+  background: #ef4444; top: 40%; box-shadow: 0 3px 0 #7f1d1d; display: none;
+}
+.look-scene .car::before {
+  content: ""; position: absolute; inset: 4px 18px 10px 6px;
+  background: #7dd3fc; border-radius: 3px;
+}
+.look-scene .car.show { display: block; }
+.look-scene .car.from-left { left: -60px; animation: carFromLeft 1.4s ease-out forwards; }
+.look-scene .car.from-right { right: -60px; animation: carFromRight 1.4s ease-out forwards; }
+@keyframes carFromLeft { to { left: 28%; } }
+@keyframes carFromRight { to { right: 28%; } }
+.look-scene .ped {
+  position: absolute; bottom: 8px; left: 48%; width: 18px; height: 28px;
+  background: #0ea5e9; border-radius: 8px 8px 4px 4px;
+}
+.look-scene .ped::before {
+  content: ""; position: absolute; top: -10px; left: 2px; width: 14px; height: 14px;
+  background: #fcd34d; border-radius: 50%;
+}
+.arrow-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 12px 0;
+}
+.arrow-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; min-height: 100px; padding: 14px 8px;
+  border: 3px solid var(--sky-300); border-radius: 18px;
+  background: linear-gradient(180deg, #fff, #f0f9ff);
+  color: var(--ink); font-weight: 900; font-size: 1.15rem;
+  box-shadow: 0 8px 0 rgba(2,132,199,.12);
+}
+.arrow-btn .arr { font-size: 2.4rem; line-height: 1; }
+.arrow-btn.lit {
+  border-color: var(--mint); background: var(--mint-soft);
+  box-shadow: 0 0 0 3px rgba(16,185,129,.3), 0 8px 0 rgba(16,185,129,.15);
+}
+.arrow-btn.bad-flash {
+  border-color: var(--coral); background: var(--coral-soft);
+}
+.arrow-btn:disabled { opacity: .55; cursor: default; }
+.arrow-btn.expected {
+  border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,158,11,.35), 0 8px 0 rgba(2,132,199,.12);
+}
+.step-pills {
+  display: flex; justify-content: center; gap: 8px; margin: 8px 0 4px; flex-wrap: wrap;
+}
+.step-pill {
+  min-width: 72px; padding: 6px 12px; border-radius: 999px;
+  background: var(--sky-100); color: var(--sky-700); font-weight: 800; font-size: .9rem;
+  border: 2px solid var(--sky-200); text-align: center;
+}
+.step-pill.done { background: var(--mint-soft); border-color: var(--mint); color: #065f46; }
+.step-pill.cur { background: var(--amber-soft); border-color: var(--amber); color: #92400e; }
+.demo-note {
+  text-align: center; font-weight: 800; color: var(--sky-700); margin: 8px 0;
+}
+
+</style>
+</head>
+<body>
+<img class="logo-corner" src="data:image/png;base64,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" alt="לוגו מחוז דרום" height="48" width="auto">
+<div class="app" id="app">
+
+  <div class="topbar" id="topbar">
+    <div class="brand-chip">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#0ea5e9"/><path d="M7 12h10M12 7v10" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M8 9l-3 3 3 3M16 9l3 3-3 3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>שבוע זה״ב · מחוז דרום</span>
+    </div>
+    <div class="progress-wrap" id="progressWrap" hidden>
+      <div class="progress-bar" id="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="התקדמות"></div>
+    </div>
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="השתקה" title="השתקה">🔊</button>
+  </div>
+  <div id="live" class="live-region" aria-live="polite" aria-atomic="true"></div>
+
+  <section class="screen active" id="screen-hub" aria-labelledby="hub-title">
+    <div class="card">
+      <div class="hero-icon" aria-hidden="true">
+        <svg width="56" height="56" viewBox="0 0 64 64" role="img" aria-label="חצי מבט">
+          <circle cx="32" cy="32" r="28" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+          <path d="M18 32h28M32 18v28" stroke="#0369a1" stroke-width="3" stroke-linecap="round"/>
+          <path d="M22 24l-8 8 8 8M42 24l8 8-8 8" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1 id="hub-title">שְׂמֹאל־יָמִין־שְׂמֹאל</h1>
+      <p class="subtitle" id="hub-sub">מִשְׂחַק »פַּנָּס מִבָּט« · בְּטִיחוּת בַּדֶּרֶךְ</p>
+      <ul class="goals" id="hub-goals">
+        <li>לזכור: שמאל → ימין → שוב שמאל לפני חצייה</li>
+        <li>להבין למה מתחילים בשמאל (נתיב קרוב בישראל)</li>
+        <li>לעצור במלואם לפני המבט — ואז לחצות כשפנוי</li>
+      </ul>
+      <p style="text-align:center;font-weight:800;color:var(--sky-700);margin:0 0 8px;" id="age-prompt">בחרו קבוצת גיל</p>
+      <div class="age-grid" role="group" aria-label="בחירת גיל">
+        <button type="button" class="age-btn" id="age-young" data-age="young" aria-pressed="false">
+          <span class="age-label">א–ג</span>
+          <span class="age-hint">עִם נִקּוּד</span>
+        </button>
+        <button type="button" class="age-btn" id="age-older" data-age="older" aria-pressed="false">
+          <span class="age-label">ד–ז</span>
+          <span class="age-hint">בלי ניקוד</span>
+        </button>
+      </div>
+      <button type="button" class="primary-btn" id="startBtn" disabled>הַתְחֵלָה</button>
+      <p class="hint-note">מקלדת: ← → לחצים · Enter · M להשתקה</p>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-demo" aria-labelledby="demo-title">
+    <div class="card">
+      <h2 class="question" id="demo-title" style="text-align:center">הַדְגָּמָה</h2>
+      <p class="demo-note" id="demo-note">עוֹצְרִים — אַחַר כָּךְ מִסְתַּכְּלִים בַּסֵּדֶר</p>
+      <div class="look-scene" id="demo-scene" role="img" aria-label="סצנת רחוב להדגמה">
+        <div class="road"></div><div class="lane"></div><div class="crosswalk"></div>
+        <div class="ped" aria-hidden="true"></div>
+        <span class="sw-label">מדרכה</span>
+      </div>
+      <div class="step-pills" id="demo-pills" aria-hidden="true">
+        <span class="step-pill" data-i="0">1 · שמאל</span>
+        <span class="step-pill" data-i="1">2 · ימין</span>
+        <span class="step-pill" data-i="2">3 · שמאל</span>
+      </div>
+      <div class="arrow-row" aria-hidden="true">
+        <button type="button" class="arrow-btn" id="demo-a0" disabled><span class="arr" aria-hidden="true">←</span><span>שְׂמֹאל</span></button>
+        <button type="button" class="arrow-btn" id="demo-a1" disabled><span class="arr" aria-hidden="true">→</span><span>יָמִין</span></button>
+        <button type="button" class="arrow-btn" id="demo-a2" disabled><span class="arr" aria-hidden="true">←</span><span>שְׂמֹאל</span></button>
+      </div>
+      <button type="button" class="next-btn" id="demoNext">הַבָּא לְתַרְגּוּל</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-play" aria-labelledby="q-title">
+    <div class="card" id="play-card">
+      <div class="q-meta">
+        <span class="badge" id="q-counter">1 / 10</span>
+        <span class="badge" id="q-score" aria-label="ניקוד">★ 0</span>
+      </div>
+      <div id="scene-host"></div>
+      <h2 class="question" id="q-title"></h2>
+      <div id="q-body"></div>
+      <div class="feedback" id="feedback" role="status"></div>
+      <button type="button" class="next-btn" id="nextBtn" hidden>הַבָּא</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-knowledge" aria-labelledby="know-title">
+    <div class="card knowledge">
+      <div class="knowledge-icon" aria-hidden="true">💡</div>
+      <h2 class="question" id="know-title" style="text-align:center">כַּרְטִיס יֶדַע</h2>
+      <p class="knowledge-text" id="know-text"></p>
+      <button type="button" class="next-btn" id="knowNext">הַבָּא</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-end" aria-labelledby="end-title">
+    <div class="card" style="text-align:center">
+      <div class="hero-icon" aria-hidden="true">🏆</div>
+      <h1 id="end-title">כַּלָּה!</h1>
+      <p class="subtitle" id="end-sub">כָּל הַכָּבוֹד עַל סֵדֶר הַמִּבָּט!</p>
+      <div class="end-stars" id="end-stars" aria-label="כוכבים">
+        <span class="star" data-i="1">⭐</span>
+        <span class="star" data-i="2">⭐</span>
+        <span class="star" data-i="3">⭐</span>
+      </div>
+      <p style="font-weight:800;font-size:1.2rem;color:var(--ink-soft)" id="end-score"></p>
+      <button type="button" class="primary-btn" id="againBtn" style="margin-top:12px">שׁוּב לַמֶּרְכָּז</button>
+    </div>
+  </section>
+</div>
+<script>
+(function () {
+  "use strict";
+  /* Look order LOCKED: שמאל → ימין → שמאל (Israel drives on the RIGHT) */
+  const LOOK = ["L", "R", "L"];
+  let muted = false, audioCtx = null;
+  function ctx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function beep(freq, dur, type, vol) {
+    if (muted) return;
+    try {
+      const c = ctx(), o = c.createOscillator(), g = c.createGain();
+      o.type = type || "sine"; o.frequency.value = freq;
+      o.connect(g); g.connect(c.destination);
+      const t = c.currentTime;
+      g.gain.setValueAtTime(vol || 0.08, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      o.start(t); o.stop(t + dur + 0.02);
+    } catch (e) {}
+  }
+  function sfx(kind) {
+    if (kind === "tick") { beep(520, 0.07, "sine", 0.07); }
+    else if (kind === "ok") { beep(520, 0.08, "sine", 0.07); setTimeout(() => beep(660, 0.09, "sine", 0.07), 80); setTimeout(() => beep(880, 0.14, "sine", 0.08), 170); }
+    else if (kind === "bad") { beep(240, 0.08, "triangle", 0.06); setTimeout(() => beep(180, 0.16, "triangle", 0.07), 70); }
+    else if (kind === "know") { beep(523, 0.1, "sine", 0.06); setTimeout(() => beep(659, 0.12, "sine", 0.06), 100); setTimeout(() => beep(784, 0.14, "sine", 0.05), 200); }
+    else if (kind === "win") { [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,0.15,"sine",0.08), i*110)); }
+  }
+
+  const UI = {
+    young: {
+      title: "שְׂמֹאל־יָמִין־שְׂמֹאל",
+      sub: "מִשְׂחַק »פַּנָּס מִבָּט« · בְּטִיחוּת בַּדֶּרֶךְ",
+      start: "הַתְחֵלָה", next: "הַבָּא", knowTitle: "כַּרְטִיס יֶדַע",
+      endTitle: "כַּלָּה!", endSub: "כָּל הַכָּבוֹד עַל סֵדֶר הַמִּבָּט!",
+      again: "שׁוּב לַמֶּרְכָּז", ok: "כָּל הַכָּבוֹד! ✓", bad: "כִּמְעַט… נַסּוּ עוֹד פַּעַם ✗",
+      reveal: "הַתְּשׁוּבָה הַנְּכוֹנָה:", agePrompt: "בַּחֲרוּ קְבוּצַת גִּיל",
+      demoTitle: "הַדְגָּמָה", demoNote: "עוֹצְרִים — אַחַר כָּךְ: שְׂמֹאל → יָמִין → שְׂמֹאל",
+      demoNext: "הַבָּא לְתַרְגּוּל",
+      left: "שְׂמֹאל", right: "יָמִין",
+      stepLabels: ["1 · שְׂמֹאל", "2 · יָמִין", "3 · שְׂמֹאל"]
+    },
+    older: {
+      title: "שמאל–ימין–שמאל",
+      sub: "משחק »פנס מבט« · בטיחות בדרך",
+      start: "התחלה", next: "הבא", knowTitle: "כרטיס ידע",
+      endTitle: "כל הכבוד!", endSub: "סיימתם את תחנת סדר המבט",
+      again: "חזרה למרכז", ok: "מצוין! ✓", bad: "כמעט… נסו שוב ✗",
+      reveal: "התשובה הנכונה:", agePrompt: "בחרו קבוצת גיל",
+      demoTitle: "הדגמה", demoNote: "עוצרים — אחר כך: שמאל → ימין → שמאל",
+      demoNext: "הבא לתרגול",
+      left: "שמאל", right: "ימין",
+      stepLabels: ["1 · שמאל", "2 · ימין", "3 · שמאל"]
+    }
+  };
+
+  const ITEMS = {
+    young: [
+      { id:"y1", type:"mc", q:"מָה הַסֵּדֶר הַנָּכוֹן לִפְנֵי חֲצִיָּה?",
+        choices:[
+          {t:"שְׂמֹאל־יָמִין־שְׂמֹאל", ok:true},
+          {t:"יָמִין־שְׂמֹאל־יָמִין", ok:false},
+          {t:"רַק יָמִין", ok:false},
+          {t:"בְּלִי לְהִסְתַּכֵּל", ok:false}
+        ],
+        know:"בְּיִשְׂרָאֵל הַסֵּדֶר הוּא שְׂמֹאל → יָמִין → שְׂמֹאל. הָרֶכֶב בַּנָּתִיב הַקָּרוֹב מַגִּיעַ מִשְּׂמֹאל." },
+      { id:"y2", type:"mc", q:"לָמָּה מִסְתַּכְּלִים שׁוּב שְׂמֹאלָה בַּסּוֹף?",
+        choices:[
+          {t:"כֵּן יָפֶה", ok:false},
+          {t:"כְּדֵי לִרְאוֹת רֶכֶב שֶׁמִּתְקָרֵב מִשְּׂמֹאל", ok:true},
+          {t:"כְּדֵי לְמָצֹא חָבֵר", ok:false},
+          {t:"אֵין סִבָּה", ok:false}
+        ],
+        know:"הַמִּבָּט הָאַחֲרוֹן שְׂמֹאלָה בּוֹדֵק שׁוּב אֶת הַנָּתִיב הַקָּרוֹב לִפְנֵי שֶׁיּוֹצְאִים לַכְּבִישׁ." },
+      { id:"y3", type:"mc", q:"לִפְנֵי שֶׁמִּסְתַּכְּלִים — מָה עוֹשִׂים?",
+        choices:[
+          {t:"רָצִים", ok:false},{t:"עוֹצְרִים", ok:true},{t:"קוֹפְצִים", ok:false},{t:"שָׁרִים", ok:false}
+        ],
+        know:"קֹדֶם כֹּל עוֹצְרִים עַל הַמִּדְרָכָה — וְֽרַק אַחַר כָּךְ מִסְתַּכְּלִים." },
+      { id:"y4", type:"arrow", q:"תַּרְגִּיל סֵדֶר: לַחֲצוּ בַּסֵּדֶר הַנָּכוֹן",
+        correct:["L","R","L"],
+        know:"שְׂמֹאל → יָמִין → שְׂמֹאל. אִם שׁוֹכְחִים צַד — עָלוּל לָבוֹא רֶכֶב מִשָּׁם." },
+      { id:"y5", type:"mc", q:"אִם שָׁכַחְתִּי לְהִסְתַּכֵּל שְׂמֹאלָה — מַה קּוֹרֶה?",
+        choices:[
+          {t:"כְּלוּם", ok:false},
+          {t:"עָלוּל לָבוֹא רֶכֶב מִשְּׂמֹאל", ok:true},
+          {t:"הַכְּבִישׁ נֶעֱלָם", ok:false},
+          {t:"הָאוֹר כָּבֶה", ok:false}
+        ],
+        know:"בַּנָּתִיב הַקָּרוֹב הָרֶכֶב מַגִּיעַ מִשְּׂמֹאל — לָכֵן חָשׁוּב לְהַבִּיט שְׂמֹאלָה." },
+      { id:"y6", type:"mc", q:"הֵיכָן עוֹמְדִים כְּשֶׁמִּסְתַּכְּלִים?",
+        choices:[
+          {t:"בְּאֶמְצַע הַכְּבִישׁ", ok:false},
+          {t:"עַל הַמִּדְרָכָה / בִּקְצֵה הַמַּעֲבָר", ok:true},
+          {t:"עַל קוֹ הַצָּהֹב בִּלְבַד בְּלִי זְהִירוּת", ok:false},
+          {t:"מֵאֲחוֹרֵי שֵׂיחַ שֶׁמַּסְתִּיר", ok:false}
+        ],
+        know:"עוֹמְדִים עַל הַמִּדְרָכָה אוֹ בִּקְצֵה הַמַּעֲבָר — לֹא בְּאֶמְצַע הַכְּבִישׁ." },
+      { id:"y7", type:"mc", q:"חָבֵר אוֹמֵר: »רַק תִּבְדֹּק צַד אֶחָד.« מָה עוֹנִים?",
+        friend:"רַק תִּבְדֹּק צַד אֶחָד",
+        choices:[
+          {t:"בְּסֵדֶר", ok:false},
+          {t:"לֹא — בּוֹדְקִים שְׂמֹאל־יָמִין־שְׂמֹאל", ok:true},
+          {t:"רַק בַּלַּיְלָה", ok:false},
+          {t:"רַק אִם יֵשׁ כֶּלֶב", ok:false}
+        ],
+        know:"תָּמִיד בּוֹדְקִים אֶת כָּל הַסֵּדֶר: שְׂמֹאל־יָמִין־שְׂמֹאל — לֹא צַד אֶחָד." },
+      { id:"y8", type:"mc", q:"אַחֲרֵי שֶׁרָאִיתִי שֶׁפָּנוּי — מָה עוֹשִׂים?",
+        choices:[
+          {t:"נִשְׁאָרִים לָעַד", ok:false},
+          {t:"חוֹצִים יָשָׁר בְּהַליכָה", ok:true},
+          {t:"רָצִים בַּעִגּוּלִים", ok:false},
+          {t:"חוֹזְרִים אֲחוֹרַנִּית", ok:false}
+        ],
+        know:"כְּשֶׁהַסֵּדֶר הֻשְׁלַם וְֽהַדֶּרֶךְ פְּנוּיָה — חוֹצִים יָשָׁר בְּהַליכָה." },
+      { id:"y9", type:"mc", q:"מַשְׂחֵק מָהִיר: אֵיזֶה חֵץ רִאשׁוֹן?",
+        choices:[
+          {t:"שְׂמֹאל", ok:true},{t:"יָמִין", ok:false},{t:"לְמַעְלָה", ok:false},{t:"לְמַטָּה", ok:false}
+        ],
+        know:"הַחֵץ הָרִאשׁוֹן הוּא שְׂמֹאל — כִּי מִשָּׁם מַגִּיעַ הָרֶכֶב בַּנָּתִיב הַקָּרוֹב." },
+      { id:"y10", type:"knowledge-only", q:"סִיּוּם יֶדַע",
+        know:"עוֹצְרִים → שְׂמֹאל → יָמִין → שְׂמֹאל → חוֹצִים כְּשֶׁפָּנוּי." }
+    ],
+    older: [
+      { id:"o1", type:"mc", q:"בישראל רכב נוסע בימין. איך זה קשור למבט הראשון (והאחרון) שמאלה?",
+        choices:[
+          {t:"לא קשור", ok:false},
+          {t:"הרכב בנתיב הקרוב מגיע לרוב משמאל למי שעומד לחצות", ok:true},
+          {t:"רק בגלל השמש", ok:false},
+          {t:"רק בכבישים חד-סיטריים", ok:false}
+        ],
+        know:"נסיעה בימין → הנתיב הקרוב מגיע משמאל. לכן מתחילים וחוזרים בשמאל: שמאל–ימין–שמאל." },
+      { id:"o2", type:"arrow", q:"סדר מלא נכון — לחצו בסדר:",
+        correct:["L","R","L"], extraTurn:true,
+        know:"עצירה → שמאל → ימין → שמאל → חצייה. אל תקצרו את הסדר." },
+      { id:"o3", type:"mc", q:"מתי חוזרים על המבט?",
+        choices:[
+          {t:"אף פעם", ok:false},
+          {t:"אם חיכינו והמצב השתנה / לפני שיוצאים לכביש", ok:true},
+          {t:"רק אחרי שכבר חוצים", ok:false},
+          {t:"רק כשיורד גשם", ok:false}
+        ],
+        know:"אם חיכיתם והמצב השתנה — חוזרים על הסדר המלא לפני היציאה לכביש." },
+      { id:"o4", type:"mc", q:"אופניים שקטים מתקרבים משמאל. איזה שלב בסדר תופס אותם?",
+        choices:[
+          {t:"המבט שמאלה (ראשון או חוזר)", ok:true},
+          {t:"רק המבט ימינה באמצע", ok:false},
+          {t:"אחרי החצייה", ok:false},
+          {t:"לא רלוונטי", ok:false}
+        ],
+        know:"אופניים שקטים משמאל נתפסים במבט שמאלה — הראשון או החוזר." },
+      { id:"o5", type:"mc", q:"»הסתכלתי פעם אחת ימינה — מספיק?«",
+        choices:[
+          {t:"כן", ok:false},
+          {t:"לא — יש סדר מלא: שמאל–ימין–שמאל", ok:true},
+          {t:"רק ליד בית ספר", ok:false},
+          {t:"רק עם מבוגר", ok:false}
+        ],
+        know:"מבט יחיד ימינה אינו מספיק. הסדר המלא: שמאל–ימין–שמאל." },
+      { id:"o6", type:"mc", q:"למה לא מסתכלים תוך כדי ריצה לקצה?",
+        choices:[
+          {t:"כי נמאס", ok:false},
+          {t:"כי צריך עצירה יציבה כדי לראות באמת", ok:true},
+          {t:"כי הכביש רחב מדי תמיד", ok:false},
+          {t:"אין סיבה", ok:false}
+        ],
+        know:"עצירה יציבה מאפשרת לראות באמת — לא מסתכלים תוך כדי ריצה." },
+      { id:"o7", type:"mc", q:"צומת עם פנייה ימין של רכבים — מה מוסיפים למבט?",
+        choices:[
+          {t:"כלום", ok:false},
+          {t:"תשומת לב לכלי רכב שפונים לכיוון המעבר", ok:true},
+          {t:"רק מבט למעלה", ok:false},
+          {t:"סגירת עיניים", ok:false}
+        ],
+        know:"בצומת עם פניות — מוסיפים תשומת לב לרכבים שפונים אל המעבר, בנוסף לסדר המלא." },
+      { id:"o8", type:"mc", q:"ילד מסתכל רק לכיוון שממנו בא הרכב הקודם. מה לתקן?",
+        choices:[
+          {t:"להישאר עם הרגל", ok:false},
+          {t:"לחזור לתרגול הסדר המלא כל פעם", ok:true},
+          {t:"לעצום עיניים", ok:false},
+          {t:"לחצות לאט יותר בלי מבט", ok:false}
+        ],
+        know:"כל חצייה = תרגול מחדש של שמאל–ימין–שמאל. לא סומכים על הרכב הקודם." },
+      { id:"o9", type:"mc", q:"מתי מתחילים ללכת?",
+        choices:[
+          {t:"באמצע המבט", ok:false},
+          {t:"אחרי שהסדר הושלם והדרך פנויה", ok:true},
+          {t:"כשחבר מושך ביד", ok:false},
+          {t:"כשהאור לרכב ירוק בלבד", ok:false}
+        ],
+        know:"מתחילים ללכת רק אחרי שהסדר הושלם והדרך פנויה — לא באמצע המבט." },
+      { id:"o10", type:"knowledge-only", q:"סיכום",
+        know:"בישראל — עצור, שמאל–ימין–שמאל, חצה ישר. אל תקצר את הסדר." }
+    ]
+  };
+
+  let age=null, idx=0, score=0, attempts=0, locked=false, items=[], arrowStep=0, arrowSeq=[];
+  const $ = (s) => document.querySelector(s);
+  const hub=$("#screen-hub"), demo=$("#screen-demo"), play=$("#screen-play"), know=$("#screen-knowledge"), end=$("#screen-end");
+
+  function show(screen) {
+    [hub,demo,play,know,end].forEach(s => s.classList.remove("active"));
+    screen.classList.add("active");
+    const f = screen.querySelector("button:not([disabled]), [tabindex='0']");
+    if (f) setTimeout(() => f.focus(), 50);
+  }
+  function live(msg) { $("#live").textContent = msg; }
+
+  function setAge(a) {
+    age = a;
+    document.body.classList.toggle("young", a==="young");
+    document.body.classList.toggle("older", a==="older");
+    document.querySelectorAll(".age-btn").forEach(b => {
+      const on = b.dataset.age === a;
+      b.classList.toggle("selected", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const u = UI[a];
+    $("#hub-title").textContent = u.title;
+    $("#hub-sub").textContent = u.sub;
+    $("#startBtn").textContent = u.start; $("#startBtn").disabled = false;
+    $("#age-prompt").textContent = u.agePrompt;
+    $("#nextBtn").textContent = u.next;
+    $("#knowNext").textContent = u.next;
+    $("#know-title").textContent = u.knowTitle;
+    $("#againBtn").textContent = u.again;
+    $("#demo-title").textContent = u.demoTitle;
+    $("#demo-note").textContent = u.demoNote;
+    $("#demoNext").textContent = u.demoNext;
+    ["demo-a0","demo-a1","demo-a2"].forEach((id,i) => {
+      const btn = $("#"+id);
+      const lab = i===1 ? u.right : u.left;
+      btn.innerHTML = '<span class="arr" aria-hidden="true">'+(i===1?"→":"←")+'</span><span>'+lab+'</span>';
+    });
+    document.querySelectorAll("#demo-pills .step-pill").forEach((p,i) => { p.textContent = u.stepLabels[i]; });
+  }
+
+  function updateProgress() {
+    const total = items.length;
+    const pct = total ? Math.round((idx/total)*100) : 0;
+    const bar = $("#progressBar");
+    bar.style.width = pct+"%"; bar.setAttribute("aria-valuenow", pct);
+    $("#q-counter").textContent = Math.min(idx+1,total)+" / "+total;
+    $("#q-score").textContent = "★ "+score;
+  }
+
+  function lookScene(opts) {
+    opts = opts || {};
+    return '<div class="look-scene" role="img" aria-label="סצנת רחוב: מדרכה, כביש, מעבר חציה — רכב בימין">' +
+      '<div class="road"></div><div class="lane"></div><div class="crosswalk"></div>' +
+      '<div class="ped" aria-hidden="true"></div>' +
+      '<div class="car" id="danger-car" aria-hidden="true"></div>' +
+      '<span class="sw-label">מדרכה</span></div>';
+  }
+
+  function spawnDanger(side) {
+    const car = $("#danger-car");
+    if (!car) return;
+    car.className = "car show " + (side==="L" ? "from-left" : "from-right");
+  }
+
+  function renderArrowUI(item) {
+    const u = UI[age];
+    arrowStep = 0; arrowSeq = [];
+    const host = $("#scene-host");
+    host.innerHTML = lookScene();
+    const body = $("#q-body");
+    const pills = document.createElement("div");
+    pills.className = "step-pills"; pills.id = "arrow-pills";
+    pills.setAttribute("aria-label", "שלבים");
+    LOOK.forEach((_,i) => {
+      const sp = document.createElement("span");
+      sp.className = "step-pill" + (i===0?" cur":"");
+      sp.dataset.i = i;
+      sp.textContent = u.stepLabels[i];
+      pills.appendChild(sp);
+    });
+    body.appendChild(pills);
+    const row = document.createElement("div");
+    row.className = "arrow-row";
+    row.setAttribute("role", "group");
+    row.setAttribute("aria-label", "כפתורי מבט");
+    // Three buttons: LEFT, RIGHT, LEFT (visual positions in RTL: first is rightmost visually)
+    // In RTL flex/grid, first column is on the RIGHT. So order in DOM for visual L | R | L from viewer's left:
+    // Actually in RTL, grid column 1 is on the right. So DOM order: Left-btn, Right-btn, Left-btn
+    // Viewer sees (left to right on screen): Left2, Right, Left1? No - RTL: first cell is rightmost.
+    // We want on screen left-to-right: ←שמאל | →ימין | ←שמאל
+    // In RTL grid: col1 (rightmost)= third visual left button... Let's put labels clearly.
+    // Better: use dir=ltr on the row so visual order matches L R L left-to-right as international arrows.
+    row.style.direction = "ltr";
+    const defs = [
+      {dir:"L", label:u.left, arr:"←", slot:0},
+      {dir:"R", label:u.right, arr:"→", slot:1},
+      {dir:"L", label:u.left, arr:"←", slot:2}
+    ];
+    defs.forEach((d, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "arrow-btn";
+      b.dataset.dir = d.dir;
+      b.dataset.slot = d.slot;
+      b.setAttribute("aria-label", d.label);
+      b.innerHTML = '<span class="arr" aria-hidden="true">'+d.arr+'</span><span>'+d.label+'</span>';
+      b.addEventListener("click", () => onArrow(d.dir, b, item));
+      row.appendChild(b);
+    });
+    body.appendChild(row);
+    highlightExpected();
+  }
+
+  function highlightExpected() {
+    const expect = LOOK[arrowStep];
+    document.querySelectorAll("#q-body .arrow-btn").forEach(b => {
+      b.classList.toggle("expected", !locked && b.dataset.dir === expect && arrowStep < LOOK.length);
+    });
+    document.querySelectorAll("#arrow-pills .step-pill").forEach((p,i) => {
+      p.classList.toggle("done", i < arrowStep);
+      p.classList.toggle("cur", i === arrowStep && !locked);
+    });
+  }
+
+  function onArrow(dir, btn, item) {
+    if (locked) return;
+    const expect = LOOK[arrowStep];
+    if (dir === expect) {
+      sfx("tick");
+      btn.classList.add("lit");
+      arrowSeq.push(dir);
+      arrowStep++;
+      highlightExpected();
+      if (arrowStep >= LOOK.length) {
+        locked = true;
+        score += Math.max(1, 3 - attempts);
+        sfx("ok");
+        showFb(true);
+        $("#nextBtn").hidden = false;
+        document.querySelectorAll("#q-body .arrow-btn").forEach(b => { b.disabled = true; b.classList.remove("expected"); });
+        live(UI[age].ok);
+        updateProgress();
+      }
+    } else {
+      attempts++;
+      sfx("bad");
+      btn.classList.add("bad-flash");
+      setTimeout(() => btn.classList.remove("bad-flash"), 400);
+      // Car from unchecked side: if they skipped/wrong vs expected
+      spawnDanger(expect === "L" ? "L" : "R");
+      if (attempts >= 2) {
+        locked = true;
+        // reveal: light correct sequence
+        const btns = [...document.querySelectorAll("#q-body .arrow-btn")];
+        btns.forEach(b => { b.disabled = true; b.classList.remove("expected","lit"); });
+        // Light L, R, L in order visually
+        [0,1,2].forEach(i => { if (btns[i]) btns[i].classList.add("lit"); });
+        arrowStep = 3;
+        document.querySelectorAll("#arrow-pills .step-pill").forEach(p => { p.classList.add("done"); p.classList.remove("cur"); });
+        showFb(false, true);
+        $("#nextBtn").hidden = false;
+        live(UI[age].reveal + " " + UI[age].left + " → " + UI[age].right + " → " + UI[age].left);
+      } else {
+        showFb(false, false);
+        // reset sequence for retry
+        arrowStep = 0; arrowSeq = [];
+        document.querySelectorAll("#q-body .arrow-btn").forEach(b => b.classList.remove("lit"));
+        highlightExpected();
+        live(UI[age].bad);
+      }
+      updateProgress();
+    }
+  }
+
+  function renderMc(item) {
+    const wrap = document.createElement("div");
+    wrap.className = "choices";
+    wrap.setAttribute("role","group");
+    wrap.setAttribute("aria-label","תשובות");
+    const letters = ["א","ב","ג","ד"];
+    item.choices.forEach((c,i) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "choice"; b.dataset.i = i;
+      b.innerHTML = '<span class="letter">'+letters[i]+'</span><span>'+c.t+'</span><span class="mark" aria-hidden="true"></span>';
+      b.addEventListener("click", () => onChoose(i));
+      wrap.appendChild(b);
+    });
+    $("#q-body").appendChild(wrap);
+  }
+
+  function onChoose(i) {
+    if (locked) return;
+    const item = items[idx];
+    const choice = item.choices[i];
+    const buttons = $("#q-body").querySelectorAll(".choice");
+    buttons.forEach(b => b.classList.remove("selected"));
+    const btn = $("#q-body").querySelector('[data-i="'+i+'"]');
+    if (btn) btn.classList.add("selected");
+    if (choice.ok) {
+      locked = true;
+      markResult(buttons, item, true, i);
+      score += Math.max(1, 3 - attempts);
+      sfx("ok"); showFb(true);
+      $("#nextBtn").hidden = false; $("#nextBtn").focus();
+      live(UI[age].ok);
+    } else {
+      attempts++;
+      sfx("bad");
+      if (btn) { btn.classList.add("wrong"); const m=btn.querySelector(".mark"); if(m) m.textContent="✗"; }
+      if (attempts >= 2) {
+        locked = true; markResult(buttons, item, false, i);
+        showFb(false, true); $("#nextBtn").hidden = false; live(UI[age].reveal);
+      } else {
+        showFb(false, false); live(UI[age].bad);
+        if (btn) btn.disabled = true;
+      }
+    }
+    updateProgress();
+  }
+
+  function markResult(buttons, item, wasCorrect, chosen) {
+    buttons.forEach(b => {
+      const i = +b.dataset.i; b.disabled = true;
+      if (item.choices[i].ok) {
+        b.classList.add("correct");
+        const mark = b.querySelector(".mark");
+        if (mark) mark.textContent = "✓";
+      } else if (i === chosen) {
+        b.classList.add("wrong");
+        const mark = b.querySelector(".mark");
+        if (mark) mark.textContent = "✗";
+      }
+    });
+  }
+
+  function showFb(ok, revealed) {
+    const fb = $("#feedback"); const u = UI[age];
+    fb.className = "feedback show " + (ok ? "ok" : (revealed ? "info" : "bad"));
+    if (ok) fb.innerHTML = "<span aria-hidden='true'>✓</span><span class='feedback-text'>"+u.ok+"</span>";
+    else if (revealed) {
+      const item = items[idx];
+      let ans;
+      if (item.type === "arrow") ans = u.left+" → "+u.right+" → "+u.left;
+      else ans = item.choices.find(c => c.ok).t;
+      fb.innerHTML = "<span aria-hidden='true'>💡</span><span class='feedback-text'>"+u.reveal+" "+ans+"</span>";
+    } else fb.innerHTML = "<span aria-hidden='true'>✗</span><span class='feedback-text'>"+u.bad+"</span>";
+  }
+
+  function showKnowledge(text) {
+    sfx("know"); $("#know-text").textContent = text; show(know); live(text);
+  }
+
+  function renderItem() {
+    locked = false; attempts = 0; arrowStep = 0; arrowSeq = [];
+    updateProgress(); $("#progressWrap").hidden = false;
+    const item = items[idx]; const u = UI[age];
+    $("#feedback").className = "feedback"; $("#feedback").textContent = "";
+    $("#nextBtn").hidden = true;
+    $("#scene-host").innerHTML = ""; $("#q-body").innerHTML = "";
+    $("#q-title").textContent = item.q;
+    if (item.type === "knowledge-only") { showKnowledge(item.know); return; }
+    if (item.type === "arrow") {
+      renderArrowUI(item);
+    } else {
+      if (item.friend) {
+        $("#scene-host").innerHTML = lookScene() +
+          '<div style="text-align:center"><span class="friend-bubble" role="img" aria-label="חבר">🗣️ «'+item.friend+'»</span></div>';
+      } else {
+        $("#scene-host").innerHTML = lookScene();
+      }
+      renderMc(item);
+    }
+    show(play);
+  }
+
+  function afterItem() {
+    const item = items[idx];
+    if (item.know) showKnowledge(item.know);
+    else advance();
+  }
+  function advance() {
+    idx++;
+    if (idx >= items.length) finish();
+    else renderItem();
+  }
+  function finish() {
+    $("#progressBar").style.width = "100%";
+    const u = UI[age];
+    $("#end-title").textContent = u.endTitle;
+    $("#end-sub").textContent = u.endSub;
+    const maxScore = items.filter(it => it.type !== "knowledge-only").length * 3;
+    const ratio = maxScore ? score / maxScore : 1;
+    let stars = ratio >= 0.85 ? 3 : ratio >= 0.55 ? 2 : 1;
+    document.querySelectorAll(".star").forEach(s => s.classList.toggle("on", +s.dataset.i <= stars));
+    $("#end-score").textContent = "ניקוד: "+score+" · כוכבים: "+stars+" / 3";
+    $("#end-stars").setAttribute("aria-label", stars+" כוכבים מתוך 3");
+    sfx("win"); show(end); live(u.endTitle+" "+stars+" כוכבים");
+  }
+
+  function runDemo() {
+    const u = UI[age];
+    show(demo);
+    const btns = [$("#demo-a0"),$("#demo-a1"),$("#demo-a2")];
+    const pills = document.querySelectorAll("#demo-pills .step-pill");
+    btns.forEach(b => { b.classList.remove("lit"); b.disabled = true; });
+    pills.forEach(p => { p.classList.remove("done","cur"); });
+    let step = 0;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function lightNext() {
+      if (step >= 3) { $("#demoNext").focus(); return; }
+      pills[step].classList.add("cur");
+      if (step > 0) pills[step-1].classList.remove("cur"), pills[step-1].classList.add("done");
+      btns[step].classList.add("lit");
+      sfx("tick");
+      step++;
+      setTimeout(lightNext, reduce ? 200 : 700);
+    }
+    setTimeout(() => {
+      pills[0].classList.add("cur");
+      lightNext();
+    }, reduce ? 100 : 400);
+    // finish last pill
+    setTimeout(() => {
+      pills.forEach(p => { p.classList.add("done"); p.classList.remove("cur"); });
+    }, reduce ? 900 : 2500);
+  }
+
+  function startGame() {
+    if (!age) return;
+    items = ITEMS[age].slice();
+    idx = 0; score = 0;
+    runDemo();
+  }
+
+  $("#age-young").addEventListener("click", () => setAge("young"));
+  $("#age-older").addEventListener("click", () => setAge("older"));
+  $("#startBtn").addEventListener("click", startGame);
+  $("#demoNext").addEventListener("click", () => renderItem());
+  $("#nextBtn").addEventListener("click", afterItem);
+  $("#knowNext").addEventListener("click", advance);
+  $("#againBtn").addEventListener("click", () => {
+    $("#progressWrap").hidden = true; $("#progressBar").style.width = "0%";
+    show(hub); $("#startBtn").focus();
+  });
+  $("#muteBtn").addEventListener("click", () => {
+    muted = !muted;
+    $("#muteBtn").setAttribute("aria-pressed", muted ? "true" : "false");
+    $("#muteBtn").textContent = muted ? "🔇" : "🔊";
+    $("#muteBtn").setAttribute("aria-label", muted ? "בטלו השתקה" : "השתקה");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "m" || e.key === "M" || e.key === "מ") {
+      if (e.target.tagName !== "INPUT") $("#muteBtn").click();
+    }
+    if (!play.classList.contains("active") || locked) return;
+    const item = items[idx];
+    if (!item || item.type !== "arrow") return;
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      const b = [...document.querySelectorAll("#q-body .arrow-btn")].find(x => x.dataset.dir==="L" && !x.classList.contains("lit"));
+      // Prefer the expected slot's button
+      const expect = LOOK[arrowStep];
+      if (expect === "L") {
+        const candidates = [...document.querySelectorAll("#q-body .arrow-btn[data-dir='L']")];
+        const next = candidates.find(x => !x.classList.contains("lit")) || candidates[0];
+        if (next) next.click();
+      }
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      if (LOOK[arrowStep] === "R") {
+        const b = document.querySelector("#q-body .arrow-btn[data-dir='R']");
+        if (b) b.click();
+      }
+    }
+  });
+
+  setAge("young"); age = null;
+  document.querySelectorAll(".age-btn").forEach(b => { b.classList.remove("selected"); b.setAttribute("aria-pressed","false"); });
+  $("#startBtn").disabled = true;
+  $("#hub-title").textContent = "שְׂמֹאל־יָמִין־שְׂמֹאל";
+  $("#hub-sub").textContent = "מִשְׂחַק »פַּנָּס מִבָּט« · בְּטִיחוּת בַּדֶּרֶךְ";
+  $("#startBtn").textContent = "הַתְחֵלָה";
+})();
+</script>
+</body>
+</html>

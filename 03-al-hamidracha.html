@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>עַל הַמִּדְרָכָה — שבוע זה״ב | מחוז דרום</title>
+<style>
+
+:root {
+  --sky-50: #f0f9ff; --sky-100: #e0f2fe; --sky-200: #bae6fd; --sky-300: #7dd3fc;
+  --sky-500: #0ea5e9; --sky-600: #0284c7; --sky-700: #0369a1;
+  --ink: #0f2744; --ink-soft: #334e68; --muted: #5a7a94;
+  --paper: #ffffff; --card: #ffffff;
+  --mint: #10b981; --mint-soft: #d1fae5;
+  --coral: #ef4444; --coral-soft: #fee2e2;
+  --amber: #f59e0b; --amber-soft: #fef3c7; --gold: #fbbf24;
+  --radius: 1.1rem; --radius-btn: .85rem;
+  --shadow: 0 10px 28px -10px rgba(15,39,68,.18), 0 2px 8px rgba(15,39,68,.06);
+  --shadow-3d: 0 14px 0 -2px rgba(2,132,199,.12), 0 18px 36px -12px rgba(15,39,68,.22);
+  --focus: 3px solid #0369a1;
+  --font: Assistant, Heebo, Rubik, Arial, sans-serif;
+  --touch: 48px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; min-height: 100%;
+  font-family: var(--font); color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 100% -10%, #bae6fd 0%, transparent 55%),
+    radial-gradient(900px 500px at -10% 110%, #a5f3fc 0%, transparent 50%),
+    linear-gradient(180deg, var(--sky-50), #e8f7ff 40%, #f0f9ff);
+  -webkit-tap-highlight-color: transparent;
+}
+body { line-height: 1.45; }
+button, [role="button"] {
+  font-family: inherit; cursor: pointer;
+  min-height: var(--touch); min-width: var(--touch);
+}
+button:focus-visible, [tabindex="0"]:focus-visible, .choice:focus-visible, .arrow-btn:focus-visible, .path-btn:focus-visible, .route-opt:focus-visible, .dir-pad button:focus-visible {
+  outline: var(--focus); outline-offset: 3px;
+}
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.app { max-width: 920px; margin: 0 auto; padding: 12px 14px 88px; min-height: 100dvh; position: relative; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.brand-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.85); border: 1px solid var(--sky-200);
+  border-radius: 999px; padding: 6px 12px 6px 8px;
+  font-size: .85rem; color: var(--sky-700); font-weight: 700; box-shadow: var(--shadow);
+}
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--touch); height: var(--touch); border-radius: 50%;
+  border: 2px solid var(--sky-200); background: var(--paper); color: var(--ink);
+  font-size: 1.25rem; box-shadow: var(--shadow);
+}
+.icon-btn[aria-pressed="true"] { background: var(--amber-soft); border-color: var(--amber); }
+.progress-wrap {
+  flex: 1; min-width: 140px; max-width: 280px;
+  background: rgba(255,255,255,.7); border-radius: 999px; height: 12px;
+  border: 1px solid var(--sky-200); overflow: hidden;
+}
+.progress-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--sky-500), var(--mint));
+  border-radius: 999px; transition: width .35s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar, .card, .feedback, .star, .car-swoop, .arrow-btn.lit, .ped-walk { transition: none !important; animation: none !important; }
+}
+.screen { display: none; }
+.screen.active { display: block; animation: fadeIn .35s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.card {
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-3d);
+  border: 1px solid rgba(14,165,233,.18); padding: 22px 20px 24px; position: relative;
+}
+.hero-icon {
+  width: 88px; height: 88px; margin: 0 auto 12px; display: grid; place-items: center;
+  background: linear-gradient(160deg, #e0f2fe, #cffafe);
+  border-radius: 24px; border: 2px solid var(--sky-200);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.8), 0 8px 0 rgba(2,132,199,.1);
+}
+h1 {
+  margin: 0 0 8px; text-align: center;
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem); color: var(--sky-700);
+  font-weight: 800; letter-spacing: -.01em;
+}
+.subtitle { text-align: center; color: var(--ink-soft); margin: 0 0 20px; font-size: clamp(1rem, 2.5vw, 1.15rem); font-weight: 600; }
+.age-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0 20px; }
+@media (max-width: 520px) { .age-grid { grid-template-columns: 1fr; } }
+.age-btn {
+  border: 3px solid var(--sky-200); background: linear-gradient(180deg, #fff, var(--sky-50));
+  border-radius: var(--radius); padding: 18px 14px; text-align: center;
+  box-shadow: var(--shadow); color: var(--ink); transition: border-color .15s, transform .12s;
+}
+.age-btn:hover { border-color: var(--sky-500); transform: translateY(-2px); }
+.age-btn.selected {
+  border-color: var(--sky-600); background: linear-gradient(180deg, #e0f2fe, #fff);
+  box-shadow: 0 0 0 3px rgba(14,165,233,.25), var(--shadow);
+}
+.age-btn .age-label { display: block; font-size: 1.35rem; font-weight: 800; color: var(--sky-700); }
+.age-btn .age-hint { display: block; margin-top: 4px; font-size: .95rem; color: var(--muted); font-weight: 600; }
+.primary-btn, .secondary-btn, .next-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px 18px; border-radius: var(--radius-btn);
+  font-size: 1.2rem; font-weight: 800; border: none; min-height: 52px;
+}
+.primary-btn {
+  background: linear-gradient(180deg, #38bdf8, #0284c7); color: #fff;
+  box-shadow: 0 6px 0 #0369a1, 0 10px 20px rgba(2,132,199,.28);
+}
+.primary-btn:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 3px 0 #0369a1; }
+.primary-btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+.secondary-btn {
+  background: #fff; color: var(--sky-700); border: 2px solid var(--sky-300); box-shadow: var(--shadow);
+}
+.next-btn {
+  background: linear-gradient(180deg, #34d399, #059669); color: #fff;
+  box-shadow: 0 6px 0 #047857, 0 10px 20px rgba(16,185,129,.25); margin-top: 14px;
+}
+.q-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  font-weight: 700; color: var(--muted); font-size: .95rem;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--sky-100); color: var(--sky-700);
+  border-radius: 999px; padding: 4px 12px; font-size: .9rem;
+}
+.question {
+  font-size: clamp(1.25rem, 3.2vw, 1.65rem); font-weight: 800;
+  margin: 0 0 16px; color: var(--ink); text-align: right;
+}
+.young .question, .young .choice, .young .knowledge-text, .young .age-btn .age-label,
+.young h1, .young .subtitle, .young .feedback-text, .young .arrow-btn {
+  font-size: clamp(1.3rem, 3.4vw, 1.75rem);
+}
+.young .choice { font-size: clamp(1.15rem, 3vw, 1.4rem); }
+.choices { display: grid; gap: 10px; }
+.choice {
+  display: flex; align-items: flex-start; gap: 12px; text-align: right; width: 100%;
+  padding: 14px; border-radius: 14px; border: 2.5px solid var(--sky-200);
+  background: linear-gradient(180deg, #fff, #f8fcff); color: var(--ink);
+  font-size: 1.1rem; font-weight: 700; box-shadow: 0 4px 0 rgba(2,132,199,.08);
+}
+.choice .letter {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px;
+  display: grid; place-items: center; background: var(--sky-100); color: var(--sky-700); font-weight: 900;
+}
+.choice:hover:not(:disabled) { border-color: var(--sky-500); }
+.choice.selected { border-color: var(--sky-600); background: #e0f2fe; }
+.choice.correct { border-color: var(--mint); background: var(--mint-soft); }
+.choice.wrong { border-color: var(--coral); background: var(--coral-soft); }
+.choice:disabled { cursor: default; }
+.choice .mark { margin-inline-start: auto; font-size: 1.3rem; font-weight: 900; }
+.feedback {
+  margin-top: 14px; padding: 12px 14px; border-radius: 12px;
+  font-weight: 800; display: none; align-items: center; gap: 10px;
+}
+.feedback.show { display: flex; }
+.feedback.ok { background: var(--mint-soft); color: #065f46; border: 2px solid var(--mint); }
+.feedback.bad { background: var(--coral-soft); color: #991b1b; border: 2px solid var(--coral); }
+.feedback.info { background: var(--amber-soft); color: #92400e; border: 2px solid var(--amber); }
+.knowledge { text-align: center; padding: 8px 4px; }
+.knowledge-icon {
+  width: 72px; height: 72px; margin: 0 auto 12px; border-radius: 20px;
+  background: var(--amber-soft); display: grid; place-items: center; font-size: 2rem; border: 2px solid var(--amber);
+}
+.knowledge-text { font-size: clamp(1.15rem, 3vw, 1.4rem); font-weight: 800; color: var(--ink); margin: 0 0 8px; }
+.logo-corner {
+  position: fixed; bottom: 10px; left: 10px; z-index: 40;
+  height: 48px; width: auto; max-width: 140px;
+  filter: drop-shadow(0 2px 6px rgba(15,39,68,.15)); pointer-events: none;
+}
+@media (max-width: 480px) { .logo-corner { height: 40px; } }
+.end-stars { display: flex; justify-content: center; gap: 10px; margin: 16px 0; font-size: 2.4rem; }
+.star { filter: grayscale(1); opacity: .35; transform: scale(.9); }
+.star.on { filter: none; opacity: 1; transform: scale(1); }
+.goals { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 8px; }
+.goals li {
+  background: var(--sky-50); border: 1px solid var(--sky-200); border-radius: 12px;
+  padding: 10px 12px; font-weight: 700; color: var(--ink-soft); font-size: .98rem;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.goals li::before { content: "✓"; color: var(--mint); font-weight: 900; }
+.hint-note { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 10px; font-weight: 600; }
+.friend-bubble {
+  display: inline-block; background: #fef3c7; border: 2px solid #f59e0b;
+  border-radius: 16px 16px 4px 16px; padding: 8px 14px;
+  font-weight: 900; color: #92400e; margin-bottom: 10px;
+}
+.live-region { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+.map-board {
+  position: relative; width: 100%; height: 280px;
+  border-radius: 16px; border: 3px solid var(--sky-300);
+  overflow: hidden; margin-bottom: 12px;
+  background: #64748b;
+  touch-action: none;
+}
+.map-road {
+  position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+  background:
+    repeating-linear-gradient(90deg, #475569 0 28px, #3f4b5c 28px 32px),
+    #475569;
+}
+.map-road-label {
+  position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+  background: rgba(15,23,42,.75); color: #f8fafc; font-weight: 900;
+  font-size: .85rem; padding: 4px 12px; border-radius: 999px; z-index: 2;
+  border: 1px dashed #fbbf24;
+}
+.map-sidewalk {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
+  background:
+    repeating-linear-gradient(0deg, #cbd5e1 0 10px, #e2e8f0 10px 20px),
+    #cbd5e1;
+  border-top: 4px solid #94a3b8;
+}
+.map-sidewalk-label {
+  position: absolute; bottom: 8px; right: 10px;
+  background: rgba(255,255,255,.92); color: var(--ink);
+  font-weight: 900; font-size: .85rem; padding: 4px 12px; border-radius: 999px;
+  border: 2px solid #64748b; z-index: 2;
+}
+.map-safe-zone {
+  position: absolute; left: 8%; right: 8%; bottom: 18%; height: 18%;
+  border: 2px dashed #059669; border-radius: 8px;
+  background: rgba(16,185,129,.12); pointer-events: none;
+}
+.map-star {
+  position: absolute; width: 28px; height: 28px; font-size: 1.4rem;
+  display: grid; place-items: center; z-index: 3;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.25));
+}
+.map-star.got { opacity: .25; transform: scale(.7); }
+.map-hazard {
+  position: absolute; z-index: 3; font-size: 1.5rem;
+  background: rgba(255,255,255,.85); border-radius: 8px; padding: 2px 4px;
+  border: 2px solid #f59e0b;
+}
+.map-car {
+  position: absolute; width: 48px; height: 24px; border-radius: 5px 8px 5px 5px;
+  background: #3b82f6; top: 18%; right: 14%;
+  box-shadow: 0 3px 0 #1e3a8a; z-index: 2;
+}
+.map-car::before {
+  content: ""; position: absolute; inset: 3px 14px 8px 5px;
+  background: #93c5fd; border-radius: 3px;
+}
+.map-ped {
+  position: absolute; width: 22px; height: 32px; z-index: 5;
+  transition: left .12s linear, top .12s linear;
+}
+.map-ped .body {
+  width: 16px; height: 22px; margin: 10px auto 0; background: #0ea5e9;
+  border-radius: 6px 6px 3px 3px; position: relative;
+}
+.map-ped .body::before {
+  content: ""; position: absolute; top: -11px; left: 1px;
+  width: 14px; height: 14px; background: #fcd34d; border-radius: 50%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-ped { transition: none !important; }
+}
+.dir-pad {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+  max-width: 280px; margin: 10px auto 0;
+}
+.dir-pad .spacer { visibility: hidden; }
+.dir-pad button {
+  min-height: 52px; border-radius: 14px; border: 2.5px solid var(--sky-300);
+  background: #fff; font-weight: 900; font-size: 1.4rem; color: var(--ink);
+  box-shadow: 0 4px 0 rgba(2,132,199,.1);
+}
+.dir-pad button:active:not(:disabled) { transform: translateY(2px); }
+.path-choice-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;
+}
+@media (max-width: 520px) { .path-choice-grid { grid-template-columns: 1fr; } }
+.path-btn {
+  border: 3px solid var(--sky-200); border-radius: 16px; padding: 12px;
+  background: #fff; text-align: center; font-weight: 800; color: var(--ink);
+  box-shadow: var(--shadow);
+}
+.path-btn .preview {
+  height: 72px; border-radius: 10px; margin-bottom: 8px;
+  display: grid; place-items: center; font-weight: 900; font-size: .95rem;
+  border: 2px solid transparent;
+}
+.path-btn .preview.sw {
+  background: repeating-linear-gradient(0deg, #cbd5e1 0 8px, #e2e8f0 8px 16px);
+  border-color: #64748b; color: var(--ink);
+}
+.path-btn .preview.rd {
+  background: repeating-linear-gradient(90deg, #475569 0 16px, #3f4b5c 16px 20px);
+  border-color: #fbbf24; color: #f8fafc;
+}
+.path-btn.correct { border-color: var(--mint); background: var(--mint-soft); }
+.path-btn.wrong { border-color: var(--coral); background: var(--coral-soft); }
+.route-opts { display: grid; gap: 10px; }
+.route-opt {
+  border: 2.5px solid var(--sky-200); border-radius: 14px; padding: 14px;
+  background: linear-gradient(180deg,#fff,#f8fcff); text-align: right;
+  font-weight: 800; color: var(--ink); box-shadow: 0 4px 0 rgba(2,132,199,.08);
+}
+.route-opt .route-line {
+  display: block; margin-top: 6px; font-size: .95rem; color: var(--muted); font-weight: 700;
+}
+.route-opt.correct { border-color: var(--mint); background: var(--mint-soft); }
+.route-opt.wrong { border-color: var(--coral); background: var(--coral-soft); }
+.mini-map {
+  height: 100px; border-radius: 12px; border: 2px solid var(--sky-300);
+  margin-bottom: 10px; position: relative; overflow: hidden;
+  background: linear-gradient(180deg, #86efac 0 28%, #475569 28% 55%, #cbd5e1 55%);
+}
+.mini-map .mlabel {
+  position: absolute; font-size: .7rem; font-weight: 900;
+  background: rgba(255,255,255,.9); padding: 2px 6px; border-radius: 6px;
+}
+
+</style>
+</head>
+<body>
+<img class="logo-corner" src="data:image/png;base64,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" alt="לוגו מחוז דרום" height="48" width="auto">
+<div class="app" id="app">
+
+  <div class="topbar" id="topbar">
+    <div class="brand-chip">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="14" width="20" height="8" rx="2" fill="#94a3b8"/><rect x="2" y="4" width="20" height="8" rx="2" fill="#475569"/><path d="M4 8h16" stroke="#fbbf24" stroke-width="2" stroke-dasharray="3 3"/></svg>
+      <span>שבוע זה״ב · מחוז דרום</span>
+    </div>
+    <div class="progress-wrap" id="progressWrap" hidden>
+      <div class="progress-bar" id="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="התקדמות"></div>
+    </div>
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="השתקה" title="השתקה">🔊</button>
+  </div>
+  <div id="live" class="live-region" aria-live="polite" aria-atomic="true"></div>
+
+  <section class="screen active" id="screen-hub" aria-labelledby="hub-title">
+    <div class="card">
+      <div class="hero-icon" aria-hidden="true">
+        <svg width="56" height="56" viewBox="0 0 64 64" role="img" aria-label="מדרכה">
+          <rect x="4" y="36" width="56" height="20" rx="3" fill="#94a3b8"/>
+          <rect x="4" y="8" width="56" height="24" rx="3" fill="#475569"/>
+          <path d="M8 20h48" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4 4"/>
+          <circle cx="32" cy="46" r="6" fill="#0ea5e9"/>
+        </svg>
+      </div>
+      <h1 id="hub-title">עַל הַמִּדְרָכָה</h1>
+      <p class="subtitle" id="hub-sub">מִשְׂחַק »נָתִיב בָּטוּחַ« · בְּטִיחוּת בַּדֶּרֶךְ</p>
+      <ul class="goals">
+        <li>ללכת על המדרכה — לא על הכביש</li>
+        <li>להתרחק משפת הכביש כשיש מקום</li>
+        <li>לא לרוץ אחרי כדור לכביש; זהירות ביציאות חניה</li>
+      </ul>
+      <p style="text-align:center;font-weight:800;color:var(--sky-700);margin:0 0 8px;" id="age-prompt">בחרו קבוצת גיל</p>
+      <div class="age-grid" role="group" aria-label="בחירת גיל">
+        <button type="button" class="age-btn" id="age-young" data-age="young" aria-pressed="false">
+          <span class="age-label">א–ג</span>
+          <span class="age-hint">עִם נִקּוּד</span>
+        </button>
+        <button type="button" class="age-btn" id="age-older" data-age="older" aria-pressed="false">
+          <span class="age-label">ד–ז</span>
+          <span class="age-hint">בלי ניקוד</span>
+        </button>
+      </div>
+      <button type="button" class="primary-btn" id="startBtn" disabled>הַתְחֵלָה</button>
+      <p class="hint-note">מקלדת: חיצים / WASD · Enter · M להשתקה</p>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-play" aria-labelledby="q-title">
+    <div class="card" id="play-card">
+      <div class="q-meta">
+        <span class="badge" id="q-counter">1 / 10</span>
+        <span class="badge" id="q-score" aria-label="ניקוד">★ 0</span>
+      </div>
+      <div id="scene-host"></div>
+      <h2 class="question" id="q-title"></h2>
+      <div id="q-body"></div>
+      <div class="feedback" id="feedback" role="status"></div>
+      <button type="button" class="next-btn" id="nextBtn" hidden>הַבָּא</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-knowledge" aria-labelledby="know-title">
+    <div class="card knowledge">
+      <div class="knowledge-icon" aria-hidden="true">💡</div>
+      <h2 class="question" id="know-title" style="text-align:center">כַּרְטִיס יֶדַע</h2>
+      <p class="knowledge-text" id="know-text"></p>
+      <button type="button" class="next-btn" id="knowNext">הַבָּא</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-end" aria-labelledby="end-title">
+    <div class="card" style="text-align:center">
+      <div class="hero-icon" aria-hidden="true">🏆</div>
+      <h1 id="end-title">כַּלָּה!</h1>
+      <p class="subtitle" id="end-sub">כָּל הַכָּבוֹד עַל הֲלִיכָה בְּטוּחָה!</p>
+      <div class="end-stars" id="end-stars" aria-label="כוכבים">
+        <span class="star" data-i="1">⭐</span>
+        <span class="star" data-i="2">⭐</span>
+        <span class="star" data-i="3">⭐</span>
+      </div>
+      <p style="font-weight:800;font-size:1.2rem;color:var(--ink-soft)" id="end-score"></p>
+      <button type="button" class="primary-btn" id="againBtn" style="margin-top:12px">שׁוּב לַמֶּרְכָּז</button>
+    </div>
+  </section>
+</div>
+<script>
+(function () {
+  "use strict";
+  let muted = false, audioCtx = null;
+  function ctx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function beep(freq, dur, type, vol) {
+    if (muted) return;
+    try {
+      const c = ctx(), o = c.createOscillator(), g = c.createGain();
+      o.type = type || "sine"; o.frequency.value = freq;
+      o.connect(g); g.connect(c.destination);
+      const t = c.currentTime;
+      g.gain.setValueAtTime(vol || 0.08, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      o.start(t); o.stop(t + dur + 0.02);
+    } catch (e) {}
+  }
+  function sfx(kind) {
+    if (kind === "step") { beep(420, 0.05, "square", 0.04); setTimeout(()=>beep(380,0.05,"square",0.03), 60); }
+    else if (kind === "ok") { beep(660, 0.1, "sine", 0.08); setTimeout(()=>beep(880,0.12,"sine",0.07), 90); }
+    else if (kind === "bad") { beep(200, 0.12, "triangle", 0.06); setTimeout(()=>beep(160,0.14,"triangle",0.05), 80); }
+    else if (kind === "know") { beep(523,0.1,"sine",0.06); setTimeout(()=>beep(659,0.12,"sine",0.06),100); setTimeout(()=>beep(784,0.14,"sine",0.05),200); }
+    else if (kind === "win") { [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,0.15,"sine",0.08), i*110)); }
+    else if (kind === "star") { beep(784, 0.08, "sine", 0.06); }
+  }
+
+  const UI = {
+    young: {
+      title: "עַל הַמִּדְרָכָה", sub: "מִשְׂחַק »נָתִיב בָּטוּחַ« · בְּטִיחוּת בַּדֶּרֶךְ",
+      start: "הַתְחֵלָה", next: "הַבָּא", knowTitle: "כַּרְטִיס יֶדַע",
+      endTitle: "כַּלָּה!", endSub: "כָּל הַכָּבוֹד עַל הֲלִיכָה בְּטוּחָה!",
+      again: "שׁוּב לַמֶּרְכָּז", ok: "כָּל הַכָּבוֹד! ✓", bad: "כִּמְעַט… נַסּוּ עוֹד פַּעַם ✗",
+      reveal: "הַתְּשׁוּבָה הַנְּכוֹנָה:", agePrompt: "בַּחֲרוּ קְבוּצַת גִּיל",
+      sw: "מִדְרָכָה", road: "כְּבִישׁ", collect: "אִסְפוּ כּוֹכָבִים עַל הַמִּדְרָכָה",
+      donePath: "סִיַּמְתֶּם אֶת הַמַּסְלוּל!"
+    },
+    older: {
+      title: "על המדרכה", sub: "משחק »נתיב בטוח« · בטיחות בדרך",
+      start: "התחלה", next: "הבא", knowTitle: "כרטיס ידע",
+      endTitle: "כל הכבוד!", endSub: "סיימתם את תחנת המדרכה הבטוחה",
+      again: "חזרה למרכז", ok: "מצוין! ✓", bad: "כמעט… נסו שוב ✗",
+      reveal: "התשובה הנכונה:", agePrompt: "בחרו קבוצת גיל",
+      sw: "מדרכה", road: "כביש", collect: "אספו כוכבים על המדרכה — רחוק מהשפה",
+      donePath: "סיימתם את המסלול!"
+    }
+  };
+
+  const ITEMS = {
+    young: [
+      { id:"y1", type:"path-choice", q:"אֵיפֹה הוֹלְכִים?",
+        choices:[
+          {t:"עַל הַכְּבִישׁ", ok:false, kind:"rd"},
+          {t:"עַל הַמִּדְרָכָה", ok:true, kind:"sw"},
+          {t:"בֵּין מְכוֹנִיּוֹת", ok:false, kind:"rd"},
+          {t:"עַל הַקַּו הָאָמְצָעִי", ok:false, kind:"rd"}
+        ],
+        know:"הַמִּדְרָכָה לַהוֹלְכִים. הַכְּבִישׁ לָרְכָבִים." },
+      { id:"y2", type:"mc", q:"כַּדּוּר הִתְגַּלְגֵּל לַכְּבִישׁ. מָה עוֹשִׂים?",
+        choices:[
+          {t:"רָצִים אַחֲרָיו", ok:false},
+          {t:"מְבַקְּשִׁים מִמְּבֻגָּר לַעֲזֹר / מַמְתִּינִים", ok:true},
+          {t:"קוֹפְצִים", ok:false},
+          {t:"עוֹצְמִים עֵינַיִם", ok:false}
+        ],
+        know:"כַּדּוּר בַּכְּבִישׁ? לֹא רָצִים אַחֲרָיו — מְבַקְּשִׁים עֶזְרַת מְבֻגָּר." },
+      { id:"y3", type:"mc", q:"יֵשׁ מִדְרָכָה צָרָה. מָה עוֹשִׂים?",
+        choices:[
+          {t:"יוֹרְדִים לַכְּבִישׁ", ok:false},
+          {t:"הוֹלְכִים בְּזְהִירוּת עַל הַמִּדְרָכָה", ok:true},
+          {t:"רָצִים בַּכְּבִישׁ", ok:false},
+          {t:"הוֹלְכִים עִם גַּב לַכְּבִישׁ בְּלִי תְּשׂוּמַת לֵב", ok:false}
+        ],
+        know:"גַּם בְּמִדְרָכָה צָרָה — נִשְׁאָרִים עָלֶיהָ בְּזְהִירוּת." },
+      { id:"y4", type:"mc", q:"לָמָּה לֹא רָצִים עַל הַמִּדְרָכָה לְיַד כְּבִישׁ?",
+        choices:[
+          {t:"כִּי נִשְׁאָר בְּלִי נְשִׁימָה", ok:false},
+          {t:"כְּדֵי לֹא לְהִצָּמֵד לַכְּבִישׁ אוֹ לִפֹּל הַחוּצָה", ok:true},
+          {t:"כִּי אָסוּר לָרוּץ בַּבַּיִת", ok:false},
+          {t:"אֵין סִבָּה", ok:false}
+        ],
+        know:"רִיצָה לְיַד כְּבִישׁ עֲלוּלָה לְהַצְמִיד לַשָּׂפָה אוֹ לִפֹּל לַכְּבִישׁ." },
+      { id:"y5", type:"walk", q:"תַּרְגִּיל מַסְלוּל: הִשָּׁאֲרוּ עַל הַמִּדְרָכָה (הָאֵזוֹר הָאָפוֹר עִם תּוֹוִית), לֹא עַל הַכְּבִישׁ",
+        stars:[{x:18,y:72},{x:42,y:78},{x:68,y:74}],
+        know:"נִשְׁאָרִים עַל הַמִּדְרָכָה — לֹא יוֹרְדִים לַכְּבִישׁ." },
+      { id:"y6", type:"mc", q:"חָבֵר הוֹלֵךְ עַל הַכְּבִישׁ »כִּי כֵן מַהֵר.« מָה נָכוֹן?",
+        friend:"כִּי כֵן מַהֵר",
+        choices:[
+          {t:"לְהִצְטַרֵף", ok:false},
+          {t:"לַחֲזֹר לַמִּדְרָכָה וּלְהַזְמִין אוֹתוֹ", ok:true},
+          {t:"לְצַלֵּם", ok:false},
+          {t:"לִקְפֹּץ", ok:false}
+        ],
+        know:"חוֹזְרִים לַמִּדְרָכָה וּמַזְמִינִים אֶת הַחָבֵר — לֹא מִצְטַרְפִים לַכְּבִישׁ." },
+      { id:"y7", type:"mc", q:"לְיַד יְצִיאַת חֲנָיָה — מָה עוֹשִׂים?",
+        choices:[
+          {t:"רָצִים", ok:false},
+          {t:"מִסְתַּכְּלִים שֶׁלֹּא יוֹצֵא רֶכֶב", ok:true},
+          {t:"עוֹצְמִים עֵינַיִם", ok:false},
+          {t:"יוֹשְׁבִים עַל הַכְּבִישׁ", ok:false}
+        ],
+        know:"לְיַד יְצִיאַת חֲנָיָה — מִסְתַּכְּלִים שֶׁלֹּא יוֹצֵא רֶכֶב." },
+      { id:"y8", type:"mc", q:"אֵיפֹה שָׂמִים תִּיק / תּוֹר?",
+        choices:[
+          {t:"עַל שְׂפַת הַכְּבִישׁ", ok:false},
+          {t:"בְּצַד הַמִּדְרָכָה הָרָחוֹק מֵהַכְּבִישׁ כְּשֶׁאֶפְשָׁר", ok:true},
+          {t:"בְּאֶמְצַע הַמַּעֲבָר", ok:false},
+          {t:"עַל גַּלְגַּל רֶכֶב", ok:false}
+        ],
+        know:"תִּיק וְֽתּוֹר — בַּצַּד הָרָחוֹק מֵהַכְּבִישׁ כְּשֶׁאֶפְשָׁר." },
+      { id:"y9", type:"mc", q:"מַשְׂחֵק כַּדּוּר עַל מִדְרָכָה לְיַד כְּבִישׁ סוֹאֵן?",
+        choices:[
+          {t:"רַעְיוֹן טוֹב", ok:false},
+          {t:"לֹא — מְסֻכָּן; מְשַׂחֲקִים בַּמִּגְרָשׁ / חָצֵר", ok:true},
+          {t:"רַק אִם הַכַּדּוּר קָטָן", ok:false},
+          {t:"רַק בַּלַּיְלָה", ok:false}
+        ],
+        know:"לֹא מְשַׂחֲקִים כַּדּוּר עַל מִדְרָכָה לְיַד כְּבִישׁ סוֹאֵן — רַק בַּמִּגְרָשׁ אוֹ בֶּחָצֵר." },
+      { id:"y10", type:"knowledge-only", q:"סִיּוּם יֶדַע",
+        know:"הַמִּדְרָכָה לַהוֹלְכִים. הַכְּבִישׁ לָרְכָבִים. לֹא רָצִים אַחֲרֵי כַּדּוּר לַכְּבִישׁ." }
+    ],
+    older: [
+      { id:"o1", type:"mc", q:"למה הולכים בצד המדרכה הרחוק מהכביש כשיש מקום?",
+        choices:[
+          {t:"בשביל צל בלבד", ok:false},
+          {t:"מגדיל מרחק מרכב ומשפת הכביש", ok:true},
+          {t:"אין סיבה", ok:false},
+          {t:"רק כדי לא לפגוש אנשים", ok:false}
+        ],
+        know:"הצד הרחוק מהכביש מגדיל מרחק מרכב ומשפת הכביש." },
+      { id:"o2", type:"mc", q:"יציאת חניה חוצה מדרכה. מה הכלל?",
+        choices:[
+          {t:"להתעלם", ok:false},
+          {t:"להאט ולהסתכל לשני הכיוונים לפני המעבר על היציאה", ok:true},
+          {t:"לרוץ כדי לעבור מהר", ok:false},
+          {t:"ללכת על הכביש במקום", ok:false}
+        ],
+        know:"ביציאת חניה — מאטים ומסתכלים לשני הכיוונים לפני שעוברים." },
+      { id:"o3", type:"mc", q:"תחנת אוטובוס עמוסה — איך מתנהלים?",
+        choices:[
+          {t:"יורדים לכביש לעקוף", ok:false},
+          {t:"עוברים בזהירות על המדרכה / מחכים בלי לדחוף לכביש", ok:true},
+          {t:"נצמדים לדלת האוטובוס על הכביש", ok:false},
+          {t:"רצים מאחורי האוטובוס", ok:false}
+        ],
+        know:"בתחנה עמוסה נשארים על המדרכה — לא יורדים לכביש וללא דחיפה." },
+      { id:"o4", type:"mc", q:"מכשול על המדרכה (פח, חפירה). מה עדיף?",
+        choices:[
+          {t:"מיד לכביש בלי מבט", ok:false},
+          {t:"לעקוף בזהירות ורק אם חייבים לרדת — אחרי מבט ומבוגר אם אפשר", ok:true},
+          {t:"לקפוץ מעל הפח לכביש", ok:false},
+          {t:"לשבת על המכשול", ok:false}
+        ],
+        know:"מכשול: מעדיפים לעקוף על המדרכה. ירידה לכביש — רק אם חייבים, אחרי מבט." },
+      { id:"o5", type:"mc", q:"אופניים על המדרכה מול הולך רגל — מה המסר החינוכי?",
+        choices:[
+          {t:"כולם רצים", ok:false},
+          {t:"זהירות הדדית; מדרכה קודם להולכי רגל; לרדת / להאט", ok:true},
+          {t:"האופניים תמיד קודמים", ok:false},
+          {t:"אין כללים", ok:false}
+        ],
+        know:"מדרכה קודם להולכי רגל. רוכבים — זהירות, האטה או ירידה כשצריך." },
+      { id:"o6", type:"mc", q:"חבר דוחף בלי כוונה לכיוון השפה. מה עושים?",
+        choices:[
+          {t:"דוחפים חזרה לכביש", ok:false},
+          {t:"עוצרים, מתרחקים מהשפה, מדברים", ok:true},
+          {t:"רצים אחריו לכביש", ok:false},
+          {t:"צוחקים וקופצים", ok:false}
+        ],
+        know:"עוצרים, מתרחקים מהשפה, ומדברים — לא דוחפים לכביש." },
+      { id:"o7", type:"mc", q:"טלפון תוך הליכה ליד כביש:",
+        choices:[
+          {t:"מומלץ תמיד", ok:false},
+          {t:"מסיח דעת — עדיף לעצור בצד בטוח", ok:true},
+          {t:"חובה רק בלילה", ok:false},
+          {t:"רק עם אוזניות", ok:false}
+        ],
+        know:"טלפון מסיח דעת ליד כביש — עוצרים בצד בטוח אם צריך להשתמש." },
+      { id:"o8", type:"route", q:"מסלול נכון: בית → מדרכה → מעבר חציה → מדרכה → בית ספר",
+        choices:[
+          {t:"בית → כביש → בית ספר", line:"קיצור מסוכן על הכביש", ok:false},
+          {t:"בית → מדרכה → מעבר חציה → מדרכה → בית ספר", line:"מסלול בטוח מלא", ok:true},
+          {t:"בית → קו צהוב → בית ספר", line:"הליכה במרחב הכביש", ok:false}
+        ],
+        know:"המסלול הבטוח: מדרכה → מעבר חציה → מדרכה. לא קיצור על הכביש." },
+      { id:"o9", type:"mc", q:"למה לא הולכים »על הקו הצהוב« כדרך קיצור?",
+        choices:[
+          {t:"כי הקו דק", ok:false},
+          {t:"כי זה בתוך מרחב הכביש / מסוכן", ok:true},
+          {t:"כי זה לא יפה", ok:false},
+          {t:"אין בעיה", ok:false}
+        ],
+        know:"הקו הצהוב הוא במרחב הכביש — לא דרך קיצור להולכים." },
+      { id:"o10", type:"knowledge-only", q:"סיכום",
+        know:"מדרכה = המקום שלנו. מרחק מהשפה, זהירות ביציאות חניה, בלי משחקים לכביש." }
+    ]
+  };
+
+  let age=null, idx=0, score=0, attempts=0, locked=false, items=[];
+  let ped = {x:10, y:78}, starsGot=0, starsNeed=0, roadHits=0;
+  const $ = (s) => document.querySelector(s);
+  const hub=$("#screen-hub"), play=$("#screen-play"), know=$("#screen-knowledge"), end=$("#screen-end");
+
+  function show(screen) {
+    [hub,play,know,end].forEach(s => s.classList.remove("active"));
+    screen.classList.add("active");
+    const f = screen.querySelector("button:not([disabled]), [tabindex='0']");
+    if (f) setTimeout(() => f.focus(), 50);
+  }
+  function live(msg) { $("#live").textContent = msg; }
+
+  function setAge(a) {
+    age = a;
+    document.body.classList.toggle("young", a==="young");
+    document.body.classList.toggle("older", a==="older");
+    document.querySelectorAll(".age-btn").forEach(b => {
+      const on = b.dataset.age === a;
+      b.classList.toggle("selected", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const u = UI[a];
+    $("#hub-title").textContent = u.title;
+    $("#hub-sub").textContent = u.sub;
+    $("#startBtn").textContent = u.start; $("#startBtn").disabled = false;
+    $("#age-prompt").textContent = u.agePrompt;
+    $("#nextBtn").textContent = u.next;
+    $("#knowNext").textContent = u.next;
+    $("#know-title").textContent = u.knowTitle;
+    $("#againBtn").textContent = u.again;
+  }
+
+  function updateProgress() {
+    const total = items.length;
+    const pct = total ? Math.round((idx/total)*100) : 0;
+    const bar = $("#progressBar");
+    bar.style.width = pct+"%"; bar.setAttribute("aria-valuenow", pct);
+    $("#q-counter").textContent = Math.min(idx+1,total)+" / "+total;
+    $("#q-score").textContent = "★ "+score;
+  }
+
+  function renderMc(item) {
+    const wrap = document.createElement("div");
+    wrap.className = "choices";
+    wrap.setAttribute("role","group"); wrap.setAttribute("aria-label","תשובות");
+    const letters = ["א","ב","ג","ד"];
+    item.choices.forEach((c,i) => {
+      const b = document.createElement("button");
+      b.type="button"; b.className="choice"; b.dataset.i=i;
+      b.innerHTML = '<span class="letter">'+letters[i]+'</span><span>'+c.t+'</span><span class="mark" aria-hidden="true"></span>';
+      b.addEventListener("click", () => onChoose(i));
+      wrap.appendChild(b);
+    });
+    $("#q-body").appendChild(wrap);
+  }
+
+  function onChoose(i) {
+    if (locked) return;
+    const item = items[idx];
+    const choice = item.choices[i];
+    const buttons = $("#q-body").querySelectorAll(".choice, .path-btn, .route-opt");
+    buttons.forEach(b => b.classList.remove("selected"));
+    const btn = $("#q-body").querySelector('[data-i="'+i+'"]');
+    if (btn) btn.classList.add("selected");
+    if (choice.ok) {
+      locked = true;
+      markResult(buttons, item, true, i);
+      score += Math.max(1, 3 - attempts);
+      sfx("ok"); showFb(true);
+      $("#nextBtn").hidden = false; $("#nextBtn").focus();
+      live(UI[age].ok);
+    } else {
+      attempts++;
+      sfx("bad");
+      if (btn) { btn.classList.add("wrong"); const m=btn.querySelector(".mark"); if(m) m.textContent="✗"; }
+      if (attempts >= 2) {
+        locked = true; markResult(buttons, item, false, i);
+        showFb(false, true); $("#nextBtn").hidden = false; live(UI[age].reveal);
+      } else {
+        showFb(false, false); live(UI[age].bad);
+        if (btn) btn.disabled = true;
+      }
+    }
+    updateProgress();
+  }
+
+  function markResult(buttons, item, wasCorrect, chosen) {
+    buttons.forEach(b => {
+      const i = +b.dataset.i; b.disabled = true;
+      if (item.choices[i] && item.choices[i].ok) {
+        b.classList.add("correct");
+        const mark = b.querySelector(".mark");
+        if (mark) mark.textContent = "✓";
+        else { const s=document.createElement("span"); s.className="mark"; s.textContent=" ✓"; b.appendChild(s); }
+      } else if (i === chosen) {
+        b.classList.add("wrong");
+        const mark = b.querySelector(".mark");
+        if (mark) mark.textContent = "✗";
+      }
+    });
+  }
+
+  function showFb(ok, revealed) {
+    const fb = $("#feedback"); const u = UI[age];
+    fb.className = "feedback show " + (ok ? "ok" : (revealed ? "info" : "bad"));
+    if (ok) fb.innerHTML = "<span aria-hidden='true'>✓</span><span class='feedback-text'>"+u.ok+"</span>";
+    else if (revealed) {
+      const item = items[idx];
+      const ans = item.choices ? item.choices.find(c => c.ok).t : u.donePath;
+      fb.innerHTML = "<span aria-hidden='true'>💡</span><span class='feedback-text'>"+u.reveal+" "+ans+"</span>";
+    } else fb.innerHTML = "<span aria-hidden='true'>✗</span><span class='feedback-text'>"+u.bad+"</span>";
+  }
+
+  function showKnowledge(text) {
+    sfx("know"); $("#know-text").textContent = text; show(know); live(text);
+  }
+
+  function renderPathChoice(item) {
+    const u = UI[age];
+    const host = $("#scene-host");
+    host.innerHTML = '<div class="mini-map" role="img" aria-label="מפה: כביש למעלה עם רכב בימין, מדרכה למטה">' +
+      '<span class="mlabel" style="top:8px;right:8px">'+u.road+'</span>' +
+      '<span class="mlabel" style="bottom:8px;right:8px">'+u.sw+'</span>' +
+      '<div style="position:absolute;top:14%;right:18%;width:36px;height:18px;background:#3b82f6;border-radius:4px" aria-hidden="true"></div>' +
+      '</div>';
+    const grid = document.createElement("div");
+    grid.className = "path-choice-grid";
+    grid.setAttribute("role","group"); grid.setAttribute("aria-label","בחרו נתיב");
+    // Show only 2 main visual choices + keep all 4 as buttons in choices style if 4
+    // Use path buttons for first two kinds, but all choices as choice buttons for consistency
+    // Brief has 4 options - use choice list but with texture previews for sidewalk vs road
+    item.choices.forEach((c,i) => {
+      const b = document.createElement("button");
+      b.type="button"; b.className="path-btn"; b.dataset.i=i;
+      const kind = c.kind || (c.ok ? "sw" : "rd");
+      const lab = kind==="sw" ? u.sw : u.road;
+      b.innerHTML = '<div class="preview '+kind+'" aria-hidden="true">'+lab+'</div><span>'+c.t+'</span><span class="mark" aria-hidden="true"></span>';
+      b.addEventListener("click", () => onChoose(i));
+      grid.appendChild(b);
+    });
+    $("#q-body").appendChild(grid);
+  }
+
+  function renderRoute(item) {
+    const host = $("#scene-host");
+    const u = UI[age];
+    host.innerHTML = '<div class="mini-map" role="img" aria-label="מפה סכמטית לבית ספר">' +
+      '<span class="mlabel" style="bottom:10px;right:10px">בית</span>' +
+      '<span class="mlabel" style="bottom:10px;left:10px">בית ספר</span>' +
+      '<span class="mlabel" style="top:8px;left:40%">'+u.road+'</span>' +
+      '</div>';
+    const wrap = document.createElement("div");
+    wrap.className = "route-opts";
+    wrap.setAttribute("role","group"); wrap.setAttribute("aria-label","בחרו מסלול");
+    item.choices.forEach((c,i) => {
+      const b = document.createElement("button");
+      b.type="button"; b.className="route-opt"; b.dataset.i=i;
+      b.innerHTML = '<span>'+c.t+'</span><span class="route-line">'+c.line+'</span><span class="mark" aria-hidden="true"></span>';
+      b.addEventListener("click", () => onChoose(i));
+      wrap.appendChild(b);
+    });
+    $("#q-body").appendChild(wrap);
+  }
+
+  function renderWalk(item) {
+    const u = UI[age];
+    ped = {x:8, y:78}; starsGot = 0; roadHits = 0;
+    starsNeed = (item.stars || []).length;
+    const host = $("#scene-host");
+    host.innerHTML =
+      '<div class="map-board" id="map-board" role="application" aria-label="מסלול: הישארו על המדרכה">' +
+        '<div class="map-road" aria-hidden="true"></div>' +
+        '<div class="map-road-label">'+u.road+'</div>' +
+        '<div class="map-sidewalk" aria-hidden="true"></div>' +
+        '<div class="map-sidewalk-label">'+u.sw+'</div>' +
+        '<div class="map-safe-zone" aria-hidden="true"></div>' +
+        '<div class="map-car" title="רכב בימין" aria-hidden="true"></div>' +
+        '<div class="map-hazard" style="left:55%;top:22%" aria-hidden="true">🚗</div>' +
+        '<div id="map-stars"></div>' +
+        '<div class="map-ped" id="map-ped" style="left:8%;top:78%"><div class="body"></div></div>' +
+      '</div>' +
+      '<p class="demo-note" style="text-align:center;font-weight:800;color:var(--sky-700)">'+u.collect+'</p>';
+    const starHost = $("#map-stars");
+    (item.stars || []).forEach((s,i) => {
+      const el = document.createElement("div");
+      el.className = "map-star"; el.dataset.i = i;
+      el.style.left = s.x+"%"; el.style.top = s.y+"%";
+      el.textContent = "⭐";
+      el.setAttribute("aria-label", "כוכב "+(i+1));
+      starHost.appendChild(el);
+    });
+    const pad = document.createElement("div");
+    pad.className = "dir-pad";
+    pad.innerHTML =
+      '<span class="spacer"></span>' +
+      '<button type="button" data-dx="0" data-dy="-1" aria-label="למעלה">↑</button>' +
+      '<span class="spacer"></span>' +
+      '<button type="button" data-dx="-1" data-dy="0" aria-label="שמאלה">←</button>' +
+      '<button type="button" data-dx="0" data-dy="1" aria-label="למטה">↓</button>' +
+      '<button type="button" data-dx="1" data-dy="0" aria-label="ימינה">→</button>';
+    // In RTL, arrow meanings for move: dx -1 is left on screen in LTR coords of map (left % decreases)
+    // Map uses left % increasing to the right visually. So:
+    // aria שמאלה = decrease x, ימינה = increase x. Buttons labeled ← → with dx.
+    // In RTL layout the visual order of pad flips - use dir=ltr on pad
+    pad.style.direction = "ltr";
+    pad.querySelectorAll("button").forEach(b => {
+      b.addEventListener("click", () => movePed(+b.dataset.dx, +b.dataset.dy, item));
+    });
+    $("#q-body").appendChild(pad);
+  }
+
+  function movePed(dx, dy, item) {
+    if (locked) return;
+    ped.x = Math.max(2, Math.min(92, ped.x + dx * 6));
+    ped.y = Math.max(4, Math.min(88, ped.y + dy * 5));
+    const el = $("#map-ped");
+    if (el) { el.style.left = ped.x+"%"; el.style.top = ped.y+"%"; }
+    sfx("step");
+    // Sidewalk is bottom 42% of board → y > ~58 is sidewalk
+    const onRoad = ped.y < 56;
+    if (onRoad) {
+      roadHits++;
+      sfx("bad");
+      showFb(false, false);
+      live(UI[age].bad + " — " + UI[age].road);
+      // bounce back to sidewalk
+      ped.y = 72;
+      if (el) el.style.top = ped.y+"%";
+      attempts++;
+      if (attempts >= 2) {
+        // force complete with reveal after too many road hits
+        locked = true;
+        showFb(false, true);
+        $("#nextBtn").hidden = false;
+        live(UI[age].reveal + " " + UI[age].sw);
+        updateProgress();
+        return;
+      }
+    }
+    // collect stars
+    document.querySelectorAll(".map-star:not(.got)").forEach(st => {
+      const sx = parseFloat(st.style.left);
+      const sy = parseFloat(st.style.top);
+      if (Math.abs(ped.x - sx) < 8 && Math.abs(ped.y - sy) < 8) {
+        st.classList.add("got");
+        starsGot++;
+        sfx("star");
+        score += 1;
+        live("⭐");
+      }
+    });
+    if (starsGot >= starsNeed && starsNeed > 0) {
+      locked = true;
+      score += Math.max(1, 3 - attempts);
+      sfx("ok");
+      showFb(true);
+      $("#feedback").querySelector(".feedback-text").textContent = UI[age].donePath;
+      $("#nextBtn").hidden = false;
+      live(UI[age].donePath);
+      document.querySelectorAll(".dir-pad button").forEach(b => b.disabled = true);
+    }
+    updateProgress();
+  }
+
+  function renderItem() {
+    locked = false; attempts = 0;
+    updateProgress(); $("#progressWrap").hidden = false;
+    const item = items[idx];
+    $("#feedback").className = "feedback"; $("#feedback").textContent = "";
+    $("#nextBtn").hidden = true;
+    $("#scene-host").innerHTML = ""; $("#q-body").innerHTML = "";
+    $("#q-title").textContent = item.q;
+    if (item.type === "knowledge-only") { showKnowledge(item.know); return; }
+    if (item.type === "path-choice") renderPathChoice(item);
+    else if (item.type === "route") renderRoute(item);
+    else if (item.type === "walk") renderWalk(item);
+    else {
+      if (item.friend) {
+        $("#scene-host").innerHTML = '<div style="text-align:center"><span class="friend-bubble" role="img" aria-label="חבר">🗣️ «'+item.friend+'»</span></div>';
+      }
+      renderMc(item);
+    }
+    show(play);
+  }
+
+  function afterItem() {
+    const item = items[idx];
+    if (item.know) showKnowledge(item.know);
+    else advance();
+  }
+  function advance() {
+    idx++;
+    if (idx >= items.length) finish();
+    else renderItem();
+  }
+  function finish() {
+    $("#progressBar").style.width = "100%";
+    const u = UI[age];
+    $("#end-title").textContent = u.endTitle;
+    $("#end-sub").textContent = u.endSub;
+    const maxScore = items.filter(it => it.type !== "knowledge-only").length * 3 + 3; // walk stars bonus approx
+    const ratio = maxScore ? Math.min(1, score / maxScore) : 1;
+    let stars = ratio >= 0.75 ? 3 : ratio >= 0.45 ? 2 : 1;
+    document.querySelectorAll(".star").forEach(s => s.classList.toggle("on", +s.dataset.i <= stars));
+    $("#end-score").textContent = "ניקוד: "+score+" · כוכבים: "+stars+" / 3";
+    $("#end-stars").setAttribute("aria-label", stars+" כוכבים מתוך 3");
+    sfx("win"); show(end); live(u.endTitle+" "+stars+" כוכבים");
+  }
+  function startGame() {
+    if (!age) return;
+    items = ITEMS[age].slice();
+    idx = 0; score = 0;
+    renderItem();
+  }
+
+  $("#age-young").addEventListener("click", () => setAge("young"));
+  $("#age-older").addEventListener("click", () => setAge("older"));
+  $("#startBtn").addEventListener("click", startGame);
+  $("#nextBtn").addEventListener("click", afterItem);
+  $("#knowNext").addEventListener("click", advance);
+  $("#againBtn").addEventListener("click", () => {
+    $("#progressWrap").hidden = true; $("#progressBar").style.width = "0%";
+    show(hub); $("#startBtn").focus();
+  });
+  $("#muteBtn").addEventListener("click", () => {
+    muted = !muted;
+    $("#muteBtn").setAttribute("aria-pressed", muted ? "true" : "false");
+    $("#muteBtn").textContent = muted ? "🔇" : "🔊";
+    $("#muteBtn").setAttribute("aria-label", muted ? "בטלו השתקה" : "השתקה");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "m" || e.key === "M" || e.key === "מ") {
+      if (e.target.tagName !== "INPUT") $("#muteBtn").click();
+    }
+    if (!play.classList.contains("active") || locked) return;
+    const item = items[idx];
+    if (!item || item.type !== "walk") return;
+    const map = {ArrowUp:[0,-1], ArrowDown:[0,1], ArrowLeft:[-1,0], ArrowRight:[1,0],
+                 w:[0,-1],s:[0,1],a:[-1,0],d:[1,0], W:[0,-1],S:[0,1],A:[-1,0],D:[1,0]};
+    if (map[e.key]) { e.preventDefault(); movePed(map[e.key][0], map[e.key][1], item); }
+  });
+
+  setAge("young"); age = null;
+  document.querySelectorAll(".age-btn").forEach(b => { b.classList.remove("selected"); b.setAttribute("aria-pressed","false"); });
+  $("#startBtn").disabled = true;
+  $("#hub-title").textContent = "עַל הַמִּדְרָכָה";
+  $("#hub-sub").textContent = "מִשְׂחַק »נָתִיב בָּטוּחַ« · בְּטִיחוּת בַּדֶּרֶךְ";
+  $("#startBtn").textContent = "הַתְחֵלָה";
+})();
+</script>
+</body>
+</html>

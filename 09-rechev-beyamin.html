@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>רכב בימין — שבוע זה״ב | מחוז דרום</title>
+<style>
+
+:root {
+  --sky-50: #f0f9ff; --sky-100: #e0f2fe; --sky-200: #bae6fd; --sky-300: #7dd3fc;
+  --sky-500: #0ea5e9; --sky-600: #0284c7; --sky-700: #0369a1;
+  --ink: #0f2744; --ink-soft: #334e68; --muted: #5a7a94;
+  --paper: #ffffff; --card: #ffffff;
+  --mint: #10b981; --mint-soft: #d1fae5;
+  --coral: #ef4444; --coral-soft: #fee2e2;
+  --amber: #f59e0b; --amber-soft: #fef3c7; --gold: #fbbf24;
+  --radius: 1.1rem; --radius-btn: .85rem;
+  --shadow: 0 10px 28px -10px rgba(15,39,68,.18), 0 2px 8px rgba(15,39,68,.06);
+  --shadow-3d: 0 14px 0 -2px rgba(2,132,199,.12), 0 18px 36px -12px rgba(15,39,68,.22);
+  --focus: 3px solid #0369a1;
+  --font: Assistant, Heebo, Rubik, Arial, sans-serif;
+  --touch: 48px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; min-height: 100%;
+  font-family: var(--font); color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 100% -10%, #bae6fd 0%, transparent 55%),
+    radial-gradient(900px 500px at -10% 110%, #a5f3fc 0%, transparent 50%),
+    linear-gradient(180deg, var(--sky-50), #e8f7ff 40%, #f0f9ff);
+  -webkit-tap-highlight-color: transparent;
+}
+body { line-height: 1.45; }
+button, [role="button"] {
+  font-family: inherit; cursor: pointer;
+  min-height: var(--touch); min-width: var(--touch);
+}
+button:focus-visible, [tabindex="0"]:focus-visible, .choice:focus-visible,
+.door-btn:focus-visible, .vis-opt:focus-visible, .lane-slot:focus-visible,
+.msg-opt:focus-visible, .dir-btn:focus-visible, .place-car:focus-visible {
+  outline: var(--focus); outline-offset: 3px;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.app {
+  max-width: 920px; margin: 0 auto; padding: 12px 14px 88px;
+  min-height: 100dvh; position: relative;
+}
+.logo-corner {
+  position: fixed; top: 10px; left: 10px; z-index: 40;
+  height: 48px; width: auto; pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(15,39,68,.15));
+}
+@media (max-width: 480px) { .logo-corner { height: 40px; } }
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin-bottom: 10px; flex-wrap: wrap;
+}
+.brand-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.85); border: 1px solid var(--sky-200);
+  border-radius: 999px; padding: 6px 12px 6px 8px;
+  font-size: .85rem; color: var(--sky-700); font-weight: 700;
+  box-shadow: var(--shadow);
+}
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--touch); height: var(--touch);
+  border-radius: 50%; border: 2px solid var(--sky-200);
+  background: var(--paper); color: var(--ink); font-size: 1.25rem;
+  box-shadow: var(--shadow);
+}
+.icon-btn[aria-pressed="true"] { background: var(--amber-soft); border-color: var(--amber); }
+.progress-wrap {
+  flex: 1; min-width: 140px; max-width: 280px;
+  background: rgba(255,255,255,.7); border-radius: 999px; height: 12px;
+  border: 1px solid var(--sky-200); overflow: hidden;
+}
+.progress-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--sky-500), var(--mint));
+  border-radius: 999px; transition: width .35s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar, .card, .feedback, .star, .screen.active,
+  .car-anim, .door-btn, .vis-opt { transition: none !important; animation: none !important; }
+}
+.screen { display: none; }
+.screen.active { display: block; animation: fadeIn .35s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow-3d); border: 1px solid rgba(14,165,233,.18);
+  padding: 22px 20px 24px; position: relative;
+}
+.hero-icon {
+  width: 88px; height: 88px; margin: 0 auto 12px;
+  display: grid; place-items: center;
+  background: linear-gradient(160deg, #e0f2fe, #cffafe);
+  border-radius: 24px; border: 2px solid var(--sky-200);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.8), 0 8px 0 rgba(2,132,199,.1);
+}
+h1 {
+  margin: 0 0 8px; text-align: center;
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem); color: var(--sky-700);
+  font-weight: 800; letter-spacing: -.01em;
+}
+.subtitle {
+  text-align: center; color: var(--ink-soft); margin: 0 0 20px;
+  font-size: clamp(1rem, 2.5vw, 1.15rem); font-weight: 600;
+}
+.goals { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 8px; }
+.goals li {
+  background: var(--sky-50); border: 1px solid var(--sky-200);
+  border-radius: 12px; padding: 10px 14px; font-weight: 700; color: var(--ink-soft);
+}
+.goals li::before { content: "✓ "; color: var(--mint); font-weight: 900; }
+.age-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0 20px; }
+@media (max-width: 520px) { .age-grid { grid-template-columns: 1fr; } }
+.age-btn {
+  border: 3px solid var(--sky-200);
+  background: linear-gradient(180deg, #fff, var(--sky-50));
+  border-radius: var(--radius); padding: 18px 14px; text-align: center;
+  box-shadow: var(--shadow); color: var(--ink);
+}
+.age-btn:hover { border-color: var(--sky-500); }
+.age-btn.selected {
+  border-color: var(--sky-600);
+  background: linear-gradient(180deg, #e0f2fe, #fff);
+  box-shadow: 0 0 0 3px rgba(14,165,233,.25), var(--shadow);
+}
+.age-btn .age-label { display: block; font-size: 1.35rem; font-weight: 800; color: var(--sky-700); }
+.age-btn .age-hint { display: block; margin-top: 4px; font-size: .95rem; color: var(--muted); font-weight: 600; }
+.primary-btn, .next-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px 18px;
+  border-radius: var(--radius-btn); font-size: 1.2rem; font-weight: 800;
+  border: none; min-height: 52px;
+}
+.primary-btn {
+  background: linear-gradient(180deg, #38bdf8, #0284c7); color: #fff;
+  box-shadow: 0 6px 0 #0369a1, 0 10px 20px rgba(2,132,199,.28);
+}
+.primary-btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+.next-btn {
+  background: linear-gradient(180deg, #34d399, #059669); color: #fff;
+  box-shadow: 0 6px 0 #047857, 0 10px 20px rgba(16,185,129,.25); margin-top: 14px;
+}
+.q-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  font-weight: 700; color: var(--muted); font-size: .95rem;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--sky-100); color: var(--sky-700);
+  border-radius: 999px; padding: 4px 12px; font-size: .9rem;
+}
+.question {
+  font-size: clamp(1.25rem, 3.2vw, 1.65rem);
+  font-weight: 800; margin: 0 0 16px; color: var(--ink); text-align: right;
+}
+.young .question, .young .choice, .young .knowledge-text, .young .age-btn .age-label,
+.young h1, .young .subtitle, .young .feedback-text {
+  font-size: clamp(1.3rem, 3.4vw, 1.75rem);
+}
+.young .choice { font-size: clamp(1.15rem, 3vw, 1.4rem); }
+.choices { display: grid; gap: 10px; }
+.choice {
+  display: flex; align-items: flex-start; gap: 12px;
+  text-align: right; width: 100%; padding: 14px;
+  border-radius: 14px; border: 2.5px solid var(--sky-200);
+  background: linear-gradient(180deg, #fff, #f8fcff);
+  color: var(--ink); font-size: 1.1rem; font-weight: 700;
+  box-shadow: 0 4px 0 rgba(2,132,199,.08);
+}
+.choice .letter {
+  flex-shrink: 0; width: 32px; height: 32px; border-radius: 10px;
+  display: grid; place-items: center; background: var(--sky-100);
+  color: var(--sky-700); font-weight: 900; font-size: .95rem;
+}
+.choice .mark { margin-inline-start: auto; font-weight: 900; }
+.choice.selected { border-color: var(--sky-500); background: #e0f2fe; }
+.choice.correct, .door-btn.correct, .vis-opt.correct, .msg-opt.correct,
+.lane-slot.correct, .dir-btn.correct, .place-car.correct {
+  border-color: var(--mint) !important; background: var(--mint-soft) !important;
+}
+.choice.wrong, .door-btn.wrong, .vis-opt.wrong, .msg-opt.wrong,
+.lane-slot.wrong, .dir-btn.wrong, .place-car.wrong {
+  border-color: var(--coral) !important; background: var(--coral-soft) !important;
+}
+.feedback {
+  display: none; margin-top: 12px; padding: 12px 14px; border-radius: 12px;
+  font-weight: 800; align-items: center; gap: 8px;
+}
+.feedback.show { display: flex; }
+.feedback.ok { background: var(--mint-soft); color: #065f46; border: 2px solid var(--mint); }
+.feedback.bad { background: var(--coral-soft); color: #991b1b; border: 2px solid var(--coral); }
+.feedback.info { background: var(--amber-soft); color: #92400e; border: 2px solid var(--amber); }
+.knowledge { text-align: center; padding: 8px 4px; }
+.knowledge-icon {
+  width: 64px; height: 64px; margin: 0 auto 10px; border-radius: 18px;
+  display: grid; place-items: center; font-size: 2rem;
+  background: linear-gradient(160deg, #fef3c7, #e0f2fe); border: 2px solid var(--amber);
+}
+.knowledge-text { font-size: clamp(1.15rem, 3vw, 1.4rem); font-weight: 800; color: var(--ink); margin: 0 0 8px; }
+.hint-note { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 10px; font-weight: 600; }
+.live-region { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+.end-stars { display: flex; justify-content: center; gap: 10px; margin: 16px 0; font-size: 2.4rem; }
+.star { opacity: .25; filter: grayscale(1); }
+.star.on { opacity: 1; filter: none; transform: scale(1.1); }
+.friend-bubble {
+  display: inline-block; background: #fff; border: 2px solid var(--sky-300);
+  border-radius: 16px; padding: 10px 14px; font-weight: 800; color: var(--ink-soft);
+  box-shadow: var(--shadow); margin-bottom: 10px;
+}
+
+
+.street-map {
+  position: relative; height: 220px; border-radius: 16px; overflow: hidden;
+  border: 2px solid var(--sky-300); margin-bottom: 14px;
+  background: #86efac;
+}
+.street-map .road {
+  position: absolute; top: 50%; left: 0; right: 0; height: 90px;
+  transform: translateY(-50%);
+  background: #475569;
+  background-image: repeating-linear-gradient(90deg, transparent, transparent 20px, #fbbf24 20px, #fbbf24 28px);
+}
+.street-map .lane-label {
+  position: absolute; font-size: .75rem; font-weight: 900;
+  background: #fff; padding: 2px 8px; border-radius: 6px; border: 1px solid #0369a1; color: #0369a1; z-index: 4;
+}
+.street-map .lane-r { top: 52%; right: 8px; }
+.street-map .lane-l { bottom: 52%; left: 8px; }
+.lane-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.place-car, .dir-btn, .lane-slot {
+  border: 2.5px solid var(--sky-200); border-radius: 14px; padding: 14px;
+  background: #fff; font-weight: 800; color: var(--ink); text-align: center;
+  box-shadow: var(--shadow); min-height: 56px; font-size: 1.05rem;
+}
+.dir-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+@media (max-width: 520px) { .dir-row { grid-template-columns: 1fr; } }
+.car-mini { display: inline-block; }
+
+</style>
+</head>
+<body>
+<img class="logo-corner" src="data:image/png;base64,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" alt="לוגו מחוז דרום" height="48" width="auto">
+<div class="app" id="app">
+  <div class="topbar" id="topbar">
+    <div class="brand-chip">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h12l-4-4m4 4l-4 4" stroke="#0284c7" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>
+      <span>שבוע זה״ב · מחוז דרום</span>
+    </div>
+    <div class="progress-wrap" id="progressWrap" hidden>
+      <div class="progress-bar" id="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="התקדמות"></div>
+    </div>
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="השתקה" title="השתקה">🔊</button>
+  </div>
+  <div id="live" class="live-region" aria-live="polite" aria-atomic="true"></div>
+
+  <section class="screen active" id="screen-hub" aria-labelledby="hub-title">
+    <div class="card">
+      <div class="hero-icon" aria-hidden="true"><svg width="56" height="56" viewBox="0 0 64 64"><rect x="4" y="28" width="56" height="16" rx="2" fill="#475569"/><rect x="8" y="34" width="20" height="6" fill="#0ea5e9"/><polygon points="28,37 36,37 32,30 32,44" fill="#0284c7"/><text x="32" y="22" text-anchor="middle" font-size="14" font-weight="900" fill="#0369a1">ימין</text></svg></div>
+      <h1 id="hub-title">רֶכֶב בְּיָמִין</h1>
+      <p class="subtitle" id="hub-sub">מִשְׂחַק »סַדֵּר אֶת הָרְחוֹב« · בְּטִיחוּת בַּדֶּרֶךְ</p>
+      <ul class="goals"><li>בישראל רכב נוסע בימין</li><li>לכן מבט שמאל–ימין–שמאל</li><li>לא להעתיק חוקים מסרטים מחו״ל</li></ul>
+      <p style="text-align:center;font-weight:800;color:var(--sky-700);margin:0 0 8px;" id="age-prompt">בחרו קבוצת גיל</p>
+      <div class="age-grid" role="group" aria-label="בחירת גיל">
+        <button type="button" class="age-btn" id="age-young" data-age="young" aria-pressed="false">
+          <span class="age-label">א–ג</span>
+          <span class="age-hint">עִם נִקּוּד</span>
+        </button>
+        <button type="button" class="age-btn" id="age-older" data-age="older" aria-pressed="false">
+          <span class="age-label">ד–ז</span>
+          <span class="age-hint">בלי ניקוד</span>
+        </button>
+      </div>
+      <button type="button" class="primary-btn" id="startBtn" disabled>הַתְחֵלָה</button>
+      <p class="hint-note">מקלדת · Enter · M להשתקה · אופליין</p>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-play" aria-labelledby="q-title">
+    <div class="card" id="play-card">
+      <div class="q-meta">
+        <span class="badge" id="q-counter">1 / 10</span>
+        <span class="badge" id="q-score" aria-label="ניקוד">★ 0</span>
+      </div>
+      <div id="scene-host"></div>
+      <h2 class="question" id="q-title"></h2>
+      <div id="q-body"></div>
+      <div class="feedback" id="feedback" role="status"></div>
+      <button type="button" class="next-btn" id="nextBtn" hidden>הַבָּא</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-knowledge" aria-labelledby="know-title">
+    <div class="card knowledge">
+      <div class="knowledge-icon" aria-hidden="true">💡</div>
+      <h2 class="question" id="know-title" style="text-align:center">כַּרְטִיס יֶדַע</h2>
+      <p class="knowledge-text" id="know-text"></p>
+      <button type="button" class="next-btn" id="knowNext">הַבָּא</button>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-end" aria-labelledby="end-title">
+    <div class="card" style="text-align:center">
+      <div class="hero-icon" aria-hidden="true">🏆</div>
+      <h1 id="end-title">כַּלָּה!</h1>
+      <p class="subtitle" id="end-sub"></p>
+      <div class="end-stars" id="end-stars" aria-label="כוכבים">
+        <span class="star" data-i="1">⭐</span>
+        <span class="star" data-i="2">⭐</span>
+        <span class="star" data-i="3">⭐</span>
+      </div>
+      <p style="font-weight:800;font-size:1.2rem;color:var(--ink-soft)" id="end-score"></p>
+      <button type="button" class="primary-btn" id="againBtn" style="margin-top:12px">שׁוּב לַמֶּרְכָּז</button>
+    </div>
+  </section>
+</div>
+<script>
+(function () {
+  "use strict";
+
+  let muted = false, audioCtx = null;
+  function ctx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function beep(freq, dur, type, vol) {
+    if (muted) return;
+    try {
+      const c = ctx(), o = c.createOscillator(), g = c.createGain();
+      o.type = type || "sine"; o.frequency.value = freq;
+      o.connect(g); g.connect(c.destination);
+      const t = c.currentTime;
+      g.gain.setValueAtTime(vol || 0.08, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      o.start(t); o.stop(t + dur + 0.02);
+    } catch (e) {}
+  }
+  function sfx(kind) {
+    if (kind === "ok") { beep(660, 0.1, "sine", 0.08); setTimeout(()=>beep(880,0.12,"sine",0.07), 90); }
+    else if (kind === "bad") { beep(200, 0.12, "triangle", 0.06); setTimeout(()=>beep(160,0.14,"triangle",0.05), 80); }
+    else if (kind === "know") { beep(523,0.1,"sine",0.06); setTimeout(()=>beep(659,0.12,"sine",0.06),100); setTimeout(()=>beep(784,0.14,"sine",0.05),200); }
+    else if (kind === "win") { [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,0.15,"sine",0.08), i*110)); }
+    else if (kind === "door") { beep(280, 0.08, "square", 0.04); setTimeout(()=>beep(420,0.1,"sine",0.05), 90); }
+    else if (kind === "whistle") { beep(880, 0.06, "sine", 0.05); setTimeout(()=>beep(1100,0.08,"sine",0.04), 70); }
+    else if (kind === "place") { beep(440, 0.08, "triangle", 0.05); setTimeout(()=>beep(550,0.1,"sine",0.05), 80); }
+  }
+
+
+  const UI = {
+    young: {
+      title: "רֶכֶב בְּיָמִין", sub: "מִשְׂחַק »סַדֵּר אֶת הָרְחוֹב« · בְּטִיחוּת בַּדֶּרֶךְ",
+      start: "הַתְחֵלָה", next: "הַבָּא", knowTitle: "כַּרְטִיס יֶדַע",
+      endTitle: "כַּלָּה!", endSub: "כָּל הַכָּבוֹד — רֶכֶב בְּיָמִין!",
+      again: "שׁוּב לַמֶּרְכָּז", ok: "כָּל הַכָּבוֹד! ✓", bad: "כִּמְעַט… נַסּוּ עוֹד פַּעַם ✗",
+      reveal: "הַתְּשׁוּבָה הַנְּכוֹנָה:", agePrompt: "בַּחֲרוּ קְבוּצַת גִּיל",
+      rightLane: "נָתִיב יָמִין", leftLane: "נָתִיב שְׂמֹאל", fromLeft: "מִשְּׂמֹאל", fromRight: "מִיָּמִין"
+    },
+    older: {
+      title: "רכב בימין", sub: "משחק »סדר את הרחוב« · בטיחות בדרך",
+      start: "התחלה", next: "הבא", knowTitle: "כרטיס ידע",
+      endTitle: "כל הכבוד!", endSub: "סיימתם את תחנת רכב בימין",
+      again: "חזרה למרכז", ok: "מצוין! ✓", bad: "כמעט… נסו שוב ✗",
+      reveal: "התשובה הנכונה:", agePrompt: "בחרו קבוצת גיל",
+      rightLane: "נתיב ימין", leftLane: "נתיב שמאל", fromLeft: "משמאל", fromRight: "מימין"
+    }
+  };
+
+
+  const ITEMS = {
+    young: [
+      { id:"y1", type:"mc", q:"בְּיִשְׂרָאֵל — בְּאֵיזֶה צַד נוֹסֵעַ רֶכֶב?",
+        choices:[
+          {t:"בִּשְׂמֹאל", ok:false},
+          {t:"בְּיָמִין", ok:true},
+          {t:"בָּאֶמְצַע תָּמִיד", ok:false},
+          {t:"עַל הַמִּדְרָכָה", ok:false}
+        ],
+        know:"בְּיִשְׂרָאֵל רֶכֶב נוֹסֵעַ בְּיָמִין הַכְּבִישׁ." },
+      { id:"y2", type:"mc", q:"לָכֵן מִסְתַּכְּלִים קֹדֶם שְׂמֹאלָה?",
+        choices:[
+          {t:"כֵּן — הַנָּתִיב הַקָּרוֹב: רֶכֶב מַגִּיעַ מִשְּׂמֹאל", ok:true},
+          {t:"לֹא קָשׁוּר", ok:false},
+          {t:"רַק בַּגֶּשֶׁם", ok:false},
+          {t:"רַק בְּחֻלצָה אֲדֻמָּה", ok:false}
+        ],
+        know:"כִּי רֶכֶב בְּיָמִין — הַנָּתִיב הַקָּרוֹב מַגִּיעַ מִשְּׂמֹאל, לָכֵן מִבָּט רִאשׁוֹן שְׂמֹאלָה." },
+      { id:"y3", type:"place", q:"תַּרְגִּיל: שִׂימוּ אֶת הָרֶכֶב בַּנָּתִיב הַיְמָנִי",
+        choices:[
+          {t:"נָתִיב יָמִין (נָכוֹן)", ok:true, lane:"right"},
+          {t:"נָתִיב שְׂמֹאל (שָׁגוּי)", ok:false, lane:"left"}
+        ],
+        reveal:"נָתִיב יָמִין",
+        know:"שָׂמִים אֶת הָרֶכֶב בַּנָּתִיב הַיְמָנִי." },
+      { id:"y4", type:"mc", q:"תְּמוּנָה מֵחֻץ לָאָרֶץ עִם רֶכֶב בִּשְׂמֹאל — מָה אֶצְלֵנוּ?",
+        choices:[
+          {t:"אוֹתוֹ דָּבָר", ok:false},
+          {t:"אֶצְלֵנוּ יָמִין", ok:true},
+          {t:"אֵין כְּבִישִׁים", ok:false},
+          {t:"רַק אוֹפַנַּיִם", ok:false}
+        ],
+        know:"מִחוּץ לָאָרֶץ יֵשׁ כְּלָלִים אֲחֵרִים — אֶצְלֵנוּ יָמִין." },
+      { id:"y5", type:"mc", q:"הַיּוֹם לָמַדְנוּ: רֶכֶב בְּ______.",
+        choices:[
+          {t:"שְׂמֹאל", ok:false},
+          {t:"יָמִין", ok:true},
+          {t:"אֲוִיר", ok:false},
+          {t:"מַיִם", ok:false}
+        ],
+        know:"הַיּוֹם לָמַדְנוּ: רֶכֶב בְּיָמִין." },
+      { id:"y6", type:"mc", q:"כְּשֶׁעוֹמְדִים לַחֲצוֹת — לְאֵיזֶה צַד מִסְתַּכְּלִים רִאשׁוֹן?",
+        choices:[
+          {t:"שְׂמֹאל", ok:true},
+          {t:"יָמִין", ok:false},
+          {t:"לְמַעְלָה", ok:false},
+          {t:"לַקִּרְקַע בִּלְבַד", ok:false}
+        ],
+        know:"מִסְתַּכְּלִים רִאשׁוֹן שְׂמֹאלָה — שְׂמֹאל־יָמִין־שְׂמֹאל." },
+      { id:"y7", type:"mc", q:"רֶכֶב »הוֹלֵךְ נֶגֶד« עַל נָתִיב שְׂמֹאל בִּימָמָה דוּ־סִטְרִית — זֶה נָכוֹן?",
+        choices:[
+          {t:"כֵּן", ok:false},
+          {t:"לֹא — אֶצְלֵנוּ נוֹסְעִים בְּיָמִין", ok:true},
+          {t:"רַק בַּלַּיְלָה", ok:false},
+          {t:"רַק לְאֹטוֹבּוּס", ok:false}
+        ],
+        know:"אֶצְלֵנוּ נוֹסְעִים בְּיָמִין — לֹא נֶגֶד הַתְּנוּעָה." },
+      { id:"y8", type:"arrows", q:"מִשְׂחַק: כַּוְּנוּ אֶת הַחֵץ לְכִוּוּן הַנְּסִיעָה הַנָּכוֹן",
+        choices:[
+          {t:"חֵץ יָמִינָה (נְסִיעָה בְּיָמִין)", ok:true, dir:"right"},
+          {t:"חֵץ שְׂמֹאלָה (שָׁגוּי אֶצְלֵנוּ)", ok:false, dir:"left"}
+        ],
+        reveal:"חֵץ יָמִינָה",
+        know:"כִּוּוּן הַנְּסִיעָה בְּיִשְׂרָאֵל — יָמִין." },
+      { id:"y9", type:"mc", friend:"בסרט ראיתי שנוסעים בשמאל",
+        q:"חָבֵר רָאָה סֶרֶט חוּץ וְחָשַׁב שֶׁנּוֹסְעִים בִּשְׂמֹאל. מָה תַּגִּידוּ?",
+        choices:[
+          {t:"»נָכוֹן גַּם פֹּה«", ok:false},
+          {t:"»בְּיִשְׂרָאֵל בְּיָמִין«", ok:true},
+          {t:"»אֵין חֲשִׁיבוּת«", ok:false},
+          {t:"»רַק בְּתֵל אָבִיב שְׂמֹאל«", ok:false}
+        ],
+        know:"בְּיִשְׂרָאֵל נוֹסְעִים בְּיָמִין — לֹא כַּמּוֹ בַּסֶּרֶט מֵחֻץ לָאָרֶץ." },
+      { id:"y10", type:"knowledge-only", q:"סִיּוּם יֶדַע",
+        know:"בְּיִשְׂרָאֵל רֶכֶב בְּיָמִין — וְלָכֵן שְׂמֹאל־יָמִין־שְׂמֹאל." }
+    ],
+    older: [
+      { id:"o1", type:"mc", q:"עובדה בסיסית: בישראל נוהגים באיזה צד?",
+        choices:[
+          {t:"בשמאל כמו בבריטניה", ok:false},
+          {t:"בימין הכביש", ok:true},
+          {t:"באמצע תמיד", ok:false},
+          {t:"על המדרכה", ok:false}
+        ],
+        know:"בישראל נוהגים בצד ימין של הכביש." },
+      { id:"o2", type:"mc", q:"קשר לחצייה: למה המבט הראשון והאחרון שמאלה?",
+        choices:[
+          {t:"רק כי ככה בסרטים", ok:false},
+          {t:"כי הנתיב הקרוב — רכב מגיע משמאל למי שעומד לחצות", ok:true},
+          {t:"אין קשר לנסיעה בימין", ok:false},
+          {t:"רק בחד-סיטרי", ok:false}
+        ],
+        know:"נסיעה בימין → נתיב קרוב משמאל → מבט ראשון וחוזר שמאלה." },
+      { id:"o3", type:"mc", q:"רחוב חד-סיטרי:",
+        choices:[
+          {t:"תמיד אפשר לחצות בלי מבט", ok:false},
+          {t:"עדיין מסתכלים — כיוון התנועה לפי השילוט", ok:true},
+          {t:"תמיד שמאל", ok:false},
+          {t:"אין רכבים בחד-סיטרי", ok:false}
+        ],
+        know:"גם בחד-סיטרי מסתכלים — לפי כיוון התנועה והשילוט." },
+      { id:"o4", type:"place", q:"תרחיש מסרט זר: שימו את הרכב נכון לישראל",
+        choices:[
+          {t:"נתיב ימין (ישראל)", ok:true, lane:"right"},
+          {t:"נתיב שמאל (כמו בסרט זר)", ok:false, lane:"left"}
+        ],
+        reveal:"נתיב ימין",
+        know:"מתקנים לישראל — נסיעה בימין." },
+      { id:"o5", type:"mc", q:"נתיב ימין בכביש דו-סיטרי מיועד בעיקר ל-",
+        choices:[
+          {t:"נסיעה עם כיוון התנועה בימין", ok:true},
+          {t:"נסיעה הפוכה תמיד", ok:false},
+          {t:"הולכי רגל", ok:false},
+          {t:"משחקי כדור", ok:false}
+        ],
+        know:"נתיב ימין = נסיעה עם כיוון התנועה בימין." },
+      { id:"o6", type:"mc", q:"פנייה ימין ברמזור — למה הולך רגל נזהר?",
+        choices:[
+          {t:"כי רכב עלול לפנות לכיוון המעבר", ok:true},
+          {t:"כי אין פניות בישראל", ok:false},
+          {t:"כי ימין אסור תמיד", ok:false},
+          {t:"אין סיבה", ok:false}
+        ],
+        know:"רכב עלול לפנות ימין לכיוון המעבר — נזהרים." },
+      { id:"o7", type:"arrows", q:"מפה: סמנו חץ נסיעה נכון ברחוב עירוני (ישראל)",
+        choices:[
+          {t:"→ ימין (נכון)", ok:true, dir:"right"},
+          {t:"← שמאל (שגוי אצלנו)", ok:false, dir:"left"}
+        ],
+        reveal:"חץ ימינה",
+        know:"ברחוב עירוני בישראל — כיוון נסיעה בימין." },
+      { id:"o8", type:"mc", q:"מה לא נכון?",
+        choices:[
+          {t:"בישראל נוסעים בימין", ok:false},
+          {t:"בישראל נוסעים בשמאל כמו בבריטניה", ok:true},
+          {t:"מבט שמאל–ימין–שמאל חשוב", ok:false},
+          {t:"יורדים למדרכה", ok:false}
+        ],
+        know:"לא נכון: בישראל לא נוסעים בשמאל כמו בבריטניה." },
+      { id:"o9", type:"mc", q:"קישור למשחק שמאל–ימין–שמאל:",
+        choices:[
+          {t:"קודם ימין תמיד", ok:false},
+          {t:"אותו עיקרון — שמאל קודם", ok:true},
+          {t:"אין קשר", ok:false},
+          {t:"רק בלילה", ok:false}
+        ],
+        know:"אותו עיקרון כמו במשחק 2 — שמאל קודם." },
+      { id:"o10", type:"knowledge-only", q:"סיכום",
+        know:"ישראל = נסיעה בימין. אל תעתיקו חוקים מסרטים מחו״ל. שמאל–ימין–שמאל." }
+    ]
+  };
+
+
+  let age=null, idx=0, score=0, attempts=0, locked=false, items=[];
+  const $ = (s) => document.querySelector(s);
+  const hub=$("#screen-hub"), play=$("#screen-play"), know=$("#screen-knowledge"), end=$("#screen-end");
+
+  function show(screen) {
+    [hub,play,know,end].forEach(s => s.classList.remove("active"));
+    screen.classList.add("active");
+    const f = screen.querySelector("button:not([disabled]), [tabindex='0']");
+    if (f) setTimeout(() => f.focus(), 50);
+  }
+  function live(msg) { $("#live").textContent = msg; }
+  function esc(s) { const d=document.createElement("div"); d.textContent=s||""; return d.innerHTML; }
+
+  function setAge(a) {
+    age = a;
+    document.body.classList.toggle("young", a==="young");
+    document.body.classList.toggle("older", a==="older");
+    document.querySelectorAll(".age-btn").forEach(b => {
+      const on = b.dataset.age === a;
+      b.classList.toggle("selected", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const u = UI[a];
+    $("#hub-title").textContent = u.title;
+    $("#hub-sub").textContent = u.sub;
+    $("#startBtn").textContent = u.start; $("#startBtn").disabled = false;
+    $("#age-prompt").textContent = u.agePrompt;
+    $("#nextBtn").textContent = u.next;
+    $("#knowNext").textContent = u.next;
+    $("#know-title").textContent = u.knowTitle;
+    $("#againBtn").textContent = u.again;
+    $("#end-title").textContent = u.endTitle;
+  }
+
+  function updateProgress() {
+    const total = items.length;
+    const pct = total ? Math.round((idx/total)*100) : 0;
+    const bar = $("#progressBar");
+    bar.style.width = pct+"%"; bar.setAttribute("aria-valuenow", pct);
+    $("#q-counter").textContent = Math.min(idx+1,total)+" / "+total;
+    $("#q-score").textContent = "★ "+score;
+  }
+
+  function renderMc(item) {
+    const wrap = document.createElement("div");
+    wrap.className = "choices";
+    wrap.setAttribute("role","group"); wrap.setAttribute("aria-label","תשובות");
+    const letters = ["א","ב","ג","ד"];
+    item.choices.forEach((c,i) => {
+      const b = document.createElement("button");
+      b.type="button"; b.className="choice"; b.dataset.i=i;
+      b.innerHTML = '<span class="letter">'+letters[i]+'</span><span>'+esc(c.t)+'</span><span class="mark" aria-hidden="true"></span>';
+      b.addEventListener("click", () => onChoose(i));
+      wrap.appendChild(b);
+    });
+    $("#q-body").appendChild(wrap);
+  }
+
+  function onChoose(i) {
+    if (locked) return;
+    const item = items[idx];
+    const choice = item.choices[i];
+    const buttons = $("#q-body").querySelectorAll(".choice, .door-btn, .vis-opt, .msg-opt, .dir-btn, .place-car, .lane-slot");
+    buttons.forEach(b => b.classList.remove("selected"));
+    const btn = $("#q-body").querySelector('[data-i="'+i+'"]') || document.querySelector('[data-i="'+i+'"]');
+    if (btn) btn.classList.add("selected");
+    if (choice.ok) {
+      locked = true;
+      markResult(buttons, item, true, i);
+      score += Math.max(1, 3 - attempts);
+      sfx("ok"); showFb(true);
+      $("#nextBtn").hidden = false; $("#nextBtn").focus();
+      live(UI[age].ok);
+    } else {
+      attempts++;
+      sfx("bad");
+      if (btn) { btn.classList.add("wrong"); const m=btn.querySelector(".mark"); if(m) m.textContent="✗"; }
+      if (attempts >= 2) {
+        locked = true; markResult(buttons, item, false, i);
+        showFb(false, true); $("#nextBtn").hidden = false; live(UI[age].reveal);
+      } else {
+        showFb(false, false); live(UI[age].bad);
+        if (btn) btn.disabled = true;
+      }
+    }
+    updateProgress();
+  }
+
+  function markResult(buttons, item, wasCorrect, chosen) {
+    buttons.forEach(b => {
+      const i = +b.dataset.i; b.disabled = true;
+      if (item.choices[i] && item.choices[i].ok) {
+        b.classList.add("correct");
+        const mark = b.querySelector(".mark");
+        if (mark) mark.textContent = "✓";
+      } else if (i === chosen) {
+        b.classList.add("wrong");
+        const mark = b.querySelector(".mark");
+        if (mark) mark.textContent = "✗";
+      }
+    });
+  }
+
+  function showFb(ok, revealed) {
+    const fb = $("#feedback"); const u = UI[age];
+    fb.className = "feedback show " + (ok ? "ok" : (revealed ? "info" : "bad"));
+    if (ok) fb.innerHTML = "<span aria-hidden='true'>✓</span><span class='feedback-text'>"+u.ok+"</span>";
+    else if (revealed) {
+      const item = items[idx];
+      const ans = (item.choices && item.choices.find(c => c.ok)) ? item.choices.find(c => c.ok).t : (item.reveal || "");
+      fb.innerHTML = "<span aria-hidden='true'>💡</span><span class='feedback-text'>"+u.reveal+" "+esc(ans)+"</span>";
+    } else fb.innerHTML = "<span aria-hidden='true'>✗</span><span class='feedback-text'>"+u.bad+"</span>";
+  }
+
+  function showKnowledge(text) {
+    sfx("know"); $("#know-text").textContent = text; show(know); live(text);
+  }
+
+
+  function streetSVG() {
+    const u = UI[age];
+    return '<div class="street-map" role="img" aria-label="מפת רחוב — נסיעה בימין">' +
+      '<div class="road"></div>' +
+      '<span class="lane-label lane-r">'+u.rightLane+'</span>' +
+      '<span class="lane-label lane-l">'+u.leftLane+'</span>' +
+      '<svg viewBox="0 0 320 220" width="100%" height="220" style="position:absolute;inset:0;pointer-events:none" aria-hidden="true">' +
+      '<rect x="200" y="95" width="70" height="28" rx="6" fill="#0ea5e9" stroke="#0369a1" stroke-width="2"/>' +
+      '<polygon points="270,109 290,109 278,95 278,123" fill="#0284c7"/>' +
+      '<text x="235" y="114" text-anchor="middle" fill="#fff" font-size="11" font-weight="900">ימין</text>' +
+      '</svg></div>';
+  }
+  function renderPlace(item) {
+    $("#scene-host").innerHTML = streetSVG();
+    const grid = document.createElement("div");
+    grid.className = "lane-pick";
+    grid.setAttribute("role","group"); grid.setAttribute("aria-label","בחירת נתיב");
+    item.choices.forEach((c,i) => {
+      const b = document.createElement("button");
+      b.type="button"; b.className="place-car"; b.dataset.i=i;
+      const icon = c.lane==="right"
+        ? '<svg width="40" height="24" viewBox="0 0 40 24" aria-hidden="true"><rect x="2" y="6" width="28" height="14" rx="3" fill="#0ea5e9"/><polygon points="30,13 38,13 34,6 34,20" fill="#0284c7"/></svg>'
+        : '<svg width="40" height="24" viewBox="0 0 40 24" aria-hidden="true"><rect x="10" y="6" width="28" height="14" rx="3" fill="#94a3b8"/><polygon points="10,13 2,13 6,6 6,20" fill="#64748b"/></svg>';
+      b.innerHTML = icon + '<span>'+esc(c.t)+'</span><span class="mark" aria-hidden="true"></span>';
+      b.addEventListener("click", () => { sfx("place"); onChoose(i); });
+      grid.appendChild(b);
+    });
+    $("#q-body").appendChild(grid);
+  }
+  function renderArrows(item) {
+    $("#scene-host").innerHTML = streetSVG();
+    const grid = document.createElement("div");
+    grid.className = "dir-row";
+    grid.setAttribute("role","group"); grid.setAttribute("aria-label","כיוון נסיעה");
+    item.choices.forEach((c,i) => {
+      const b = document.createElement("button");
+      b.type="button"; b.className="dir-btn"; b.dataset.i=i;
+      const arrow = c.dir==="right" ? "← ימין" : "→ שמאל"; // RTL: visual
+      // In RTL UI, "ימין" means the right side of the road. Label clearly in Hebrew.
+      const label = c.dir==="right" ? "⬅ כיוון ימין (נסיעה)" : "➡ כיוון שמאל";
+      b.innerHTML = '<span style="font-size:1.5rem" aria-hidden="true">'+(c.dir==="right"?"➡️":"⬅️")+'</span><span>'+esc(c.t)+'</span><span class="mark" aria-hidden="true"></span>';
+      b.setAttribute("aria-label", c.t);
+      b.addEventListener("click", () => { sfx("place"); onChoose(i); });
+      grid.appendChild(b);
+    });
+    $("#q-body").appendChild(grid);
+  }
+  function renderSpecial(item) {
+    if (item.type === "place") { renderPlace(item); return true; }
+    if (item.type === "arrows") { renderArrows(item); return true; }
+    if (item.type === "mc" && !item.friend) {
+      $("#scene-host").innerHTML = streetSVG();
+    }
+    return false;
+  }
+
+
+  function renderItem() {
+    locked = false; attempts = 0;
+    updateProgress(); $("#progressWrap").hidden = false;
+    const item = items[idx];
+    $("#feedback").className = "feedback"; $("#feedback").textContent = "";
+    $("#nextBtn").hidden = true;
+    $("#scene-host").innerHTML = ""; $("#q-body").innerHTML = "";
+    $("#q-title").textContent = item.q;
+    if (item.type === "knowledge-only") { showKnowledge(item.know); return; }
+    if (item.friend) {
+      $("#scene-host").innerHTML = '<div style="text-align:center"><span class="friend-bubble" role="img" aria-label="חבר">🗣️ «'+esc(item.friend)+'»</span></div>';
+    }
+    if (typeof renderSpecial === "function" && renderSpecial(item)) {
+      show(play); return;
+    }
+    renderMc(item);
+    show(play);
+  }
+
+  function afterItem() {
+    const item = items[idx];
+    if (item.know) showKnowledge(item.know);
+    else advance();
+  }
+  function advance() {
+    idx++;
+    if (idx >= items.length) finish();
+    else renderItem();
+  }
+  function finish() {
+    $("#progressBar").style.width = "100%";
+    const u = UI[age];
+    $("#end-title").textContent = u.endTitle;
+    $("#end-sub").textContent = u.endSub;
+    const maxScore = items.filter(it => it.type !== "knowledge-only").length * 3;
+    const ratio = maxScore ? Math.min(1, score / maxScore) : 1;
+    let stars = ratio >= 0.75 ? 3 : ratio >= 0.45 ? 2 : 1;
+    document.querySelectorAll(".star").forEach(s => s.classList.toggle("on", +s.dataset.i <= stars));
+    $("#end-score").textContent = "ניקוד: "+score+" · כוכבים: "+stars+" / 3";
+    $("#end-stars").setAttribute("aria-label", stars+" כוכבים מתוך 3");
+    sfx("win"); show(end); live(u.endTitle+" "+stars+" כוכבים");
+  }
+  function startGame() {
+    if (!age) return;
+    items = ITEMS[age].slice();
+    idx = 0; score = 0;
+    renderItem();
+  }
+
+  $("#age-young").addEventListener("click", () => setAge("young"));
+  $("#age-older").addEventListener("click", () => setAge("older"));
+  $("#startBtn").addEventListener("click", startGame);
+  $("#nextBtn").addEventListener("click", afterItem);
+  $("#knowNext").addEventListener("click", advance);
+  $("#againBtn").addEventListener("click", () => {
+    $("#progressWrap").hidden = true; $("#progressBar").style.width = "0%";
+    show(hub); $("#startBtn").focus();
+  });
+  $("#muteBtn").addEventListener("click", () => {
+    muted = !muted;
+    $("#muteBtn").setAttribute("aria-pressed", muted ? "true" : "false");
+    $("#muteBtn").textContent = muted ? "🔇" : "🔊";
+    $("#muteBtn").setAttribute("aria-label", muted ? "בטלו השתקה" : "השתקה");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "m" || e.key === "M" || e.key === "מ") {
+      if (e.target.tagName !== "INPUT") $("#muteBtn").click();
+    }
+  });
+
+  setAge("young"); age = null;
+  document.querySelectorAll(".age-btn").forEach(b => { b.classList.remove("selected"); b.setAttribute("aria-pressed","false"); });
+  $("#startBtn").disabled = true;
+  $("#hub-title").textContent = 'רֶכֶב בְּיָמִין';
+  $("#hub-sub").textContent = 'מִשְׂחַק »סַדֵּר אֶת הָרְחוֹב« · בְּטִיחוּת בַּדֶּרֶךְ';
+})();
+</script>
+</body>
+</html>

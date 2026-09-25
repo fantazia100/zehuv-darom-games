@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>חצייה בטוחה — שבוע זה״ב | מחוז דרום</title>
+<style>
+:root {
+  --sky-50: #f0f9ff;
+  --sky-100: #e0f2fe;
+  --sky-200: #bae6fd;
+  --sky-300: #7dd3fc;
+  --sky-500: #0ea5e9;
+  --sky-600: #0284c7;
+  --sky-700: #0369a1;
+  --ink: #0f2744;
+  --ink-soft: #334e68;
+  --muted: #5a7a94;
+  --paper: #ffffff;
+  --card: #ffffff;
+  --mint: #10b981;
+  --mint-soft: #d1fae5;
+  --coral: #ef4444;
+  --coral-soft: #fee2e2;
+  --amber: #f59e0b;
+  --amber-soft: #fef3c7;
+  --gold: #fbbf24;
+  --radius: 1.1rem;
+  --radius-btn: .85rem;
+  --shadow: 0 10px 28px -10px rgba(15,39,68,.18), 0 2px 8px rgba(15,39,68,.06);
+  --shadow-3d: 0 14px 0 -2px rgba(2,132,199,.12), 0 18px 36px -12px rgba(15,39,68,.22);
+  --focus: 3px solid #0369a1;
+  --font: Assistant, Heebo, Rubik, Arial, sans-serif;
+  --touch: 48px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; min-height: 100%;
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 100% -10%, #bae6fd 0%, transparent 55%),
+    radial-gradient(900px 500px at -10% 110%, #a5f3fc 0%, transparent 50%),
+    linear-gradient(180deg, var(--sky-50), #e8f7ff 40%, #f0f9ff);
+  -webkit-tap-highlight-color: transparent;
+}
+body { line-height: 1.45; }
+button, [role="button"] {
+  font-family: inherit; cursor: pointer;
+  min-height: var(--touch); min-width: var(--touch);
+}
+button:focus-visible, [tabindex="0"]:focus-visible, .choice:focus-visible, .scene-opt:focus-visible, .seq-btn:focus-visible {
+  outline: var(--focus); outline-offset: 3px;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.app {
+  max-width: 920px; margin: 0 auto; padding: 12px 14px 88px;
+  min-height: 100dvh; position: relative;
+}
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin-bottom: 10px; flex-wrap: wrap;
+}
+.brand-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.85); border: 1px solid var(--sky-200);
+  border-radius: 999px; padding: 6px 12px 6px 8px;
+  font-size: .85rem; color: var(--sky-700); font-weight: 700;
+  box-shadow: var(--shadow);
+}
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--touch); height: var(--touch);
+  border-radius: 50%; border: 2px solid var(--sky-200);
+  background: var(--paper); color: var(--ink); font-size: 1.25rem;
+  box-shadow: var(--shadow);
+}
+.icon-btn[aria-pressed="true"] { background: var(--amber-soft); border-color: var(--amber); }
+.progress-wrap {
+  flex: 1; min-width: 140px; max-width: 280px;
+  background: rgba(255,255,255,.7); border-radius: 999px; height: 12px;
+  border: 1px solid var(--sky-200); overflow: hidden;
+}
+.progress-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--sky-500), var(--mint));
+  border-radius: 999px; transition: width .35s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar, .card, .feedback, .star { transition: none !important; animation: none !important; }
+  .car-move { animation: none !important; }
+}
+.screen { display: none; }
+.screen.active { display: block; animation: fadeIn .35s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-3d);
+  border: 1px solid rgba(14,165,233,.18);
+  padding: 22px 20px 24px;
+  position: relative;
+}
+.hero-icon {
+  width: 88px; height: 88px; margin: 0 auto 12px;
+  display: grid; place-items: center;
+  background: linear-gradient(160deg, #e0f2fe, #cffafe);
+  border-radius: 24px; border: 2px solid var(--sky-200);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.8), 0 8px 0 rgba(2,132,199,.1);
+}
+h1 {
+  margin: 0 0 8px; text-align: center;
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem); color: var(--sky-700);
+  font-weight: 800; letter-spacing: -.01em;
+}
+.subtitle {
+  text-align: center; color: var(--ink-soft); margin: 0 0 20px;
+  font-size: clamp(1rem, 2.5vw, 1.15rem); font-weight: 600;
+}
+.age-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0 20px;
+}
+@media (max-width: 520px) { .age-grid { grid-template-columns: 1fr; } }
+.age-btn {
+  border: 3px solid var(--sky-200);
+  background: linear-gradient(180deg, #fff, var(--sky-50));
+  border-radius: var(--radius);
+  padding: 18px 14px; text-align: center;
+  box-shadow: var(--shadow);
+  color: var(--ink); transition: border-color .15s, transform .12s;
+}
+.age-btn:hover { border-color: var(--sky-500); transform: translateY(-2px); }
+.age-btn.selected {
+  border-color: var(--sky-600);
+  background: linear-gradient(180deg, #e0f2fe, #fff);
+  box-shadow: 0 0 0 3px rgba(14,165,233,.25), var(--shadow);
+}
+.age-btn .age-label { display: block; font-size: 1.35rem; font-weight: 800; color: var(--sky-700); }
+.age-btn .age-hint { display: block; margin-top: 4px; font-size: .95rem; color: var(--muted); font-weight: 600; }
+.primary-btn, .secondary-btn, .next-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 14px 18px;
+  border-radius: var(--radius-btn); font-size: 1.2rem; font-weight: 800;
+  border: none; min-height: 52px;
+}
+.primary-btn {
+  background: linear-gradient(180deg, #38bdf8, #0284c7);
+  color: #fff;
+  box-shadow: 0 6px 0 #0369a1, 0 10px 20px rgba(2,132,199,.28);
+}
+.primary-btn:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 3px 0 #0369a1; }
+.primary-btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+.secondary-btn {
+  background: #fff; color: var(--sky-700);
+  border: 2px solid var(--sky-300);
+  box-shadow: var(--shadow);
+}
+.next-btn {
+  background: linear-gradient(180deg, #34d399, #059669);
+  color: #fff;
+  box-shadow: 0 6px 0 #047857, 0 10px 20px rgba(16,185,129,.25);
+  margin-top: 14px;
+}
+.q-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  font-weight: 700; color: var(--muted); font-size: .95rem;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--sky-100); color: var(--sky-700);
+  border-radius: 999px; padding: 4px 12px; font-size: .9rem;
+}
+.question {
+  font-size: clamp(1.25rem, 3.2vw, 1.65rem);
+  font-weight: 800; margin: 0 0 16px; color: var(--ink);
+  text-align: right;
+}
+.young .question, .young .choice, .young .knowledge-text, .young .age-btn .age-label,
+.young h1, .young .subtitle, .young .feedback-text, .young .seq-btn {
+  font-size: clamp(1.3rem, 3.4vw, 1.75rem);
+}
+.young .choice { font-size: clamp(1.15rem, 3vw, 1.4rem); }
+.choices { display: grid; gap: 10px; }
+.choice {
+  display: flex; align-items: flex-start; gap: 12px;
+  text-align: right; width: 100%;
+  padding: 14px 14px;
+  border-radius: 14px;
+  border: 2.5px solid var(--sky-200);
+  background: linear-gradient(180deg, #fff, #f8fcff);
+  color: var(--ink); font-size: 1.1rem; font-weight: 700;
+  box-shadow: 0 4px 0 rgba(2,132,199,.08);
+  transition: border-color .12s, background .12s;
+}
+.choice .letter {
+  flex-shrink: 0; width: 36px; height: 36px;
+  border-radius: 10px; display: grid; place-items: center;
+  background: var(--sky-100); color: var(--sky-700); font-weight: 900;
+}
+.choice:hover:not(:disabled) { border-color: var(--sky-500); }
+.choice.selected { border-color: var(--sky-600); background: #e0f2fe; }
+.choice.correct {
+  border-color: var(--mint); background: var(--mint-soft);
+}
+.choice.wrong {
+  border-color: var(--coral); background: var(--coral-soft);
+}
+.choice:disabled { cursor: default; }
+.choice .mark { margin-inline-start: auto; font-size: 1.3rem; font-weight: 900; }
+.scene-board {
+  background: linear-gradient(180deg, #87ceeb 0%, #b8e0f0 38%, #94a3b8 38%, #64748b 72%, #86efac 72%, #86efac 100%);
+  border-radius: 16px; border: 2px solid var(--sky-300);
+  height: 200px; position: relative; overflow: hidden; margin-bottom: 14px;
+}
+.scene-board .road {
+  position: absolute; left: 0; right: 0; top: 38%; height: 34%;
+  background: #475569;
+}
+.scene-board .lane {
+  position: absolute; left: 8%; right: 8%; top: 50%; height: 4px;
+  border-top: 3px dashed #fbbf24; opacity: .85;
+}
+.crosswalk {
+  position: absolute; left: 42%; width: 16%; top: 38%; height: 34%;
+  background: repeating-linear-gradient(
+    90deg, #fff 0 8px, transparent 8px 14px
+  );
+  opacity: .95;
+}
+.sidewalk-label {
+  position: absolute; bottom: 6px; right: 10px;
+  background: rgba(255,255,255,.85); padding: 2px 8px;
+  border-radius: 8px; font-size: .75rem; font-weight: 800; color: var(--ink-soft);
+}
+.car {
+  position: absolute; width: 54px; height: 28px; border-radius: 6px 10px 6px 6px;
+  background: #ef4444; top: 42%;
+  box-shadow: 0 3px 0 #7f1d1d;
+}
+.car::before {
+  content: ""; position: absolute; inset: 4px 18px 10px 6px;
+  background: #7dd3fc; border-radius: 3px;
+}
+.car.near { right: 12%; background: #3b82f6; box-shadow: 0 3px 0 #1e3a8a; }
+.car.far { left: 10%; top: 55%; background: #f59e0b; box-shadow: 0 3px 0 #92400e; }
+.car-move { animation: driveLtr 4s linear infinite; }
+@keyframes driveLtr {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(220%); }
+}
+/* Cars on RIGHT side of road: for two-way, near lane (to pedestrian at bottom) comes from LEFT → moves left-to-right visually when facing crossing... 
+   Actually: Israel drives on RIGHT. Pedestrian at bottom sidewalk looking across.
+   Near lane traffic approaches from the LEFT (comes toward us from left).
+   So near-lane car should animate from left toward right (or approach from left).
+*/
+.ped-light {
+  position: absolute; left: 28%; bottom: 28%; width: 28px; height: 52px;
+  background: #1e293b; border-radius: 6px; border: 2px solid #0f172a;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
+  padding: 4px 0;
+}
+.ped-light .lamp {
+  width: 14px; height: 14px; border-radius: 50%; background: #334155;
+}
+.ped-light.green .lamp.g { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+.ped-light.red .lamp.r { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+.veh-light {
+  position: absolute; right: 22%; top: 8%; width: 22px; height: 56px;
+  background: #1e293b; border-radius: 5px; border: 2px solid #0f172a;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
+}
+.veh-light .lamp { width: 12px; height: 12px; border-radius: 50%; background: #334155; }
+.veh-light.red .lamp.r { background: #ef4444; }
+.veh-light.green .lamp.g { background: #22c55e; }
+.scene-opts { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 640px) { .scene-opts.cols3 { grid-template-columns: 1fr 1fr 1fr; } }
+.scene-opt {
+  border: 2.5px solid var(--sky-200); border-radius: 14px;
+  background: #fff; padding: 12px; text-align: center; font-weight: 800;
+  color: var(--ink); box-shadow: var(--shadow);
+}
+.scene-opt .mini {
+  height: 72px; border-radius: 10px; margin-bottom: 8px;
+  background: #e2e8f0; display: grid; place-items: center; font-size: 1.8rem;
+}
+.scene-opt.correct { border-color: var(--mint); background: var(--mint-soft); }
+.scene-opt.wrong { border-color: var(--coral); background: var(--coral-soft); }
+.seq-area { margin-top: 8px; }
+.seq-slots, .seq-pool {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 10px 0;
+}
+.seq-slot {
+  min-width: 100px; min-height: 52px; padding: 8px 12px;
+  border: 2.5px dashed var(--sky-300); border-radius: 12px;
+  background: var(--sky-50); display: grid; place-items: center;
+  font-weight: 800; color: var(--muted);
+}
+.seq-slot.filled {
+  border-style: solid; border-color: var(--sky-600);
+  background: #e0f2fe; color: var(--ink);
+}
+.seq-btn {
+  border: 2.5px solid var(--sky-300); background: #fff;
+  border-radius: 12px; padding: 12px 16px; font-weight: 800;
+  color: var(--ink); box-shadow: 0 4px 0 rgba(2,132,199,.1);
+}
+.seq-btn:disabled { opacity: .4; }
+.seq-btn.used { visibility: hidden; }
+.feedback {
+  margin-top: 14px; padding: 12px 14px; border-radius: 12px;
+  font-weight: 800; display: none; align-items: center; gap: 10px;
+}
+.feedback.show { display: flex; }
+.feedback.ok { background: var(--mint-soft); color: #065f46; border: 2px solid var(--mint); }
+.feedback.bad { background: var(--coral-soft); color: #991b1b; border: 2px solid var(--coral); }
+.feedback.info { background: var(--amber-soft); color: #92400e; border: 2px solid var(--amber); }
+.knowledge {
+  text-align: center; padding: 8px 4px;
+}
+.knowledge-icon {
+  width: 72px; height: 72px; margin: 0 auto 12px;
+  border-radius: 20px; background: var(--amber-soft);
+  display: grid; place-items: center; font-size: 2rem;
+  border: 2px solid var(--amber);
+}
+.knowledge-text {
+  font-size: clamp(1.15rem, 3vw, 1.4rem); font-weight: 800; color: var(--ink);
+  margin: 0 0 8px;
+}
+.logo-corner {
+  position: fixed; bottom: 10px; left: 10px; z-index: 40;
+  height: 48px; width: auto; max-width: 140px;
+  filter: drop-shadow(0 2px 6px rgba(15,39,68,.15));
+  pointer-events: none;
+}
+@media (max-width: 480px) { .logo-corner { height: 40px; } }
+.end-stars { display: flex; justify-content: center; gap: 10px; margin: 16px 0; font-size: 2.4rem; }
+.star { filter: grayscale(1); opacity: .35; transform: scale(.9); }
+.star.on { filter: none; opacity: 1; transform: scale(1); }
+.goals {
+  list-style: none; padding: 0; margin: 0 0 16px;
+  display: grid; gap: 8px;
+}
+.goals li {
+  background: var(--sky-50); border: 1px solid var(--sky-200);
+  border-radius: 12px; padding: 10px 12px; font-weight: 700;
+  color: var(--ink-soft); font-size: .98rem;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.goals li::before { content: "✓"; color: var(--mint); font-weight: 900; }
+.hint-note {
+  text-align: center; color: var(--muted); font-size: .9rem; margin-top: 10px; font-weight: 600;
+}
+.friend-bubble {
+  display: inline-block; background: #fef3c7; border: 2px solid #f59e0b;
+  border-radius: 16px 16px 4px 16px; padding: 8px 14px;
+  font-weight: 900; color: #92400e; margin-bottom: 10px;
+}
+.live-region { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+</style>
+</head>
+<body>
+<img class="logo-corner" src="data:image/png;base64,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" alt="לוגו מחוז דרום" height="48" width="auto">
+<div class="app" id="app">
+  <div class="topbar" id="topbar">
+    <div class="brand-chip" aria-hidden="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="2" width="8" height="20" rx="2" fill="#0f172a"/><circle cx="12" cy="7" r="2.2" fill="#ef4444"/><circle cx="12" cy="12" r="2.2" fill="#fbbf24"/><circle cx="12" cy="17" r="2.2" fill="#22c55e"/></svg>
+      <span>שבוע זה״ב · מחוז דרום</span>
+    </div>
+    <div class="progress-wrap" id="progressWrap" hidden>
+      <div class="progress-bar" id="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="התקדמות"></div>
+    </div>
+    <button type="button" class="icon-btn" id="muteBtn" aria-pressed="false" aria-label="השתקה" title="השתקה">🔊</button>
+  </div>
+
+  <div id="live" class="live-region" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- HUB -->
+  <section class="screen active" id="screen-hub" aria-labelledby="hub-title">
+    <div class="card">
+      <div class="hero-icon" aria-hidden="true">
+        <svg width="56" height="56" viewBox="0 0 64 64" role="img" aria-label="רמזור">
+          <rect x="22" y="4" width="20" height="48" rx="6" fill="#0f172a"/>
+          <circle cx="32" cy="16" r="6" fill="#ef4444"/>
+          <circle cx="32" cy="28" r="6" fill="#fbbf24"/>
+          <circle cx="32" cy="40" r="6" fill="#22c55e"/>
+          <rect x="28" y="52" width="8" height="8" fill="#334155"/>
+        </svg>
+      </div>
+      <h1 id="hub-title">חֲצִיָּה בְּטוּחָה</h1>
+      <p class="subtitle" id="hub-sub">מִשְׂחַק »אוֹר–עֲצוֹר–חֲצֵה« · בְּטִיחוּת בַּדֶּרֶךְ</p>
+      <ul class="goals" id="hub-goals">
+        <li>לזהות מעבר חציה ורמזור להולכי רגל</li>
+        <li>לעצור, להסתכל שמאל–ימין–שמאל, ורק אז לחצות</li>
+        <li>לחצות רק כשבטוח — לא לרוץ אחרי חברים</li>
+      </ul>
+      <p style="text-align:center;font-weight:800;color:var(--sky-700);margin:0 0 8px;" id="age-prompt">בחרו קבוצת גיל</p>
+      <div class="age-grid" role="group" aria-label="בחירת גיל">
+        <button type="button" class="age-btn" id="age-young" data-age="young" aria-pressed="false">
+          <span class="age-label">א–ג</span>
+          <span class="age-hint">עִם נִקּוּד</span>
+        </button>
+        <button type="button" class="age-btn" id="age-older" data-age="older" aria-pressed="false">
+          <span class="age-label">ד–ז</span>
+          <span class="age-hint">בלי ניקוד</span>
+        </button>
+      </div>
+      <button type="button" class="primary-btn" id="startBtn" disabled>הַתְחֵלָה</button>
+      <p class="hint-note">מקלדת: Tab לניווט · Enter לבחירה · M להשתקה</p>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section class="screen" id="screen-play" aria-labelledby="q-title">
+    <div class="card" id="play-card">
+      <div class="q-meta">
+        <span class="badge" id="q-counter">1 / 10</span>
+        <span class="badge" id="q-score" aria-label="ניקוד">★ 0</span>
+      </div>
+      <div id="scene-host"></div>
+      <h2 class="question" id="q-title"></h2>
+      <div id="q-body"></div>
+      <div class="feedback" id="feedback" role="status"></div>
+      <button type="button" class="next-btn" id="nextBtn" hidden>הַבָּא</button>
+    </div>
+  </section>
+
+  <!-- KNOWLEDGE -->
+  <section class="screen" id="screen-knowledge" aria-labelledby="know-title">
+    <div class="card knowledge">
+      <div class="knowledge-icon" aria-hidden="true">💡</div>
+      <h2 class="question" id="know-title" style="text-align:center">כַּרְטִיס יֶדַע</h2>
+      <p class="knowledge-text" id="know-text"></p>
+      <button type="button" class="next-btn" id="knowNext">הַבָּא</button>
+    </div>
+  </section>
+
+  <!-- END -->
+  <section class="screen" id="screen-end" aria-labelledby="end-title">
+    <div class="card" style="text-align:center">
+      <div class="hero-icon" aria-hidden="true">🏆</div>
+      <h1 id="end-title">כַּלָּה!</h1>
+      <p class="subtitle" id="end-sub">כָּל הַכָּבוֹד עַל חֲצִיָּה בְּטוּחָה</p>
+      <div class="end-stars" id="end-stars" aria-label="כוכבים">
+        <span class="star" data-i="1">⭐</span>
+        <span class="star" data-i="2">⭐</span>
+        <span class="star" data-i="3">⭐</span>
+      </div>
+      <p style="font-weight:800;font-size:1.2rem;color:var(--ink-soft)" id="end-score"></p>
+      <button type="button" class="primary-btn" id="againBtn" style="margin-top:12px">שׁוּב לַמֶּרְכָּז</button>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ========== Audio (Web Audio API, offline) ========== */
+  let muted = false;
+  let audioCtx = null;
+  function ctx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function beep(freq, dur, type, vol) {
+    if (muted) return;
+    try {
+      const c = ctx();
+      const o = c.createOscillator();
+      const g = c.createGain();
+      o.type = type || "sine";
+      o.frequency.value = freq;
+      g.gain.value = vol || 0.08;
+      o.connect(g); g.connect(c.destination);
+      const t = c.currentTime;
+      g.gain.setValueAtTime(vol || 0.08, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      o.start(t); o.stop(t + dur + 0.02);
+    } catch (e) {}
+  }
+  function sfx(kind) {
+    if (kind === "ok") { beep(660, 0.12, "sine", 0.09); setTimeout(() => beep(880, 0.14, "sine", 0.08), 90); }
+    else if (kind === "bad") { beep(220, 0.18, "triangle", 0.07); }
+    else if (kind === "know") { beep(523, 0.1, "sine", 0.07); setTimeout(() => beep(659, 0.12, "sine", 0.07), 100); setTimeout(() => beep(784, 0.16, "sine", 0.06), 200); }
+    else if (kind === "win") { [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,0.15,"sine",0.08), i*110)); }
+  }
+
+  /* ========== UI strings by age ========== */
+  const UI = {
+    young: {
+      title: "חֲצִיָּה בְּטוּחָה",
+      sub: "מִשְׂחַק »אוֹר–עֲצוֹר–חֲצֵה« · בְּטִיחוּת בַּדֶּרֶךְ",
+      start: "הַתְחֵלָה",
+      next: "הַבָּא",
+      knowTitle: "כַּרְטִיס יֶדַע",
+      endTitle: "כַּלָּה!",
+      endSub: "כָּל הַכָּבוֹד עַל חֲצִיָּה בְּטוּחָה!",
+      again: "שׁוּב לַמֶּרְכָּז",
+      ok: "כָּל הַכָּבוֹד! ✓",
+      bad: "כִּמְעַט… נַסּוּ עוֹד פַּעַם ✗",
+      reveal: "הַתְּשׁוּבָה הַנְּכוֹנָה:",
+      check: "בְּדִיקָה",
+      clearSeq: "אִפּוּס",
+      agePrompt: "בַּחֲרוּ קְבוּצַת גִּיל"
+    },
+    older: {
+      title: "חצייה בטוחה",
+      sub: "משחק »אור–עצור–חצה« · בטיחות בדרך",
+      start: "התחלה",
+      next: "הבא",
+      knowTitle: "כרטיס ידע",
+      endTitle: "כל הכבוד!",
+      endSub: "סיימתם את תחנת החצייה הבטוחה",
+      again: "חזרה למרכז",
+      ok: "מצוין! ✓",
+      bad: "כמעט… נסו שוב ✗",
+      reveal: "התשובה הנכונה:",
+      check: "בדיקה",
+      clearSeq: "איפוס",
+      agePrompt: "בחרו קבוצת גיל"
+    }
+  };
+
+  /* ========== Content: 10 young + 10 older ========== */
+  /* Look order locked: שמאל–ימין–שמאל (Israel drives on the right) */
+  const ITEMS = {
+    young: [
+      {
+        id: "y1", type: "mc",
+        q: "מָה עוֹשִׂים לִפְנֵי שֶׁחוֹצִים כְּבִישׁ?",
+        choices: [
+          { t: "רָצִים מַהֵר", ok: false },
+          { t: "עוֹצְרִים בַּקָּצֶה וְֽמִסְתַּכְּלִים", ok: true },
+          { t: "קוֹפְצִים מִיָּד", ok: false },
+          { t: "סוֹגְרִים עֵינַיִם", ok: false }
+        ],
+        know: "לִפְנֵי חֲצִיָּה: עוֹצְרִים בַּקָּצֶה, מִסְתַּכְּלִים, וְֽרַק אַחַר כָּךְ חוֹצִים."
+      },
+      {
+        id: "y2", type: "mc",
+        q: "אֵיזֶה אוֹר בָּרַמְזוֹר לְהוֹלְכֵי רֶגֶל מַתִּיר לַחֲצוֹת?",
+        choices: [
+          { t: "אָדֹם", ok: false },
+          { t: "יָרֹק", ok: true },
+          { t: "צָהֹב בִּלְבַד", ok: false },
+          { t: "כָּל הָאוֹרוֹת", ok: false }
+        ],
+        know: "רַק אוֹר יָרֹק לְהוֹלֵךְ רֶגֶל מַתִּיר לְהַתְחִיל לַחֲצוֹת — אַחֲרֵי מִבָּט."
+      },
+      {
+        id: "y3", type: "scene-where",
+        q: "אֵיפֹה חוֹצִים כְּבִישׁ?",
+        choices: [
+          { t: "בֵּין מְכוֹנִיּוֹת", ok: false, icon: "🚗🚗" },
+          { t: "בְּמַעֲבַר חֲצִיָּה", ok: true, icon: "🦓" },
+          { t: "בְּאֶמְצַע הַכְּבִישׁ", ok: false, icon: "⚠️" }
+        ],
+        know: "חוֹצִים רַק בְּמַעֲבַר חֲצִיָּה — לֹא בֵּין מְכוֹנִיּוֹת וְֽלֹא בָּאֶמְצַע."
+      },
+      {
+        id: "y4", type: "mc",
+        q: "הָאוֹר אָדֹם לְהוֹלֵךְ רֶגֶל. מָה עוֹשִׂים?",
+        choices: [
+          { t: "חוֹצִים בִּזְהִירוּת", ok: false },
+          { t: "מַמְתִּינִים עַל הַמִּדְרָכָה", ok: true },
+          { t: "רָצִים לִפְנֵי שֶׁיִּשְׁתַּנֶּה", ok: false },
+          { t: "הוֹלְכִים אֲחוֹרַנִּית", ok: false }
+        ],
+        know: "אוֹר אָדֹם = מַמְתִּינִים עַל הַמִּדְרָכָה. לֹא חוֹצִים."
+      },
+      {
+        id: "y5", type: "mc",
+        q: "יֵשׁ מַעֲבַר חֲצִיָּה בְּלִי רַמְזוֹר. מָה קוֹדֵם?",
+        choices: [
+          { t: "חוֹצִים מִיָּד", ok: false },
+          { t: "מִסְתַּכְּלִים שְׂמֹאל–יָמִין–שְׂמֹאל", ok: true },
+          { t: "קוֹרְאִים לַחֲבֵר", ok: false },
+          { t: "מַחֲזִיקִים טֵלֵפוֹן", ok: false }
+        ],
+        know: "בְּיִשְׂרָאֵל: מִסְתַּכְּלִים שְׂמֹאל–יָמִין–שְׂמֹאל. הָרֶכֶב הַקָּרוֹב מַגִּיעַ מִשְּׂמֹאל."
+      },
+      {
+        id: "y6", type: "order",
+        q: "סַדְּרוּ אֶת הַסֵּדֶר הַנָּכוֹן לַחֲצִיָּה:",
+        steps: [
+          { id: "a", t: "עוֹצְרִים" },
+          { id: "b", t: "מִסְתַּכְּלִים" },
+          { id: "c", t: "חוֹצִים כְּשֶׁפָּנוּי" }
+        ],
+        correct: ["a", "b", "c"],
+        know: "הַסֵּדֶר: עוֹצְרִים → מִסְתַּכְּלִים → חוֹצִים כְּשֶׁפָּנוּי."
+      },
+      {
+        id: "y7", type: "mc",
+        q: "חָבֵר קוֹרֵא: »תָּרוּץ!« מָה נָכוֹן?",
+        friend: "תָּרוּץ!",
+        choices: [
+          { t: "רָצִים אִתּוֹ", ok: false },
+          { t: "נִשְׁאָרִים וְֽחוֹצִים רַק כְּשֶׁבְּטוּחַ", ok: true },
+          { t: "עוֹצְמִים עֵינַיִם", ok: false },
+          { t: "קוֹפְצִים לַכְּבִישׁ", ok: false }
+        ],
+        know: "גַּם אִם חָבֵר קוֹרֵא »תָּרוּץ!« — נִשְׁאָרִים בְּטוּחִים וְֽחוֹצִים רַק כְּשֶׁמֻּתָּר."
+      },
+      {
+        id: "y8", type: "light-road",
+        q: "הָאוֹר לְהוֹלֵךְ רֶגֶל יָרֹק, אֲבָל רֶכֶב מִתְקָרֵב מִשְּׂמֹאל בַּנָּתִיב הַקָּרוֹב. מָה עוֹשִׂים?",
+        ped: "green",
+        carFromLeft: true,
+        choices: [
+          { t: "רָצִים מַהֵר לַצַּד הַשֵּׁנִי", ok: false },
+          { t: "מַמְתִּינִים שֶׁהָרֶכֶב יַעֲבֹר / נוֹדְאִים שֶׁבָּטוּחַ", ok: true },
+          { t: "חוֹצִים בְּלִי לְהַבִּיט", ok: false },
+          { t: "מְחַכִּים רַק לָאוֹר הָאָדֹם לָרֶכֶב", ok: false }
+        ],
+        know: "גַּם בְּיָרֹק — מִסְתַּכְּלִים! רֶכֶב מִשְּׂמֹאל בַּנָּתִיב הַקָּרוֹב חָשׁוּב. חוֹצִים רַק כְּשֶׁבָּטוּחַ."
+      },
+      {
+        id: "y9", type: "mc",
+        q: "בַּזְּמַן שֶׁחוֹצִים — מָה עוֹשִׂים?",
+        choices: [
+          { t: "רָצִים וְֽמִסְתַּכְּלִים בַּטֵּלֵפוֹן", ok: false },
+          { t: "הוֹלְכִים יָשָׁר וּמִסְתַּכְּלִים סָבִיב", ok: true },
+          { t: "מִשַׂחֲקִים בַּכַּדּוּר", ok: false },
+          { t: "הוֹלְכִים אֲחוֹרַנִּית", ok: false }
+        ],
+        know: "בִּזְמַן חֲצִיָּה: הוֹלְכִים יָשָׁר וּמִסְתַּכְּלִים סָבִיב — בְּלִי טֵלֵפוֹן."
+      },
+      {
+        id: "y10", type: "knowledge-only",
+        q: "סִיּוּם יֶדַע",
+        know: "מַעֲבַר חֲצִיָּה + אוֹר יָרֹק + מִבַּט שְׂמֹאל–יָמִין–שְׂמֹאל = חֲצִיָּה בְּטוּחָה."
+      }
+    ],
+    older: [
+      {
+        id: "o1", type: "mc",
+        q: "במעבר חציה עם רמזור להולכי רגל, מתי מותר להתחיל לחצות?",
+        choices: [
+          { t: "כשהאור לרכב ירוק", ok: false },
+          { t: "כשהאור להולך רגל ירוק", ok: true },
+          { t: "כשיש פחות מכוניות", ok: false },
+          { t: "כשחבר כבר באמצע", ok: false }
+        ],
+        know: "רמזור להולכי רגל ≠ רמזור לרכב. מתחילים לחצות כשהאור להולך רגל ירוק — אחרי מבט."
+      },
+      {
+        id: "o2", type: "mc",
+        q: "התחלתם לחצות בירוק והאור מתחיל להבהב. מה עושים?",
+        choices: [
+          { t: "רצים חזרה תמיד", ok: false },
+          { t: "ממשיכים בזהירות עד המדרכה השנייה אם כבר באמצע", ok: true },
+          { t: "עוצרים באמצע הכביש", ok: false },
+          { t: "מסתובבים במקום", ok: false }
+        ],
+        know: "אם כבר באמצע — ממשיכים בזהירות למדרכה. לא עוצרים באמצע הכביש."
+      },
+      {
+        id: "o3", type: "scene-where",
+        q: "איפה חוצים כביש בבטחה?",
+        choices: [
+          { t: "בין מכוניות חונות", ok: false, icon: "🚗🚗" },
+          { t: "במעבר חציה מסומן", ok: true, icon: "🦓" },
+          { t: "מאחורי אוטובוס שעצר", ok: false, icon: "🚌" }
+        ],
+        know: "לא מאחורי אוטובוס ולא בין מכוניות — רק במעבר חציה, כי שם רואים אתכם."
+      },
+      {
+        id: "o4", type: "mc",
+        q: "רמזור לרכב אדום, אבל אין רמזור נפרד להולך רגל. מה הכלל?",
+        choices: [
+          { t: "רצים ישר", ok: false },
+          { t: "חוצים במעבר רק אחרי וידוא שהרחוב פנוי ובטוח", ok: true },
+          { t: "סומכים רק על צבע הרמזור לרכב", ok: false },
+          { t: "מחכים בלי להסתכל", ok: false }
+        ],
+        know: "רמזור לרכב אינו מחליף מבט. תמיד מוודאים שהרחוב פנוי ובטוח."
+      },
+      {
+        id: "o5", type: "mc",
+        q: "ילד עם אוזניות חוצה במעבר. מה הסיכון העיקרי?",
+        choices: [
+          { t: "לא שומע רכב מתקרב", ok: true },
+          { t: "הצבע של החולצה", ok: false },
+          { t: "גובה המדרכה", ok: false },
+          { t: "מספר הצעדים", ok: false }
+        ],
+        know: "אוזניות מפחיתות שמיעה — חשוב לשמוע רכב שמתקרב."
+      },
+      {
+        id: "o6", type: "order",
+        q: "סדרו את הפעולות במעבר בלי רמזור:",
+        steps: [
+          { id: "a", t: "עצירה בקצה" },
+          { id: "b", t: "מבט שמאל–ימין–שמאל" },
+          { id: "c", t: "חצייה ישרה כשהפנוי" }
+        ],
+        correct: ["a", "b", "c"],
+        know: "עצירה → מבט שמאל–ימין–שמאל → חצייה ישרה כשהפנוי. בישראל הרכב הקרוב מגיע משמאל."
+      },
+      {
+        id: "o7", type: "mc",
+        q: "חבר צועק »תרוץ!« ליד המעבר. מה נכון?",
+        friend: "תרוץ!",
+        choices: [
+          { t: "רצים יחד מיד", ok: false },
+          { t: "נשארים — חוצים רק כשבטוח ומותר", ok: true },
+          { t: "רק אם האור לרכב ירוק", ok: false },
+          { t: "קופצים בין המכוניות", ok: false }
+        ],
+        know: "לחץ מחברים אינו סיבה לסכן חיים. עצור, הסתכל, חצה רק כשבטוח."
+      },
+      {
+        id: "o8", type: "light-road",
+        q: "אור ירוק להולך רגל, ורכב מתקרב משמאל בנתיב הקרוב. מה עושים?",
+        ped: "green",
+        carFromLeft: true,
+        choices: [
+          { t: "מתעלמים — יש ירוק", ok: false },
+          { t: "נזהרים: מוודאים שהנהג רואה / שהדרך פנויה, ורק אז ממשיכים", ok: true },
+          { t: "דופקים על הרכב", ok: false },
+          { t: "חוזרים תמיד בלי לבדוק", ok: false }
+        ],
+        know: "ירוק אינו מבטל זהירות. רכב משמאל בנתיב הקרוב — קשר עין ובדיקה לפני המשך."
+      },
+      {
+        id: "o9", type: "mc",
+        q: "»הרכב עצר לי — אפשר לחצות בלי להסתכל שמאלה?«",
+        choices: [
+          { t: "כן תמיד", ok: false },
+          { t: "לא — עלולים להיות נתיבים נוספים או רכב עוקף", ok: true },
+          { t: "רק אם זה מונית", ok: false },
+          { t: "רק ביום גשום", ok: false }
+        ],
+        know: "רכב שעצר אינו מבטיח בטיחות בכל הנתיבים. תמיד מבט שמאל–ימין–שמאל."
+      },
+      {
+        id: "o10", type: "knowledge-only",
+        q: "סיכום",
+        know: "מעבר חציה + רמזור להולכי רגל + עצירה ומבט שמאל–ימין–שמאל = חצייה אחראית. לא רצים, לא בין מכוניות, לא מאחורי אוטובוס."
+      }
+    ]
+  };
+
+  /* ========== State ========== */
+  let age = null;
+  let idx = 0;
+  let score = 0;
+  let attempts = 0; // wrong attempts on current item (max 2 retries = 3 tries total? brief: "עד 2 ניסיונות" then reveal)
+  // Interpret: after wrong, retry up to 2 times → so 1 initial + 2 retries = 3 tries, OR up to 2 total attempts then reveal.
+  // "אחרי שגיאה — אותה שאלה שוב (עד 2 ניסיונות) ואז חשיפת התשובה" = after error, same question again (up to 2 attempts) then reveal.
+  // So: attempt 1 wrong → retry; attempt 2 wrong → reveal. attempts counted as wrong tries: after 2 wrongs, reveal.
+  let locked = false;
+  let items = [];
+  let seqPicked = [];
+
+  const $ = (sel) => document.querySelector(sel);
+  const hub = $("#screen-hub");
+  const play = $("#screen-play");
+  const know = $("#screen-knowledge");
+  const end = $("#screen-end");
+
+  function show(screen) {
+    [hub, play, know, end].forEach(s => s.classList.remove("active"));
+    screen.classList.add("active");
+    const focusable = screen.querySelector("button:not([disabled]), [tabindex='0']");
+    if (focusable) setTimeout(() => focusable.focus(), 50);
+  }
+
+  function live(msg) { $("#live").textContent = msg; }
+
+  function setAge(a) {
+    age = a;
+    document.body.classList.toggle("young", a === "young");
+    document.body.classList.toggle("older", a === "older");
+    document.querySelectorAll(".age-btn").forEach(b => {
+      const on = b.dataset.age === a;
+      b.classList.toggle("selected", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const u = UI[a];
+    $("#hub-title").textContent = u.title;
+    $("#hub-sub").textContent = u.sub;
+    $("#startBtn").textContent = u.start;
+    $("#startBtn").disabled = false;
+    $("#age-prompt").textContent = u.agePrompt;
+    $("#nextBtn").textContent = u.next;
+    $("#knowNext").textContent = u.next;
+    $("#know-title").textContent = u.knowTitle;
+    $("#againBtn").textContent = u.again;
+  }
+
+  function updateProgress() {
+    const total = items.length;
+    const pct = total ? Math.round((idx / total) * 100) : 0;
+    const bar = $("#progressBar");
+    bar.style.width = pct + "%";
+    bar.setAttribute("aria-valuenow", pct);
+    $("#q-counter").textContent = Math.min(idx + 1, total) + " / " + total;
+    $("#q-score").textContent = "★ " + score;
+  }
+
+  function roadScene(opts) {
+    opts = opts || {};
+    const ped = opts.ped || "red";
+    const carLeft = !!opts.carFromLeft;
+    const showVeh = !!opts.showVeh;
+    return (
+      '<div class="scene-board" role="img" aria-label="סצנת רחוב: מדרכה, כביש עם רכב בימין, מעבר חציה ורמזור להולכי רגל">' +
+        '<div class="road"></div><div class="lane"></div>' +
+        '<div class="crosswalk" aria-hidden="true"></div>' +
+        '<div class="ped-light ' + ped + '" title="רמזור להולכי רגל"><span class="lamp r"></span><span class="lamp g"></span></div>' +
+        (showVeh ? '<div class="veh-light red" title="רמזור לרכב"><span class="lamp r"></span><span class="lamp y"></span><span class="lamp g"></span></div>' : '') +
+        (carLeft
+          ? '<div class="car near car-move" style="animation-duration:3.5s" aria-hidden="true"></div>'
+          : '<div class="car near" style="right:18%" aria-hidden="true"></div>') +
+        '<div class="car far" aria-hidden="true"></div>' +
+        '<span class="sidewalk-label">מדרכה</span>' +
+      '</div>'
+    );
+  }
+
+  function renderItem() {
+    locked = false;
+    attempts = 0;
+    seqPicked = [];
+    updateProgress();
+    $("#progressWrap").hidden = false;
+    const item = items[idx];
+    const u = UI[age];
+    $("#feedback").className = "feedback";
+    $("#feedback").textContent = "";
+    $("#nextBtn").hidden = true;
+    $("#scene-host").innerHTML = "";
+    $("#q-body").innerHTML = "";
+    $("#q-title").textContent = item.q;
+
+    if (item.type === "knowledge-only") {
+      showKnowledge(item.know, true);
+      return;
+    }
+
+    if (item.type === "scene-where") {
+      $("#scene-host").innerHTML = roadScene({ ped: "green" });
+      const wrap = document.createElement("div");
+      wrap.className = "scene-opts cols3";
+      wrap.setAttribute("role", "group");
+      wrap.setAttribute("aria-label", "בחרו מקום חצייה");
+      item.choices.forEach((c, i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "scene-opt";
+        b.dataset.i = i;
+        b.innerHTML = '<div class="mini" aria-hidden="true">' + c.icon + '</div><span>' + c.t + '</span>';
+        b.addEventListener("click", () => onChoose(i));
+        wrap.appendChild(b);
+      });
+      $("#q-body").appendChild(wrap);
+    } else if (item.type === "order") {
+      $("#scene-host").innerHTML = roadScene({ ped: "red" });
+      const area = document.createElement("div");
+      area.className = "seq-area";
+      area.innerHTML = '<div class="seq-slots" id="seq-slots" aria-label="סדר שנבחר"></div>' +
+        '<div class="seq-pool" id="seq-pool" role="group" aria-label="אפשרויות לסידור"></div>' +
+        '<div style="display:flex;gap:8px;margin-top:10px">' +
+        '<button type="button" class="secondary-btn" id="seq-reset" style="flex:1">' + u.clearSeq + '</button>' +
+        '<button type="button" class="primary-btn" id="seq-check" style="flex:1" disabled>' + u.check + '</button></div>';
+      $("#q-body").appendChild(area);
+      const slots = $("#seq-slots");
+      item.correct.forEach((_, i) => {
+        const s = document.createElement("div");
+        s.className = "seq-slot";
+        s.dataset.slot = i;
+        s.textContent = (i + 1) + ".";
+        slots.appendChild(s);
+      });
+      const pool = $("#seq-pool");
+      const shuffled = item.steps.slice().sort(() => Math.random() - 0.5);
+      shuffled.forEach(st => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "seq-btn";
+        b.dataset.id = st.id;
+        b.textContent = st.t;
+        b.addEventListener("click", () => {
+          if (locked || seqPicked.length >= item.correct.length) return;
+          seqPicked.push(st.id);
+          b.classList.add("used");
+          b.disabled = true;
+          refreshSlots(item);
+          $("#seq-check").disabled = seqPicked.length !== item.correct.length;
+        });
+        pool.appendChild(b);
+      });
+      $("#seq-reset").addEventListener("click", () => {
+        if (locked) return;
+        seqPicked = [];
+        pool.querySelectorAll(".seq-btn").forEach(b => { b.classList.remove("used"); b.disabled = false; });
+        refreshSlots(item);
+        $("#seq-check").disabled = true;
+      });
+      $("#seq-check").addEventListener("click", () => onOrderCheck(item));
+    } else if (item.type === "light-road") {
+      $("#scene-host").innerHTML = roadScene({ ped: item.ped || "green", carFromLeft: item.carFromLeft, showVeh: true });
+      renderMc(item);
+    } else {
+      if (item.friend) {
+        $("#scene-host").innerHTML = roadScene({ ped: "red" }) +
+          '<div style="text-align:center"><span class="friend-bubble" role="img" aria-label="חבר קורא">🗣️ «' + item.friend + '»</span></div>';
+      } else if (item.id === "y2" || item.id === "o1") {
+        $("#scene-host").innerHTML = roadScene({ ped: "green", showVeh: true });
+      }
+      renderMc(item);
+    }
+    show(play);
+  }
+
+  function refreshSlots(item) {
+    const slots = $("#seq-slots").children;
+    for (let i = 0; i < slots.length; i++) {
+      const s = slots[i];
+      if (seqPicked[i]) {
+        const st = item.steps.find(x => x.id === seqPicked[i]);
+        s.textContent = st.t;
+        s.classList.add("filled");
+      } else {
+        s.textContent = (i + 1) + ".";
+        s.classList.remove("filled");
+      }
+    }
+  }
+
+  function renderMc(item) {
+    const wrap = document.createElement("div");
+    wrap.className = "choices";
+    wrap.setAttribute("role", "group");
+    wrap.setAttribute("aria-label", "תשובות");
+    const letters = ["א", "ב", "ג", "ד"];
+    item.choices.forEach((c, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "choice";
+      b.dataset.i = i;
+      b.innerHTML = '<span class="letter">' + letters[i] + '</span><span>' + c.t + '</span><span class="mark" aria-hidden="true"></span>';
+      b.addEventListener("click", () => onChoose(i));
+      wrap.appendChild(b);
+    });
+    $("#q-body").appendChild(wrap);
+  }
+
+  function onChoose(i) {
+    if (locked) return;
+    const item = items[idx];
+    const choice = item.choices[i];
+    const buttons = $("#q-body").querySelectorAll(".choice, .scene-opt");
+    buttons.forEach(b => b.classList.remove("selected"));
+    const btn = $("#q-body").querySelector('[data-i="' + i + '"]');
+    if (btn) btn.classList.add("selected");
+
+    if (choice.ok) {
+      locked = true;
+      markResult(buttons, item, true, i);
+      score += Math.max(1, 3 - attempts);
+      sfx("ok");
+      showFb(true);
+      $("#nextBtn").hidden = false;
+      $("#nextBtn").focus();
+      live(UI[age].ok);
+    } else {
+      attempts++;
+      sfx("bad");
+      if (btn) {
+        btn.classList.add("wrong");
+        const mark = btn.querySelector(".mark");
+        if (mark) mark.textContent = "✗";
+      }
+      if (attempts >= 2) {
+        locked = true;
+        markResult(buttons, item, false, i);
+        showFb(false, true);
+        $("#nextBtn").hidden = false;
+        live(UI[age].reveal);
+      } else {
+        showFb(false, false);
+        live(UI[age].bad);
+        // allow retry — briefly disable wrong button
+        if (btn) btn.disabled = true;
+      }
+    }
+    updateProgress();
+  }
+
+  function markResult(buttons, item, wasCorrect, chosen) {
+    buttons.forEach((b) => {
+      const i = +b.dataset.i;
+      b.disabled = true;
+      if (item.choices[i].ok) {
+        b.classList.add("correct");
+        const mark = b.querySelector(".mark");
+        if (mark) mark.textContent = "✓";
+        else {
+          const span = document.createElement("span");
+          span.className = "mark";
+          span.textContent = " ✓";
+          b.appendChild(span);
+        }
+      } else if (i === chosen) {
+        b.classList.add("wrong");
+        const mark = b.querySelector(".mark");
+        if (mark) mark.textContent = "✗";
+      }
+    });
+  }
+
+  function onOrderCheck(item) {
+    if (locked) return;
+    const ok = seqPicked.length === item.correct.length &&
+      seqPicked.every((id, i) => id === item.correct[i]);
+    if (ok) {
+      locked = true;
+      score += Math.max(1, 3 - attempts);
+      sfx("ok");
+      showFb(true);
+      $("#seq-check").disabled = true;
+      $("#seq-reset").disabled = true;
+      $("#nextBtn").hidden = false;
+      live(UI[age].ok);
+    } else {
+      attempts++;
+      sfx("bad");
+      if (attempts >= 2) {
+        locked = true;
+        seqPicked = item.correct.slice();
+        refreshSlots(item);
+        showFb(false, true);
+        $("#seq-check").disabled = true;
+        $("#seq-reset").disabled = true;
+        $("#nextBtn").hidden = false;
+        live(UI[age].reveal);
+      } else {
+        showFb(false, false);
+        // reset for retry
+        seqPicked = [];
+        $("#seq-pool").querySelectorAll(".seq-btn").forEach(b => { b.classList.remove("used"); b.disabled = false; });
+        refreshSlots(item);
+        $("#seq-check").disabled = true;
+        live(UI[age].bad);
+      }
+    }
+    updateProgress();
+  }
+
+  function showFb(ok, revealed) {
+    const fb = $("#feedback");
+    const u = UI[age];
+    fb.className = "feedback show " + (ok ? "ok" : (revealed ? "info" : "bad"));
+    if (ok) fb.innerHTML = "<span aria-hidden='true'>✓</span><span class='feedback-text'>" + u.ok + "</span>";
+    else if (revealed) {
+      const item = items[idx];
+      const ans = item.type === "order"
+        ? item.steps.map(s => s.t).join(" → ")
+        : item.choices.find(c => c.ok).t;
+      fb.innerHTML = "<span aria-hidden='true'>💡</span><span class='feedback-text'>" + u.reveal + " " + ans + "</span>";
+    } else {
+      fb.innerHTML = "<span aria-hidden='true'>✗</span><span class='feedback-text'>" + u.bad + "</span>";
+    }
+  }
+
+  function showKnowledge(text, fromOnly) {
+    sfx("know");
+    $("#know-text").textContent = text;
+    show(know);
+    live(text);
+  }
+
+  function afterItem() {
+    const item = items[idx];
+    if (item.know) {
+      showKnowledge(item.know, false);
+    } else {
+      advance();
+    }
+  }
+
+  function advance() {
+    idx++;
+    if (idx >= items.length) finish();
+    else renderItem();
+  }
+
+  function finish() {
+    $("#progressBar").style.width = "100%";
+    const u = UI[age];
+    $("#end-title").textContent = u.endTitle;
+    $("#end-sub").textContent = u.endSub;
+    const maxScore = items.filter(it => it.type !== "knowledge-only").length * 3;
+    const ratio = maxScore ? score / maxScore : 1;
+    let stars = ratio >= 0.85 ? 3 : ratio >= 0.55 ? 2 : 1;
+    document.querySelectorAll(".star").forEach(s => {
+      s.classList.toggle("on", +s.dataset.i <= stars);
+    });
+    $("#end-score").textContent = "ניקוד: " + score + " · כוכבים: " + stars + " / 3";
+    $("#end-stars").setAttribute("aria-label", stars + " כוכבים מתוך 3");
+    sfx("win");
+    show(end);
+    live(u.endTitle + " " + stars + " כוכבים");
+  }
+
+  function startGame() {
+    if (!age) return;
+    items = ITEMS[age].slice();
+    idx = 0;
+    score = 0;
+    renderItem();
+  }
+
+  /* ========== Events ========== */
+  $("#age-young").addEventListener("click", () => setAge("young"));
+  $("#age-older").addEventListener("click", () => setAge("older"));
+  $("#startBtn").addEventListener("click", startGame);
+  $("#nextBtn").addEventListener("click", afterItem);
+  $("#knowNext").addEventListener("click", advance);
+  $("#againBtn").addEventListener("click", () => {
+    $("#progressWrap").hidden = true;
+    $("#progressBar").style.width = "0%";
+    show(hub);
+    $("#startBtn").focus();
+  });
+  $("#muteBtn").addEventListener("click", () => {
+    muted = !muted;
+    $("#muteBtn").setAttribute("aria-pressed", muted ? "true" : "false");
+    $("#muteBtn").textContent = muted ? "🔇" : "🔊";
+    $("#muteBtn").setAttribute("aria-label", muted ? "בטלו השתקה" : "השתקה");
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "m" || e.key === "M" || e.key === "מ") {
+      if (e.target.tagName !== "INPUT") $("#muteBtn").click();
+    }
+  });
+
+  // Default hub labels use nikud until age chosen; keep bilingual-ready title swap
+  setAge("young");
+  age = null;
+  document.querySelectorAll(".age-btn").forEach(b => {
+    b.classList.remove("selected");
+    b.setAttribute("aria-pressed", "false");
+  });
+  $("#startBtn").disabled = true;
+  // Reset hub to mixed preview with nikud title as default display until selection
+  $("#hub-title").textContent = "חֲצִיָּה בְּטוּחָה";
+  $("#hub-sub").textContent = "מִשְׂחַק »אוֹר–עֲצוֹר–חֲצֵה« · בְּטִיחוּת בַּדֶּרֶךְ";
+  $("#startBtn").textContent = "הַתְחֵלָה";
+})();
+</script>
+</body>
+</html>
